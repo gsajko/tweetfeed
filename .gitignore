@@ -1,6 +1,7 @@
 .venv/
 _build/
 notebooks/
+data/
 .vscode/
 setup
 conf.py
