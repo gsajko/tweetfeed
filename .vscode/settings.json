@@ -1,4 +1,5 @@
 {
-    "python.venvPath": "~/.cache/pypoetry/virtualenvs"
+    "python.venvPath": "~/.cache/pypoetry/virtualenvs",
+    "python.formatting.provider": "black"
 }
 
