@@ -23,5 +23,6 @@ def following_ids(screen_name)-> list:
     return following_list
 
 def get_profile(user_id):
+    api = twitter_auth()
     profile = api.get_user(user_id)._json
     return profile
