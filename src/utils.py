@@ -2,6 +2,7 @@ import os
 from tweepy import OAuthHandler
 from tweepy import API
 from tweepy import Cursor
+import datetime, time
 
 def twitter_auth():
     #todo: use json file to store secrets
@@ -22,7 +23,21 @@ def following_ids(screen_name)-> list:
     following_list = api.friends_ids(screen_name)
     return following_list
 
-def get_profile(user_id):
+def get_profile(user_id:str):
     api = twitter_auth()
     profile = api.get_user(user_id)._json
     return profile
+
+
+def get_likes(user_id:str, how_old:int)-> list:
+    api = twitter_auth()
+    tweets = Cursor(api.favorites, id=user_id).items()
+    tweet_list = []
+    for tweet in tweets:
+        days_old = (datetime.datetime.now() - tweet.created_at).days
+        if days_old > how_old:
+            break
+        else:
+            tw = {"tweet":tweet}
+        tweet_list.append(tw)
+    return tweet_list
