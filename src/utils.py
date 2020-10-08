@@ -41,3 +41,9 @@ def get_likes(user_id:str, how_old:int)-> list:
             tw = {"tweet":tweet}
         tweet_list.append(tw)
     return tweet_list
+
+
+# TODO save profile to db
+# check if table exist - if not create table
+# check if user exist, if yes, update data with new
+# if not - save profile
