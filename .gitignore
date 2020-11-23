@@ -7,3 +7,4 @@ setup
 conf.py
 .coverage
 *.pyc
+settings.json
