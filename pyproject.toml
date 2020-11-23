@@ -8,6 +8,7 @@ authors = ["gsajko <grzegorz.sajko@protonmail.com>"]
 python = "^3.8"
 numpy = "^1.19.2"
 tweepy = "^3.9.0"
+twitter-to-sqlite = "^0.21.3"
 
 
 [tool.poetry.dev-dependencies]
