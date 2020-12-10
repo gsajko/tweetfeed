@@ -8,5 +8,4 @@ conf.py
 .coverage
 *.pyc
 settings.json
-auth/
-*.db
+auth.json

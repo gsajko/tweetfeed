@@ -1,1 +1,0 @@
-/home/gsajko/Dropbox/zettlr//attention_project.md
