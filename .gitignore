@@ -9,3 +9,4 @@ conf.py
 *.pyc
 settings.json
 auth.json
+*.db
