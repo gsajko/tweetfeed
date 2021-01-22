@@ -16,7 +16,7 @@ auth = json.load(open("auth/auth.json"))
 session = utils.session_for_auth(auth)
 
 # load tweets
-def load_tweets(db_path, days=14):
+def load_tweets(db_path, days):
     time_delta = date.today() - timedelta(days=days)
     cnx = sqlite3.connect(db_path)
     query = f"SELECT id,user, full_text, created_at, lang FROM tweets WHERE created_at < '{str(time_delta)}'"
@@ -75,11 +75,11 @@ def find_news(df, news_domains_list):
 
     return df
 
-def prepare_batch():
+def prepare_batch(days):
     with open("src/data/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
 
-    df_tweets = load_tweets("home.db") # load tweets
+    df_tweets = load_tweets("home.db", days) # load tweets
     df_tweets = find_news(df_tweets, news_domains) # add news column
 
     seen_tweets = pd.read_csv("src/data/seen.csv")
@@ -95,7 +95,9 @@ def prepare_batch():
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
-    to_custom_news_feed[["id", "user"]].to_csv("src/data/batch_to_add.csv")
+    df = to_custom_news_feed[["id", "user"]]
+    df.to_csv("src/data/batch_to_add.csv")
+    return df
 
 def count_collection(collection_id, session=session):
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
@@ -164,7 +166,7 @@ def rem_from_collection(collection_id, session=session):
 def processing_list(collection_id, tweet_list):
     collection_id = collection_id
     procc_list = []
-    print("adding tweets to collection {collection_id}")
+    print(f"adding tweets to collection {collection_id}")
     for counter, tweet_id in enumerate(tweet_list):
         if (counter + 1) % 20 == 0:
             print(f"{(counter+1)} / {len(tweet_list)}")
@@ -194,3 +196,13 @@ def rem_muted(df, owner_id, session=session):
     return df
 
 
+def get_collection_list(collection_id, session=session):
+    url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
+    response = session.get(url)
+    collection_tweets = response.json()
+    try:
+        collection_tweets = list(collection_tweets["objects"]["tweets"])
+        return collection_tweets
+    except:
+        print(f"{collection_id} contains 0 tweets")
+        return []

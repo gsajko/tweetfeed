@@ -1,11 +1,7 @@
 import pandas as pd
 import json
-from src.pipeline_functions import prepare_batch
-from src.pipeline_functions import rem_muted, get_collection_id, count_collection, rem_from_collection, processing_list
-
-# TODO leave in memory, don't save as csv
-prepare_batch()
-
+from src.pipeline_functions import *
+from datetime import datetime
 
 owner_id = "143058191"
 
@@ -18,7 +14,7 @@ while count_collection(custom_newsfeed) > 0:
     rem_from_collection(custom_newsfeed)
 
 # load dataframe
-tweets_df = pd.read_csv("src/data/batch_to_add.csv")
+tweets_df = prepare_batch(days=21)
 tweets_df = rem_muted(tweets_df, owner_id)
 tweet_list = tweets_df["id"].tolist()[:300]
 
@@ -34,3 +30,8 @@ seen_tweets_old.to_csv("src/data/seen_old.csv", index=False)
 
 # update seen.csv file
 df.to_csv("src/data/seen.csv", mode="a", header=False, index=False)
+
+not_relevant_list = get_collection_list(get_collection_id(owner_id, "not_relevant"))
+
+with open(f"{datetime.now():%Y_%m_%d_%H%M}_not_relevant_list.txt", "w") as f:
+    f.write(json.dumps(not_relevant_list))
