@@ -149,7 +149,9 @@ conf.py
 *.pyc
 settings.json
 auth.json
+
+# data
 *.db
-
-
+*.csv
+*.txt
 
