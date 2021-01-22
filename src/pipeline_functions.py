@@ -51,6 +51,16 @@ def remove_empty_str(l):
             l.remove(i)
     return l
 
+def drop_contains(df, column_name, str_list, lower=True):
+    for string in str_list:
+        if lower:
+            df["filter"] = df[column_name].str.lower().copy()
+        if not lower:
+            df["filter"] = df[column_name].copy()
+        df = df_tweets[~df["filter"].str.contains(string)]
+        df.drop(["filter"], axis=1, inplace=True)
+    return df
+
 def find_news(df, news_domains_list):
     df["urls"] = df["full_text"].apply(find_url)
     df["urls"] = df.urls.apply(lambda x: [clean_links(d) for d in x])
