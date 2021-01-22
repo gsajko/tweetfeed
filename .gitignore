@@ -141,7 +141,7 @@ auth/auth.json
 .venv/
 _build/
 
-data/
+
 .vscode/
 setup
 conf.py
@@ -151,7 +151,8 @@ settings.json
 auth.json
 
 # data
-*.db
 *.csv
 *.txt
+
+*.ipynb
 
