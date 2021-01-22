@@ -16,13 +16,8 @@ while count_collection(custom_newsfeed) > 0:
 # load dataframe
 tweets_df = prepare_batch(days=21)
 
-str_to_drop = ["breaking:"]
-tweets_df = drop_contains(tweets_df, column_name="full_text", str_list = str_to_drop)
-str_to_drop = ["GOP"]
-tweets_df = drop_contains(tweets_df, column_name="full_text", str_list = str_to_drop, lower=False)
-
 tweets_df = rem_muted(tweets_df, owner_id)
-tweet_list = tweets_df["id"].tolist()[:300]
+tweet_list = tweets_df["id"].tolist()[:200]
 
 # TODO remove this- just for checking
 with open("src/data/tweet_list.txt", "w") as write_file:

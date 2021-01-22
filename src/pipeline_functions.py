@@ -57,8 +57,8 @@ def drop_contains(df, column_name, str_list, lower=True):
             df["filter"] = df[column_name].str.lower().copy()
         if not lower:
             df["filter"] = df[column_name].copy()
-        df = df_tweets[~df["filter"].str.contains(string)]
-        df.drop(["filter"], axis=1, inplace=True)
+        df = df[~df["filter"].str.contains(string)]
+        df = df.drop(["filter"], axis=1).copy()
     return df
 
 def find_news(df, news_domains_list):
@@ -105,6 +105,9 @@ def prepare_batch(days):
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
+    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["breaking:"])
+    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["GOP"], lower=False)
+
     df = to_custom_news_feed[["id", "user"]]
     df.to_csv("src/data/batch_to_add.csv")
     return df
