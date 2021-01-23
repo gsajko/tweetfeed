@@ -4,6 +4,7 @@ import time
 
 import sqlite3
 import pandas as pd
+import numpy as np
 from twitter_to_sqlite import utils
 
 import re
@@ -19,7 +20,8 @@ session = utils.session_for_auth(auth)
 def load_tweets(db_path, days):
     time_delta = date.today() - timedelta(days=days)
     cnx = sqlite3.connect(db_path)
-    query = f"SELECT id,user, full_text, created_at, lang FROM tweets WHERE created_at < '{str(time_delta)}'"
+    query = f"SELECT id,user, full_text, created_at, lang, quoted_status, in_reply_to_status_id FROM tweets WHERE created_at < '{str(time_delta)}'"
+    #TODO add restrain, to remove tweets I liked, but for that I need to setup another cron job too.
     df = pd.read_sql_query(
         query,
         cnx,
@@ -85,12 +87,35 @@ def find_news(df, news_domains_list):
 
     return df
 
+def news_in_qt_rt(df):
+    #TODO refractor this
+    df["all_news"] = df["contains_news"].copy()
+
+    df_qt = df[["id", "contains_news"]].copy()
+    df_qt.columns = ["quoted_status", "qt_news"]
+    df = df.merge(df_qt, on="quoted_status", how="left")
+    df["qt_news"] = df["qt_news"].fillna(0).astype(np.int64)
+    df["all_news"] = df["qt_news"].astype(np.int64) + df["contains_news"].astype(np.int64)
+
+    df_qt = df[["id", "contains_news"]].copy()
+    df_qt.columns = ["in_reply_to_status_id", "rt_news"]
+    df = df.merge(df_qt, on="in_reply_to_status_id", how="left")
+    df["rt_news"] = df["rt_news"].fillna(0).astype(np.int64)
+    df["all_news"] = df["rt_news"].astype(np.int64) + df["all_news"].astype(np.int64)
+    
+    return df
+
 def prepare_batch(days):
     with open("src/data/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
 
     df_tweets = load_tweets("home.db", days) # load tweets
+    # convert columns to avoid merge problems
+    for col in ["in_reply_to_status_id"]:
+        df_tweets[col] = df_tweets[col].fillna(0).astype(np.int64)
+
     df_tweets = find_news(df_tweets, news_domains) # add news column
+    df_tweets = news_in_qt_rt(df_tweets) # find news in reweets and reply-to
 
     seen_tweets = pd.read_csv("src/data/seen.csv")
     seen_tweets.drop_duplicates(inplace=True)
@@ -101,11 +126,11 @@ def prepare_batch(days):
 
     # filter out tweets with news links
     to_custom_news_feed = (
-        df_tweets[df_tweets["contains_news"] == 0]
+        df_tweets[df_tweets["all_news"] == 0]
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
-    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["breaking:"])
+    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["breaking:", "🍿", "New Yorker"])
     to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["GOP"], lower=False)
 
     df = to_custom_news_feed[["id", "user"]]

@@ -19,7 +19,7 @@ tweets_df = prepare_batch(days=21)
 tweets_df = rem_muted(tweets_df, owner_id)
 tweet_list = tweets_df["id"].tolist()[:200]
 
-# TODO remove this- just for checking
+# TODO remove this- just for checking and backup
 with open("src/data/tweet_list.txt", "w") as write_file:
     json.dump(tweet_list, write_file)
 
@@ -33,6 +33,7 @@ seen_tweets_old.to_csv("src/data/seen_old.csv", index=False)
 df.to_csv("src/data/seen.csv", mode="a", header=False, index=False)
 
 not_relevant_list = get_collection_list(get_collection_id(owner_id, "not_relevant"))
-
+if len(not_relevant_list) > 150:
+    print("max limit hit soon!")
 with open(f"{datetime.now():%Y_%m_%d_%H%M}_not_relevant_list.txt", "w") as f:
     f.write(json.dumps(not_relevant_list))
