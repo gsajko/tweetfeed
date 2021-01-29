@@ -130,7 +130,7 @@ def prepare_batch(days):
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
-    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["breaking:", "🍿", "New Yorker"])
+    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["breaking:", "🍿", "New Yorker", "racially", "lived experience"])
     to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["GOP"], lower=False)
 
     df = to_custom_news_feed[["id", "user"]]

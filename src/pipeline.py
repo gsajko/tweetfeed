@@ -1,6 +1,6 @@
 import pandas as pd
 import json
-from src.pipeline_functions import *
+from .pipeline_functions import *
 from datetime import datetime
 
 owner_id = "143058191"
