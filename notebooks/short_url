@@ -1,0 +1,4958 @@
+[
+    {
+        "short_url": "blog.lemonde.fr",
+        "long_url": "lemonde.fr",
+        "is_news": false
+    },
+    {
+        "short_url": "bloom.bg",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "iri.upc.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "differantly.com",
+        "long_url": "dft.art",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "rdbl.co",
+        "long_url": "redbubble.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cloud.google.com",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "doi.org",
+        "long_url": "elsevier.com",
+        "is_news": false
+    },
+    {
+        "short_url": "shorturl.at",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "TaiwanCanHelp.us",
+        "long_url": "taiwancanhelp.us",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "lsv.uni-saarland.de",
+        "is_news": false
+    },
+    {
+        "short_url": "lennyrachitsky.com",
+        "long_url": "lennysnewsletter.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "NetBaseQuid.com",
+        "long_url": "netbasequid.com",
+        "is_news": false
+    },
+    {
+        "short_url": "goo.gle",
+        "long_url": "googleblog.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "ra.co",
+        "is_news": false
+    },
+    {
+        "short_url": "umn.edu",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "msft.it",
+        "long_url": "minecraft.net",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "dailymail.co.uk",
+        "is_news": true
+    },
+    {
+        "short_url": "uni-osnabrueck.de",
+        "long_url": "aivcc.uos.de",
+        "is_news": false
+    },
+    {
+        "short_url": "ti.me",
+        "long_url": "time.com",
+        "is_news": true
+    },
+    {
+        "short_url": "investorfieldguide.com",
+        "long_url": "joincolossus.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "cnfl.io",
+        "long_url": "confluent.io",
+        "is_news": false
+    },
+    {
+        "short_url": "ASKTHEDOGGFATHER.com",
+        "long_url": "askthedoggfather.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "redd.it",
+        "long_url": "reddit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "theatln.tc",
+        "long_url": "theatlantic.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "joerogan.net",
+        "long_url": "spotify.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "com.",
+        "long_url": "leavingthebayarea.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "octopus.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "chng.it",
+        "long_url": "change.org",
+        "is_news": false
+    },
+    {
+        "short_url": "RabbiSacks.org",
+        "long_url": "rabbisacks.org",
+        "is_news": false
+    },
+    {
+        "short_url": "zd.net",
+        "long_url": "zdnet.com",
+        "is_news": true
+    },
+    {
+        "short_url": "eventbrite.com",
+        "long_url": "eventbrite.de",
+        "is_news": false
+    },
+    {
+        "short_url": "afp.com",
+        "long_url": "yahoo.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "siliconangle.com",
+        "is_news": true
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "doi.org",
+        "long_url": "frontiersin.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "rb.gy",
+        "long_url": "apple.com",
+        "is_news": false
+    },
+    {
+        "short_url": "rb.gy",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "openmined.org",
+        "long_url": "github.com",
+        "is_news": false
+    },
+    {
+        "short_url": "gum.co",
+        "long_url": "gumroad.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "redd.it",
+        "long_url": "reddit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Puscifer.com",
+        "long_url": "puscifer.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "aim.edu",
+        "long_url": "zoom.us",
+        "is_news": false
+    },
+    {
+        "short_url": "invis.io",
+        "long_url": "invisionapp.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "neurips.cc",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "eventbrite.com",
+        "long_url": "eventbrite.de",
+        "is_news": false
+    },
+    {
+        "short_url": "startuppoland.org",
+        "long_url": "techsport.startuppoland.org",
+        "is_news": false
+    },
+    {
+        "short_url": "brainpint.com",
+        "long_url": "mailbrew.com",
+        "is_news": false
+    },
+    {
+        "short_url": "apple.co",
+        "long_url": "apple.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Dithering.fm",
+        "long_url": "dithering.fm",
+        "is_news": false
+    },
+    {
+        "short_url": "queerinai.org",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "albanyinstitute.org",
+        "is_news": false
+    },
+    {
+        "short_url": "Jeli.io",
+        "long_url": "jeli.io",
+        "is_news": false
+    },
+    {
+        "short_url": "hny.co",
+        "long_url": "honeycomb.io",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "bru.gl",
+        "long_url": "bruegel.org",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "deloi.tt",
+        "long_url": "deloitte.com",
+        "is_news": false
+    },
+    {
+        "short_url": "org.",
+        "long_url": "airbnb.org",
+        "is_news": false
+    },
+    {
+        "short_url": "org.",
+        "long_url": "airbnb.org",
+        "is_news": false
+    },
+    {
+        "short_url": "al2.in",
+        "long_url": "ali-alkhatib.com",
+        "is_news": false
+    },
+    {
+        "short_url": "org.",
+        "long_url": "airbnb.org",
+        "is_news": false
+    },
+    {
+        "short_url": "al2.in",
+        "long_url": "ali-alkhatib.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnfl.io",
+        "long_url": "confluent.io",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "neurips.cc",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "nvidia.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wp.me",
+        "long_url": "venturebeat.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.co.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "tcrn.ch",
+        "long_url": "techcrunch.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "nvidia.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tcrn.ch",
+        "long_url": "techcrunch.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "thr.cm",
+        "long_url": "hollywoodreporter.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wandb.com",
+        "long_url": "wandb.ai",
+        "is_news": false
+    },
+    {
+        "short_url": "eecs.berkeley.edu",
+        "long_url": "github.io",
+        "is_news": false
+    },
+    {
+        "short_url": "discord.gg",
+        "long_url": "discord.com",
+        "is_news": false
+    },
+    {
+        "short_url": "apne.ws",
+        "long_url": "apnews.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "redd.it",
+        "long_url": "reddit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "bbc.in",
+        "long_url": "bbc.co.uk",
+        "is_news": true
+    },
+    {
+        "short_url": "eventbrite.com",
+        "long_url": "eventbrite.de",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "zpr.io",
+        "long_url": "psyarxiv.com",
+        "is_news": false
+    },
+    {
+        "short_url": "app.goo.gl",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "bddy.me",
+        "long_url": "routledge.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "investorfieldguide.com",
+        "long_url": "joincolossus.com",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "research.google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "discord.gg",
+        "long_url": "discord.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "sifive.com",
+        "is_news": false
+    },
+    {
+        "short_url": "qrmn.co",
+        "long_url": "qrmenucreator.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wp.me",
+        "long_url": "davidallengreen.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "rasa.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "odsc.com",
+        "is_news": false
+    },
+    {
+        "short_url": "org.uk",
+        "long_url": "heritagetrustnetwork.org.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "awsevents.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "facebook.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "humanstories.ai",
+        "long_url": "cc.gatech.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "pcmag.com",
+        "is_news": true
+    },
+    {
+        "short_url": "boox.com.",
+        "long_url": "boox.com",
+        "is_news": false
+    },
+    {
+        "short_url": "gatesnot.es",
+        "long_url": "gatesnotes.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "wimlworkshop.org",
+        "is_news": false
+    },
+    {
+        "short_url": "cnfl.io",
+        "long_url": "confluent.io",
+        "is_news": false
+    },
+    {
+        "short_url": "go.aws",
+        "long_url": "twitch.tv",
+        "is_news": false
+    },
+    {
+        "short_url": "deeplabcut.org",
+        "long_url": "github.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "itsartm.ag",
+        "long_url": "iamag.co",
+        "is_news": false
+    },
+    {
+        "short_url": "itsartm.ag",
+        "long_url": "iamag.co",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "hifiveinventor.com",
+        "is_news": false
+    },
+    {
+        "short_url": "awscloud.com",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wrctr.co",
+        "long_url": "mailchi.mp",
+        "is_news": false
+    },
+    {
+        "short_url": "curai.com",
+        "long_url": "curaihealth.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "curai.com",
+        "long_url": "curaihealth.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Feminist.AI",
+        "long_url": "feminist.ai",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "hifiveinventor.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Patreon.com",
+        "long_url": "patreon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ac.uk",
+        "long_url": "qmul.ac.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "indianchronicles.eu",
+        "long_url": "disinfo.eu",
+        "is_news": false
+    },
+    {
+        "short_url": "Dithering.fm",
+        "long_url": "dithering.fm",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "eventbrite.de",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "flip.it",
+        "long_url": "sciencealert.com",
+        "is_news": false
+    },
+    {
+        "short_url": "aim.edu",
+        "long_url": "zoom.us",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "bmbf.de",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "ac.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "IBM.com",
+        "long_url": "ibm.com",
+        "is_news": false
+    },
+    {
+        "short_url": "IndigenousFaceMasks.ca",
+        "long_url": "indigenousfacemasks.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "arvojournals.org",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "facebook.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "boox.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Gather.town:",
+        "long_url": "gather.town",
+        "is_news": false
+    },
+    {
+        "short_url": "msft.it",
+        "long_url": "microsoft.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dtsx.io",
+        "long_url": "datastax.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnfl.io",
+        "long_url": "confluent.io",
+        "is_news": false
+    },
+    {
+        "short_url": "goo.gle",
+        "long_url": "tensorflow.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "medium.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "jalopnik.com",
+        "is_news": true
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "nvidia.com",
+        "is_news": false
+    },
+    {
+        "short_url": "aka.ms",
+        "long_url": "microsoft.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "facebook.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "cnbc.com",
+        "is_news": true
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "netevents.org",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "highsnobiety.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "patreon.com",
+        "long_url": "patreon.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "instagr.am",
+        "long_url": "instagram.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Patreon.com",
+        "long_url": "patreon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hny.co",
+        "long_url": "honeycomb.io",
+        "is_news": false
+    },
+    {
+        "short_url": "aim.edu",
+        "long_url": "zoom.us",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "AI.",
+        "long_url": "feminist.ai",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnb.cx",
+        "long_url": "cnbc.com",
+        "is_news": true
+    },
+    {
+        "short_url": "AI.",
+        "long_url": "feminist.ai",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Amazon.fr",
+        "long_url": "amazon.fr",
+        "is_news": false
+    },
+    {
+        "short_url": "rb.gy",
+        "long_url": "facebook.com",
+        "is_news": false
+    },
+    {
+        "short_url": "spr.ly",
+        "long_url": "newrelic.com",
+        "is_news": false
+    },
+    {
+        "short_url": "investorfieldguide.com",
+        "long_url": "joincolossus.com",
+        "is_news": false
+    },
+    {
+        "short_url": "discord.gg",
+        "long_url": "discord.com",
+        "is_news": false
+    },
+    {
+        "short_url": "zd.net",
+        "long_url": "zdnet.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "facebook.com",
+        "is_news": false
+    },
+    {
+        "short_url": "spr.ly",
+        "long_url": "simonandschuster.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "wp.me",
+        "long_url": "venturebeat.com",
+        "is_news": true
+    },
+    {
+        "short_url": "politi.co",
+        "long_url": "politico.com",
+        "is_news": true
+    },
+    {
+        "short_url": "brainpint.com",
+        "long_url": "notion.so",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "recordstoreday.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "recordstoreday.com",
+        "is_news": false
+    },
+    {
+        "short_url": "clgx.co",
+        "long_url": "corelogic.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "awsevents.com",
+        "is_news": false
+    },
+    {
+        "short_url": "boox.com.",
+        "long_url": "boox.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "es.pn",
+        "long_url": "espn.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "github.io",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "nvidia.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "apne.ws",
+        "long_url": "apnews.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "substack.com",
+        "long_url": "burningshore.com",
+        "is_news": false
+    },
+    {
+        "short_url": "substack.com",
+        "long_url": "burningshore.com",
+        "is_news": false
+    },
+    {
+        "short_url": "bloom.bg",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "nypost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.co.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "econ.st",
+        "long_url": "economist.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ti.me",
+        "long_url": "time.com",
+        "is_news": true
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "soundcloud.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tiny.pl",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "bbc.in",
+        "long_url": "bbc.co.uk",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "afp.com",
+        "long_url": "france24.com",
+        "is_news": true
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "blogspot.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "letterdrop.co",
+        "long_url": "letterdrop.com",
+        "is_news": false
+    },
+    {
+        "short_url": "washex.am",
+        "long_url": "washingtonexaminer.com",
+        "is_news": true
+    },
+    {
+        "short_url": "town.",
+        "long_url": "gather.town",
+        "is_news": false
+    },
+    {
+        "short_url": "town.",
+        "long_url": "gather.town",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "umn.edu",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "blogspot.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "medium.com",
+        "is_news": false
+    },
+    {
+        "short_url": "c9.gg",
+        "long_url": "traininggrounds.gg",
+        "is_news": false
+    },
+    {
+        "short_url": "Twitch.tv",
+        "long_url": "twitch.tv",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "str.sg",
+        "long_url": "straitstimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "goo.gle",
+        "long_url": "scroobly.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Repl.it",
+        "long_url": "repl.it",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "nvidia.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnb.cx",
+        "long_url": "cnbc.com",
+        "is_news": true
+    },
+    {
+        "short_url": "flic.kr",
+        "long_url": "flickr.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnb.cx",
+        "long_url": "cnbc.com",
+        "is_news": true
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "grapheneos.network",
+        "long_url": "grapheneos.org",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "grapheneos.network",
+        "long_url": "grapheneos.org",
+        "is_news": false
+    },
+    {
+        "short_url": "van.fedex.com",
+        "long_url": "fedex.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "jtim.es",
+        "long_url": "japantimes.co.jp",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "coiled.io",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "doi.org",
+        "long_url": "elsevier.com",
+        "is_news": false
+    },
+    {
+        "short_url": "booktv.org",
+        "long_url": "c-span.org:443",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "grapheneos.network",
+        "long_url": "grapheneos.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "openmined.org",
+        "long_url": "slack.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnn.it",
+        "long_url": "cnn.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.co.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.co.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "Super.so",
+        "long_url": "super.so",
+        "is_news": false
+    },
+    {
+        "short_url": "Super.so",
+        "long_url": "super.so",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "DataTalks.Club",
+        "long_url": "datatalks.club",
+        "is_news": false
+    },
+    {
+        "short_url": "DataTalks.Club",
+        "long_url": "datatalks.club",
+        "is_news": false
+    },
+    {
+        "short_url": "DataTalks.Club",
+        "long_url": "datatalks.club",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "amazon.science",
+        "is_news": false
+    },
+    {
+        "short_url": "Amazon.com",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "spr.ly",
+        "long_url": "medscape.com",
+        "is_news": false
+    },
+    {
+        "short_url": "io.",
+        "long_url": "keybase.io",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Bit.ly",
+        "long_url": "etsy.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Repl.it",
+        "long_url": "repl.it",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "aclweb.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "rdcu.be",
+        "long_url": "nature.com",
+        "is_news": true
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "booktv.org",
+        "long_url": "c-span.org:443",
+        "is_news": false
+    },
+    {
+        "short_url": "readthedocs.io",
+        "long_url": "datasette.io",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "healthyhearing.com",
+        "is_news": false
+    },
+    {
+        "short_url": "getpocket.com",
+        "long_url": "getpocket.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "confex.com",
+        "long_url": "id.forgerock.io",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "DataTalks.Club",
+        "long_url": "datatalks.club",
+        "is_news": false
+    },
+    {
+        "short_url": "doi.org",
+        "long_url": "psyarxiv.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "abc7ne.ws",
+        "long_url": "abc7news.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hny.co",
+        "long_url": "circleci.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "npr.org",
+        "is_news": true
+    },
+    {
+        "short_url": "g.co",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "pagesix.com",
+        "is_news": true
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "makeuseof.com",
+        "is_news": true
+    },
+    {
+        "short_url": "g.co",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "NetBaseQuid.com",
+        "long_url": "netbasequid.com",
+        "is_news": false
+    },
+    {
+        "short_url": "netbasequid.com",
+        "long_url": "netbase.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "pnas.org",
+        "is_news": false
+    },
+    {
+        "short_url": "gum.co",
+        "long_url": "gumroad.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnfl.io",
+        "long_url": "confluent.io",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "scylladb.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "sam.gov",
+        "is_news": false
+    },
+    {
+        "short_url": "g.co",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wandb.me",
+        "long_url": "kaggle.com",
+        "is_news": false
+    },
+    {
+        "short_url": "goo.gle",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "medium.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ac.uk",
+        "long_url": "rebuildingmacroeconomics.ac.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "grnh.se",
+        "long_url": "greenhouse.io",
+        "is_news": false
+    },
+    {
+        "short_url": "grnh.se",
+        "long_url": "greenhouse.io",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "google.com",
+        "long_url": "googleblog.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "gum.co",
+        "long_url": "gumroad.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Booking.com",
+        "long_url": "booking.com",
+        "is_news": false
+    },
+    {
+        "short_url": "redd.it",
+        "long_url": "reddit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "partner.viator.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "readthedocs.io",
+        "long_url": "datasette.io",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "confluent.io",
+        "is_news": false
+    },
+    {
+        "short_url": "wapo.st",
+        "long_url": "washingtonpost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Sc.",
+        "long_url": "sc.",
+        "is_news": false
+    },
+    {
+        "short_url": "cnfl.io",
+        "long_url": "confluent.io",
+        "is_news": false
+    },
+    {
+        "short_url": "wpcomstaging.com",
+        "long_url": "anima-ai.org",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "theemotionmachine.com",
+        "is_news": false
+    },
+    {
+        "short_url": "brainpint.com",
+        "long_url": "carrd.co",
+        "is_news": false
+    },
+    {
+        "short_url": "JoinSecret.com",
+        "long_url": "joinsecret.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "usa.gov",
+        "long_url": "fda.gov",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Supportprelingerlibrary.org",
+        "long_url": "flipcause.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.co.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "elsevier.com",
+        "long_url": "sciencedirect.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wapo.st",
+        "long_url": "washingtonpost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "BrainPint.com",
+        "long_url": "brainpint.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wpcomstaging.com",
+        "long_url": "anima-ai.org",
+        "is_news": false
+    },
+    {
+        "short_url": "elsevier.com",
+        "long_url": "sciencedirect.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnn.it",
+        "long_url": "cnn.com",
+        "is_news": true
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "sec.gov",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "botstiberbiaas.org",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "breitbart.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "vntyfr.com",
+        "long_url": "vanityfair.com",
+        "is_news": true
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "bddy.me",
+        "long_url": "lfaidata.foundation",
+        "is_news": false
+    },
+    {
+        "short_url": "domains.",
+        "long_url": "ens.domains",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wapo.st",
+        "long_url": "washingtonpost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "itrev.io",
+        "long_url": "itrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "TravelCuddly.com",
+        "long_url": "travelcuddly.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nvda.ws",
+        "long_url": "medium.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "mashable.com",
+        "is_news": true
+    },
+    {
+        "short_url": "com.",
+        "long_url": "covid19-projections.com",
+        "is_news": false
+    },
+    {
+        "short_url": "gum.co",
+        "long_url": "gumroad.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hny.co",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "mashable.com",
+        "is_news": true
+    },
+    {
+        "short_url": "redditmail.com",
+        "long_url": "app.link",
+        "is_news": false
+    },
+    {
+        "short_url": "nbcnews.to",
+        "long_url": "nbcnews.com",
+        "is_news": true
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.co.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "eepurl.com",
+        "long_url": "us14.list-manage.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.co.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "b-gat.es",
+        "long_url": "cbc.ca",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "npr.org",
+        "is_news": true
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "TravelCuddly.com",
+        "long_url": "travelcuddly.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nie.mn",
+        "long_url": "niemanlab.org",
+        "is_news": true
+    },
+    {
+        "short_url": "redditmail.com",
+        "long_url": "app.link",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "mtr.cool",
+        "long_url": "cosmopolitan.com",
+        "is_news": true
+    },
+    {
+        "short_url": "fb.watch",
+        "long_url": "facebook.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "splash247.com",
+        "is_news": false
+    },
+    {
+        "short_url": "elsevier.com",
+        "long_url": "sciencedirect.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "dailymail.co.uk",
+        "is_news": true
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.ly",
+        "long_url": "anchor.fm",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "NetBaseQuid.com",
+        "long_url": "netbasequid.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "coindesk.com",
+        "is_news": false
+    },
+    {
+        "short_url": "propub.li",
+        "long_url": "propublica.org",
+        "is_news": true
+    },
+    {
+        "short_url": "wapo.st",
+        "long_url": "washingtonpost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "github.io",
+        "long_url": "sorrypunk.com",
+        "is_news": false
+    },
+    {
+        "short_url": "github.io",
+        "long_url": "sorrypunk.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "colab.to",
+        "long_url": "research.google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "colab.to",
+        "long_url": "research.google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "colab.to",
+        "long_url": "research.google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "pl.",
+        "long_url": "mocos.pl",
+        "is_news": false
+    },
+    {
+        "short_url": "biqdata.pl",
+        "long_url": "wyborcza.pl",
+        "is_news": false
+    },
+    {
+        "short_url": "tmblr.co",
+        "long_url": "tumblr.com",
+        "is_news": false
+    },
+    {
+        "short_url": "go.aws",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "discord.gg",
+        "long_url": "discord.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "abc7ne.ws",
+        "long_url": "abc7news.com",
+        "is_news": true
+    },
+    {
+        "short_url": "getpocket.com",
+        "long_url": "getpocket.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "apne.ws",
+        "long_url": "apnews.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "iss.europa.eu",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "writingyourfamilyhistory.co.uk",
+        "long_url": "pastsearchlearning.co.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "elsevier.com",
+        "long_url": "sciencedirect.com",
+        "is_news": false
+    },
+    {
+        "short_url": "medium.com",
+        "long_url": "towardsdatascience.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "eurotunnel.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "eurotunnel.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tokkingheads.com",
+        "long_url": "rosebud.ai",
+        "is_news": false
+    },
+    {
+        "short_url": "hpinstantink.com",
+        "long_url": "hpconnected.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ellemag.co",
+        "long_url": "elle.com",
+        "is_news": true
+    },
+    {
+        "short_url": "adafru.it",
+        "long_url": "adafruit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "mitsln.co",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "mitsln.co",
+        "long_url": "mit.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "github.io",
+        "long_url": "sorrypunk.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "emotiv.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "stan.md",
+        "long_url": "stanford.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "investorfieldguide.com",
+        "long_url": "joincolossus.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "plos.org",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "research.google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "discord.gg",
+        "long_url": "discord.com",
+        "is_news": false
+    },
+    {
+        "short_url": "NetBaseQuid.com",
+        "long_url": "netbasequid.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cnn.it",
+        "long_url": "cnn.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "github.co",
+        "long_url": "github.blog",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "constantcontact.com",
+        "is_news": false
+    },
+    {
+        "short_url": "spr.ly",
+        "long_url": "simonandschuster.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "constantcontact.com",
+        "is_news": false
+    },
+    {
+        "short_url": "thr.cm",
+        "long_url": "hollywoodreporter.com",
+        "is_news": true
+    },
+    {
+        "short_url": "VirtualCoffee.io",
+        "long_url": "virtualcoffee.io",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "es.pn",
+        "long_url": "espn.com",
+        "is_news": false
+    },
+    {
+        "short_url": "org.",
+        "long_url": "gaballot.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hill.cm",
+        "long_url": "thehill.com",
+        "is_news": true
+    },
+    {
+        "short_url": "hill.cm",
+        "long_url": "thehill.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "g.co",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Born2be.pl",
+        "long_url": "born2be.pl",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "github.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "apache.org",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "apache.org",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cos.lv",
+        "long_url": "consequenceofsound.net",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "tml.cs.uni-tuebingen.de",
+        "is_news": false
+    },
+    {
+        "short_url": "nserc.ca",
+        "long_url": "nserc-crsng.gc.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "substack.com",
+        "long_url": "piratewires.com",
+        "is_news": false
+    },
+    {
+        "short_url": "fcld.ly",
+        "long_url": "sciencemag.org",
+        "is_news": true
+    },
+    {
+        "short_url": "cutt.ly",
+        "long_url": "ambafrance.org",
+        "is_news": false
+    },
+    {
+        "short_url": "bybit.com",
+        "long_url": "bybit.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "substack.com",
+        "long_url": "piratewires.com",
+        "is_news": false
+    },
+    {
+        "short_url": "substack.com",
+        "long_url": "piratewires.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "apple.com",
+        "is_news": false
+    },
+    {
+        "short_url": "DuckTools.com",
+        "long_url": "ducktools.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "uber.com",
+        "is_news": false
+    },
+    {
+        "short_url": "StartupBuilder.mba",
+        "long_url": "startupbuilder.mba",
+        "is_news": false
+    },
+    {
+        "short_url": "rb.gy",
+        "long_url": "biorxiv.org",
+        "is_news": false
+    },
+    {
+        "short_url": "rdcu.be",
+        "long_url": "nature.com",
+        "is_news": true
+    },
+    {
+        "short_url": "gum.co",
+        "long_url": "gumroad.com",
+        "is_news": false
+    },
+    {
+        "short_url": "PyTorch.org",
+        "long_url": "pytorch.org",
+        "is_news": false
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "ctvnews.ca",
+        "is_news": true
+    },
+    {
+        "short_url": "bybit.com",
+        "long_url": "bybit.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "boox.com",
+        "is_news": false
+    },
+    {
+        "short_url": "StopFinancialSurveillance.org",
+        "long_url": "stopfinancialsurveillance.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "derplearning.com",
+        "long_url": "hugedomains.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hny.co",
+        "long_url": "honeycomb.io",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "theatlantic.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "sfchronicle.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "medium.com",
+        "long_url": "towardsdatascience.com",
+        "is_news": false
+    },
+    {
+        "short_url": "1843m.ag",
+        "long_url": "economist.com",
+        "is_news": true
+    },
+    {
+        "short_url": "1843m.ag",
+        "long_url": "economist.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "bbc.in",
+        "long_url": "bbc.com",
+        "is_news": true
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "cepr.org",
+        "is_news": false
+    },
+    {
+        "short_url": "redd.it",
+        "long_url": "reddit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "medium.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hill.cm",
+        "long_url": "thehill.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "bos.gl",
+        "long_url": "bostonglobe.com",
+        "is_news": true
+    },
+    {
+        "short_url": "is.gd",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Repl.it",
+        "long_url": "repl.it",
+        "is_news": false
+    },
+    {
+        "short_url": "Repl.it",
+        "long_url": "repl.it",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "fcld.ly",
+        "long_url": "sciencemag.org",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "getpocket.com",
+        "long_url": "getpocket.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "lttr.ai",
+        "long_url": "daddymojo.net",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "theplaylist.net",
+        "is_news": false
+    },
+    {
+        "short_url": "bos.gl",
+        "long_url": "bostonglobe.com",
+        "is_news": true
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "geomblog.org",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "substack.com",
+        "long_url": "piratewires.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nzzl.us",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "nzzl.us",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "npr.org",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "jessicajburton.com",
+        "long_url": "co.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "WhattoTweet.com",
+        "long_url": "whattotweet.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "SHWEP.net",
+        "long_url": "shwep.net",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Leif.org",
+        "long_url": "leif.org:443",
+        "is_news": false
+    },
+    {
+        "short_url": "Repl.it",
+        "long_url": "repl.it",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "substack.com",
+        "long_url": "piratewires.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "theplaylist.net",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "ciderassociation.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tdrt.io",
+        "long_url": "techdirt.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "econlib.org",
+        "is_news": false
+    },
+    {
+        "short_url": "goo.gl",
+        "long_url": "cgworld.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "medium.com",
+        "long_url": "towardsdatascience.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "britishlistedbuildings.co.uk",
+        "long_url": "co.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "substack.com",
+        "long_url": "piratewires.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "voxeu.org",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "britishlistedbuildings.co.uk",
+        "long_url": "co.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "bit.do",
+        "long_url": "ti.to",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "corehr.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "getpocket.com",
+        "long_url": "getpocket.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Kongaloosh.com",
+        "long_url": "kongaloosh.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Kongaloosh.com",
+        "long_url": "kongaloosh.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Gazzaley.com",
+        "long_url": "gazzaley.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "pratik.ai",
+        "long_url": "miro.com",
+        "is_news": false
+    },
+    {
+        "short_url": "pratik.ai",
+        "long_url": "miro.com",
+        "is_news": false
+    },
+    {
+        "short_url": "blog.lemonde.fr",
+        "long_url": "lemonde.fr",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "gum.co",
+        "long_url": "gumroad.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "billypenn.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lennyrachitsky.com",
+        "long_url": "lennysnewsletter.com",
+        "is_news": false
+    },
+    {
+        "short_url": "conta.cc",
+        "long_url": "constantcontact.com",
+        "is_news": false
+    },
+    {
+        "short_url": "mitsloan.co",
+        "long_url": "mit.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hms.harvard.edu",
+        "long_url": "tdcommons.ai",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "usgs.gov",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hill.cm",
+        "long_url": "thehill.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Patreon.com",
+        "long_url": "patreon.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "github.com",
+        "is_news": false
+    },
+    {
+        "short_url": "so.",
+        "long_url": "deliberate.so",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "redd.it",
+        "long_url": "reddit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "value.app:",
+        "long_url": "value.app",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "celsius.network:",
+        "long_url": "celsius.network",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "ukp.informatik.tu-darmstadt.de",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lttr.ai",
+        "long_url": "daddymojo.net",
+        "is_news": false
+    },
+    {
+        "short_url": "str.sg",
+        
+        "long_url": "straitstimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "SHWEP.net",
+        "long_url": "shwep.net",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "TKOPresents.com",
+        "long_url": "tkopresents.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Twitch.tv",
+        "long_url": "twitch.tv",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "alltrails.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "redd.it",
+        "long_url": "reddit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ift.tt",
+        "long_url": "marginalrevolution.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "github.io",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "nypost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "gum.co",
+        "long_url": "gumroad.com",
+        "is_news": false
+    },
+    {
+        "short_url": "instagr.am",
+        "long_url": "instagram.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "nypost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "oregonlive.com",
+        "is_news": true
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "thedailybeast.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "cockroachlabs.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "patreon.com",
+        "long_url": "patreon.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "io.",
+        "long_url": "honeycomb.io",
+        "is_news": false
+    },
+    {
+        "short_url": "wdrb.news",
+        "long_url": "wdrb.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "zpr.io",
+        "long_url": "aier.org",
+        "is_news": false
+    },
+    {
+        "short_url": "getpocket.com",
+        "long_url": "getpocket.com:443",
+        "is_news": false
+    },
+    {
+        "short_url": "discord.gg",
+        "long_url": "discord.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "econ.st",
+        "long_url": "economist.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "conta.cc",
+        "long_url": "constantcontact.com",
+        "is_news": false
+    },
+    {
+        "short_url": "newpublicfestival.org",
+        "long_url": "newpublic.org",
+        "is_news": false
+    },
+    {
+        "short_url": "cnn.it",
+        "long_url": "cnn.com",
+        "is_news": true
+    },
+    {
+        "short_url": "gf.me",
+        "long_url": "gofundme.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "mit.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "flic.kr",
+        "long_url": "flickr.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "redd.it",
+        "long_url": "reddit.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "com.",
+        "long_url": "bible.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "github.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wandb.me",
+        "long_url": "research.google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wandb.me",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "breitbart.com",
+        "is_news": true
+    },
+    {
+        "short_url": "wapo.st",
+        "long_url": "washingtonpost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "skfb.ly",
+        "long_url": "sketchfab.com",
+        "is_news": false
+    },
+    {
+        "short_url": "gofund.me",
+        "long_url": "gofundme.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "amazon.co.jp",
+        "is_news": false
+    },
+    {
+        "short_url": "LEGObraillebricks.com",
+        "long_url": "legobraillebricks.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ptix.at",
+        "long_url": "peatix.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "github.io",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "britishlistedbuildings.co.uk",
+        "long_url": "co.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "britishlistedbuildings.co.uk",
+        "long_url": "co.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "101.gg",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "MIXED.de",
+        "long_url": "mixed.de",
+        "is_news": false
+    },
+    {
+        "short_url": "cnb.cx",
+        "long_url": "cnbc.com",
+        "is_news": true
+    },
+    {
+        "short_url": "cnb.cx",
+        "long_url": "cnbc.com",
+        "is_news": true
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "es.io",
+        "long_url": "sessionize.com",
+        "is_news": false
+    },
+    {
+        "short_url": "es.io",
+        "long_url": "elastic.co",
+        "is_news": false
+    },
+    {
+        "short_url": "lrb.me",
+        "long_url": "co.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "go.to",
+        "long_url": "flock.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "wp.me",
+        "long_url": "13thdimension.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "environmentjob.co.uk",
+        "is_news": false
+    },
+    {
+        "short_url": "stanford.io",
+        "long_url": "stanford.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "libproxy.berkeley.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "annualreviews.org",
+        "is_news": false
+    },
+    {
+        "short_url": "instagr.am",
+        "long_url": "instagram.com",
+        "is_news": false
+    },
+    {
+        "short_url": "aliencrashsite.org.",
+        "long_url": "aliencrashsite.org",
+        "is_news": false
+    },
+    {
+        "short_url": "cutt.ly",
+        "long_url": "rsna.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "grnh.se",
+        "long_url": "greenhouse.io",
+        "is_news": false
+    },
+    {
+        "short_url": "cloudcloudinthecloud.cloud",
+        "long_url": "lastweekinaws.com",
+        "is_news": false
+    },
+    {
+        "short_url": "cloudcloudinthecloud.cloud",
+        "long_url": "lastweekinaws.com",
+        "is_news": false
+    },
+    {
+        "short_url": "aliencrashsite.org.",
+        "long_url": "aliencrashsite.org",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dbourke.link",
+        "long_url": "notion.so",
+        "is_news": false
+    },
+    {
+        "short_url": "wp.me",
+        "long_url": "13thdimension.com",
+        "is_news": false
+    },
+    {
+        "short_url": "53eig.ht",
+        "long_url": "fivethirtyeight.com",
+        "is_news": true
+    },
+    {
+        "short_url": "g.co",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "trino.io",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "celsius.network:",
+        "long_url": "celsius.network",
+        "is_news": false
+    },
+    {
+        "short_url": "Dithering.fm",
+        "long_url": "dithering.fm",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "libproxy.berkeley.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "go.aws",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "go.aws",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "genomicfrontiers.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "elsevier.com",
+        "long_url": "sciencedirect.com",
+        "is_news": false
+    },
+    {
+        "short_url": "D2L.ai",
+        "long_url": "d2l.ai",
+        "is_news": false
+    },
+    {
+        "short_url": "aka.ms",
+        "long_url": "microsoft.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "datalxr.com",
+        "long_url": "github.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "itsartm.ag",
+        "long_url": "iamag.co",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "bor.com",
+        "long_url": "billoreilly.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "vox.com",
+        "is_news": true
+    },
+    {
+        "short_url": "tmz.me",
+        "long_url": "tmz.com",
+        "is_news": true
+    },
+    {
+        "short_url": "econ.st",
+        "long_url": "economist.com",
+        "is_news": true
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "nypost.com",
+        "is_news": true
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "Ndp.ca",
+        "long_url": "ndp.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "gumroad.com",
+        "long_url": "staffeng.com",
+        "is_news": false
+    },
+    {
+        "short_url": "coda.io",
+        "long_url": "coda.io:443",
+        "is_news": false
+    },
+    {
+        "short_url": "tcrn.ch",
+        "long_url": "techcrunch.com",
+        "is_news": true
+    },
+    {
+        "short_url": "spr.ly",
+        "long_url": "apple.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "interc.pt",
+        "long_url": "theintercept.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "reut.rs",
+        "long_url": "reuters.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "github.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "dlvr.it",
+        "long_url": "com.pl",
+        "is_news": false
+    },
+    {
+        "short_url": "app.goo.gl",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "rdcu.be",
+        "long_url": "nature.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "hubs.la",
+        "long_url": "cfr.org",
+        "is_news": false
+    },
+    {
+        "short_url": "learningthroughplay.com",
+        "long_url": "legofoundation.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ml4devs.com",
+        "long_url": "substack.com",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "cl.uni-heidelberg.de",
+        "is_news": false
+    },
+    {
+        "short_url": "tinyurl.com",
+        "long_url": "cl.uni-heidelberg.de",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "is.gd",
+        "long_url": "towardsdatascience.com",
+        "is_news": false
+    },
+    {
+        "short_url": "nyti.ms",
+        "long_url": "nytimes.com",
+        "is_news": true
+    },
+    {
+        "short_url": "forms.gle",
+        "long_url": "google.com",
+        "is_news": false
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    },
+    {
+        "short_url": "Patreon.com",
+        "long_url": "patreon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "amzn.to",
+        "long_url": "aws.amazon.com",
+        "is_news": false
+    },
+    {
+        "short_url": "doi.org",
+        "long_url": "apa.org:443",
+        "is_news": false
+    },
+    {
+        "short_url": "rdcu.be",
+        "long_url": "nature.com",
+        "is_news": true
+    },
+    {
+        "short_url": "medium.com",
+        "long_url": "towardsdatascience.com",
+        "is_news": false
+    },
+    {
+        "short_url": "angelopoulos.ai",
+        "long_url": "eecs.berkeley.edu",
+        "is_news": false
+    },
+    {
+        "short_url": "lnkd.in",
+        "long_url": "linkedin.com",
+        "is_news": false
+    },
+    {
+        "short_url": "ow.ly",
+        "long_url": "gc.ca",
+        "is_news": false
+    },
+    {
+        "short_url": "Blazetv.com",
+        "long_url": "blazetv.com",
+        "is_news": false
+    },
+    {
+        "short_url": "trib.al",
+        "long_url": "bloomberg.com",
+        "is_news": true
+    },
+    {
+        "short_url": "youtu.be",
+        "long_url": "youtube.com",
+        "is_news": false
+    }
+]

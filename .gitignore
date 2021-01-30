@@ -140,7 +140,7 @@ auth/auth.json
 
 .venv/
 _build/
-notebooks/
+# notebooks/
 
 
 .vscode/
@@ -154,5 +154,5 @@ auth.json
 # data
 *.csv
 *.txt
-*.ipynb
+# *.ipynb
 
