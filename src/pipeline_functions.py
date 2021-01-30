@@ -11,11 +11,6 @@ import re
 import json
 from urllib.parse import urlparse
 
-
-
-auth = json.load(open("auth/auth.json"))
-session = utils.session_for_auth(auth)
-
 # load tweets
 def load_tweets(db_path, days):
     time_delta = date.today() - timedelta(days=days)
@@ -105,7 +100,7 @@ def news_in_qt_rt(df):
     
     return df
 
-def prepare_batch(days):
+def prepare_batch(days, mute_list, mute_list_cs):
     with open("src/data/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
 
@@ -130,14 +125,16 @@ def prepare_batch(days):
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
-    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["breaking:", "🍿", "New Yorker", "racially", "lived experience"])
-    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = ["GOP"], lower=False)
+    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = mute_list)
+    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = mute_list_cs, lower=False)
 
     df = to_custom_news_feed[["id", "user"]]
     df.to_csv("src/data/batch_to_add.csv")
     return df
 
-def count_collection(collection_id, session=session):
+def count_collection(collection_id, auth_path):
+    auth = json.load(open(auth_path))
+    session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url)
     collection_tweets = response.json()
@@ -153,7 +150,9 @@ def count_collection(collection_id, session=session):
         return 0
 
 
-def get_list_id(owner_id, list_name, session=session):
+def get_list_id(owner_id, list_name, auth_path):
+    auth = json.load(open(auth_path))
+    session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
     response = session.get(url)
     for l in response.json():
@@ -161,7 +160,9 @@ def get_list_id(owner_id, list_name, session=session):
             return l["id"]
 
 
-def get_collection_id(owner_id, collection_name, session=session):
+def get_collection_id(owner_id, collection_name, auth_path):
+    auth = json.load(open(auth_path))
+    session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/list.json?user_id={owner_id}"
     response = session.get(url)
     collections = response.json()["objects"]["timelines"]
@@ -186,7 +187,9 @@ def err_handling(response, sleep=60):
             raise Exception(f"Status code: {response.status_code}")
 
 
-def rem_from_collection(collection_id, session=session):
+def rem_from_collection(collection_id, auth_path):
+    auth = json.load(open(auth_path))
+    session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url)
     collection_tweets = response.json()
@@ -201,8 +204,9 @@ def rem_from_collection(collection_id, session=session):
 
 
 
-def processing_list(collection_id, tweet_list):
-    collection_id = collection_id
+def processing_list(collection_id, tweet_list, auth_path):
+    auth = json.load(open(auth_path))
+    session = utils.session_for_auth(auth)
     procc_list = []
     print(f"adding tweets to collection {collection_id}")
     for counter, tweet_id in enumerate(tweet_list):
@@ -225,8 +229,10 @@ def processing_list(collection_id, tweet_list):
 
 
 
-def rem_muted(df, owner_id, session=session):
-    muted_list = get_list_id(owner_id, "muted")
+def rem_muted(df, owner_id, auth_path):
+    auth = json.load(open(auth_path))
+    session = utils.session_for_auth(auth)
+    muted_list = get_list_id(owner_id, "muted", auth_path)
     url = f"https://api.twitter.com/1.1/lists/members.json?list_id={muted_list}&owner_id={owner_id}"
     response = session.get(url)
     muted_accounts = [i["id"] for i in response.json()["users"]]
@@ -234,7 +240,9 @@ def rem_muted(df, owner_id, session=session):
     return df
 
 
-def get_collection_list(collection_id, session=session):
+def get_collection_list(collection_id, auth_path):
+    auth = json.load(open(auth_path))
+    session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url)
     collection_tweets = response.json()
