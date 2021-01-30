@@ -31,7 +31,11 @@ def clean_links(tweet):
     tweet = re.sub(r"bit.ly/\S+", "", tweet)
     tweet = re.sub(r"t.co/\S+", "", tweet)
     tweet = re.sub(r"buff.ly/\S+", "", tweet)
-    tweet = re.sub(r"twitter.com/\S+", "", tweet)
+    return tweet
+
+def remove_tw_urls(tweet):
+    tweet = re.sub(r"https://twitter.com/\S+", "", tweet)
+    tweet = re.sub(r"http://twitter.com/\S+", "", tweet)
     return tweet
 
 def get_domain(url):
@@ -59,7 +63,9 @@ def drop_contains(df, column_name, str_list, lower=True):
     return df
 
 def find_news(df, news_domains_list):
-    df["urls"] = df["full_text"].apply(find_url)
+    df["clean_text"] = df["full_text"].apply(remove_tw_urls)
+    df["urls"] = df["clean_text"].apply(find_url)
+    df.drop(["clean_text"], axis=1, inplace=True)
     df["urls"] = df.urls.apply(lambda x: [clean_links(d) for d in x])
     df["domains"] = df.urls.apply(lambda x: [get_domain(d) for d in x])
     df["domains"] = df.domains.apply(remove_empty_str)
