@@ -15,17 +15,37 @@ from urllib.parse import urlparse
 def load_tweets(db_path, days):
     time_delta = date.today() - timedelta(days=days)
     cnx = sqlite3.connect(db_path)
-    query = f"SELECT id,user, full_text, created_at, lang, quoted_status, in_reply_to_status_id FROM tweets WHERE created_at < '{str(time_delta)}'"
-    #TODO add restrain, to remove tweets I liked, but for that I need to setup another cron job too.
-    df = pd.read_sql_query(
-        query,
-        cnx,
-    )
+    columns = [
+        "id",
+        "user",
+        "full_text",
+        "created_at",
+        "lang",
+        "retweeted_status",
+        "quoted_status",
+        "is_quote_status",
+        "in_reply_to_status_id",
+    ]  # columns from table
+    columns_null = [
+        "retweeted_status",
+        "quoted_status",
+    ]  # columns that need NULL replaced to avoid precision error -pandas converts int to floats
+
+    qr_string = columns[0]  # primary key
+    for c in columns[1:]:
+        if c in columns_null:
+            c = f"ifnull({c}, 'N/A') AS {c}"
+        qr_string += f", {c}"
+    query = f"SELECT {qr_string} FROM tweets WHERE created_at < '{str(time_delta)}'"
+    # TODO add restrain, to remove tweets I liked, but for that I need to setup another cron job too.
+    df = pd.read_sql_query(query, cnx)
     return df
+
 
 # utils
 def find_url(tweet):
     return re.findall(r"http\S+", tweet)
+
 
 def clean_links(tweet):
     tweet = re.sub(r"bit.ly/\S+", "", tweet)
@@ -33,10 +53,12 @@ def clean_links(tweet):
     tweet = re.sub(r"buff.ly/\S+", "", tweet)
     return tweet
 
+
 def remove_tw_urls(tweet):
     tweet = re.sub(r"https://twitter.com/\S+", "", tweet)
     tweet = re.sub(r"http://twitter.com/\S+", "", tweet)
     return tweet
+
 
 def get_domain(url):
     domain = urlparse(url).netloc
@@ -46,11 +68,13 @@ def get_domain(url):
     else:
         return domain
 
+
 def remove_empty_str(l):
     for i in l:
         if len(i) == 0:
             l.remove(i)
     return l
+
 
 def drop_contains(df, column_name, str_list, lower=True):
     for string in str_list:
@@ -61,6 +85,7 @@ def drop_contains(df, column_name, str_list, lower=True):
         df = df[~df["filter"].str.contains(string)]
         df = df.drop(["filter"], axis=1).copy()
     return df
+
 
 def find_news(df, news_domains_list):
     df["clean_text"] = df["full_text"].apply(remove_tw_urls)
@@ -88,42 +113,48 @@ def find_news(df, news_domains_list):
 
     return df
 
+
 def news_in_qt_rt(df):
-    #TODO refractor this
+    # TODO refractor this
     df["all_news"] = df["contains_news"].copy()
 
     df_qt = df[["id", "contains_news"]].copy()
     df_qt.columns = ["quoted_status", "qt_news"]
     df = df.merge(df_qt, on="quoted_status", how="left")
     df["qt_news"] = df["qt_news"].fillna(0).astype(np.int64)
-    df["all_news"] = df["qt_news"].astype(np.int64) + df["contains_news"].astype(np.int64)
+    df["all_news"] = df["qt_news"].astype(np.int64) + df["contains_news"].astype(
+        np.int64
+    )
 
     df_qt = df[["id", "contains_news"]].copy()
     df_qt.columns = ["in_reply_to_status_id", "rt_news"]
     df = df.merge(df_qt, on="in_reply_to_status_id", how="left")
     df["rt_news"] = df["rt_news"].fillna(0).astype(np.int64)
     df["all_news"] = df["rt_news"].astype(np.int64) + df["all_news"].astype(np.int64)
-    
+
     return df
+
 
 def prepare_batch(days, mute_list, mute_list_cs):
     with open("src/data/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
 
-    df_tweets = load_tweets("home.db", days) # load tweets
+    df_tweets = load_tweets("home.db", days)  # load tweets
     # convert columns to avoid merge problems
     for col in ["in_reply_to_status_id"]:
         df_tweets[col] = df_tweets[col].fillna(0).astype(np.int64)
 
-    df_tweets = find_news(df_tweets, news_domains) # add news column
-    df_tweets = news_in_qt_rt(df_tweets) # find news in reweets and reply-to
+    df_tweets = find_news(df_tweets, news_domains)  # add news column
+    df_tweets = news_in_qt_rt(df_tweets)  # find news in reweets and reply-to
 
     seen_tweets = pd.read_csv("src/data/seen.csv")
     seen_tweets.drop_duplicates(inplace=True)
 
-    df_tweets = df_tweets[~df_tweets["id"].isin(seen_tweets["tweet_id"].tolist())] #filter out seen tweets
+    df_tweets = df_tweets[
+        ~df_tweets["id"].isin(seen_tweets["tweet_id"].tolist())
+    ]  # filter out seen tweets
 
-    df_tweets = df_tweets[df_tweets["lang"] == "en"] # take only english lang tweets
+    df_tweets = df_tweets[df_tweets["lang"] == "en"]  # take only english lang tweets
 
     # filter out tweets with news links
     to_custom_news_feed = (
@@ -131,12 +162,17 @@ def prepare_batch(days, mute_list, mute_list_cs):
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
-    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = mute_list)
-    to_custom_news_feed = drop_contains(to_custom_news_feed, column_name="full_text", str_list = mute_list_cs, lower=False)
+    to_custom_news_feed = drop_contains(
+        to_custom_news_feed, column_name="full_text", str_list=mute_list
+    )
+    to_custom_news_feed = drop_contains(
+        to_custom_news_feed, column_name="full_text", str_list=mute_list_cs, lower=False
+    )
 
     df = to_custom_news_feed[["id", "user"]]
     df.to_csv("src/data/batch_to_add.csv")
     return df
+
 
 def count_collection(collection_id, auth_path):
     auth = json.load(open(auth_path))
@@ -209,7 +245,6 @@ def rem_from_collection(collection_id, auth_path):
         err_handling(response)
 
 
-
 def processing_list(collection_id, tweet_list, auth_path):
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
@@ -232,7 +267,6 @@ def processing_list(collection_id, tweet_list, auth_path):
     df = pd.DataFrame(procc_list)
     print(df["err_reason"].value_counts())
     return df
-
 
 
 def rem_muted(df, owner_id, auth_path):
