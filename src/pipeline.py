@@ -13,15 +13,17 @@ from pipeline_functions import (
     rem_muted,
 )
 
-owner_id = "143058191"
-
 # remove tweets that are in collection
-auth = "auth/auth.json"
-custom_newsfeed = get_collection_id(owner_id, "custom_newsfeed", auth)
+AUTH = "auth/auth.json"
+OWNER_ID = "143058191"
 
-while count_collection(custom_newsfeed, auth) > 0:
+custom_newsfeed = get_collection_id(
+    owner_id=OWNER_ID, collection_name="custom_newsfeed", auth_path=AUTH
+)
+
+while count_collection(custom_newsfeed, AUTH) > 0:
     print("removing tweets ...")
-    rem_from_collection(custom_newsfeed, auth)
+    rem_from_collection(custom_newsfeed, AUTH)
 
 # load dataframe
 with open("src/data/mute_list.txt", "r") as f:
@@ -32,14 +34,14 @@ tweets_df = prepare_batch(
     days=21, mute_list=mute_list, mute_list_cs=mute_list_cs
 )
 
-tweets_df = rem_muted(tweets_df, owner_id, auth)
+tweets_df = rem_muted(tweets_df, OWNER_ID, AUTH)
 tweet_list = tweets_df["id"].tolist()[:200]
 
 # TODO remove this- just for checking and backup
 with open("src/data/tweet_list.txt", "w") as write_file:
     json.dump(tweet_list, write_file)
 
-df = processing_list(custom_newsfeed, tweet_list, auth)
+df = processing_list(custom_newsfeed, tweet_list, AUTH)
 
 # backup old data
 seen_tweets_old = pd.read_csv("src/data/seen.csv")
@@ -49,7 +51,7 @@ seen_tweets_old.to_csv("src/data/seen_old.csv", index=False)
 df.to_csv("src/data/seen.csv", mode="a", header=False, index=False)
 
 not_relevant_list = get_collection_list(
-    get_collection_id(owner_id, "not_relevant", auth), auth
+    get_collection_id(OWNER_ID, "not_relevant", AUTH), AUTH
 )
 if len(not_relevant_list) > 150:
     print("max limit hit soon!")

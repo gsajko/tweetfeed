@@ -31,12 +31,13 @@ def load_tweets(db_path, days):
     ]  # columns that need NULL replaced to avoid precision error -pandas converts int to floats
 
     qr_string = columns[0]  # primary key
-    for c in columns[1:]:
-        if c in columns_null:
-            c = f"ifnull({c}, 'N/A') AS {c}"
-        qr_string += f", {c}"
+    for col in columns[1:]:
+        if col in columns_null:
+            col = f"ifnull({col}, 'N/A') AS {col}"
+        qr_string += f", {col}"
     query = f"SELECT {qr_string} FROM tweets WHERE created_at < '{str(time_delta)}'"
-    # TODO add restrain, to remove tweets I liked, but for that I need to setup another cron job too.
+    # TODO add restrain, to remove tweets I liked
+    # but for that I need to setup another cron job too.
     df = pd.read_sql_query(query, cnx)
     return df
 
@@ -64,8 +65,7 @@ def get_domain(url):
     dot_split = domain.split(".")
     if len(dot_split) > 2:
         return ".".join(dot_split[1:])
-    else:
-        return domain
+    return domain
 
 
 def remove_empty_str(string_list):
@@ -206,6 +206,7 @@ def get_list_id(owner_id, list_name, auth_path):
     for item in response.json():
         if item["name"] == list_name:
             return item["id"]
+        return None
 
 
 def get_collection_id(owner_id, collection_name, auth_path):
@@ -219,6 +220,7 @@ def get_collection_id(owner_id, collection_name, auth_path):
     for k in collections.keys():
         if collections[k]["name"] == collection_name:
             return k
+        return None
 
 
 def err_handling(response, sleep=60):
@@ -247,8 +249,9 @@ def rem_from_collection(collection_id, auth_path):
         collection_tweets = list(collection_tweets["objects"]["tweets"])
     except Exception:
         print(f"{collection_id} collection is empty")
-    for t in collection_tweets:
-        url = f"https://api.twitter.com/1.1/collections/entries/remove.json?id={collection_id}&tweet_id={t}"
+    for tweet in collection_tweets:
+        url = f"""https://api.twitter.com/1.1/collections/entries/
+        remove.json?id={collection_id}&tweet_id={tweet}"""
         response = session.post(url)
         err_handling(response)
 
@@ -261,7 +264,9 @@ def processing_list(collection_id, tweet_list, auth_path):
     for counter, tweet_id in enumerate(tweet_list):
         if (counter + 1) % 20 == 0:
             print(f"{(counter+1)} / {len(tweet_list)}")
-        url = f"https://api.twitter.com/1.1/collections/entries/add.json?tweet_id={tweet_id}&id={collection_id}"
+        url = f"""
+        https://api.twitter.com/1.1/collections/entries/add.json?
+        tweet_id={tweet_id}&id={collection_id}"""
         response = session.post(url)
         err_handling(response)
         if response.reason == "OK":
