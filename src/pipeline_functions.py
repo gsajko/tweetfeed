@@ -1,15 +1,14 @@
-from datetime import date
-from datetime import timedelta
-import time
-
+import json
+import re
 import sqlite3
-import pandas as pd
+import time
+from datetime import date, timedelta
+from urllib.parse import urlparse
+
 import numpy as np
+import pandas as pd
 from twitter_to_sqlite import utils
 
-import re
-import json
-from urllib.parse import urlparse
 
 # load tweets
 def load_tweets(db_path, days):
@@ -69,11 +68,11 @@ def get_domain(url):
         return domain
 
 
-def remove_empty_str(l):
-    for i in l:
-        if len(i) == 0:
-            l.remove(i)
-    return l
+def remove_empty_str(string_list):
+    for i in string_list:
+        if len(string_list) == 0:
+            string_list.remove(i)
+    return string_list
 
 
 def drop_contains(df, column_name, str_list, lower=True):
@@ -194,7 +193,7 @@ def count_collection(collection_id, auth_path):
         else:
             print(f"{collection_id} contains more then 100 tweets")
         return len(collection_tweets)
-    except:
+    except Exception:
         print(f"{collection_id} contains 0 tweets")
         return 0
 
@@ -204,9 +203,9 @@ def get_list_id(owner_id, list_name, auth_path):
     session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
     response = session.get(url)
-    for l in response.json():
-        if l["name"] == list_name:
-            return l["id"]
+    for item in response.json():
+        if item["name"] == list_name:
+            return item["id"]
 
 
 def get_collection_id(owner_id, collection_name, auth_path):
@@ -246,7 +245,7 @@ def rem_from_collection(collection_id, auth_path):
     collection_tweets = response.json()
     try:
         collection_tweets = list(collection_tweets["objects"]["tweets"])
-    except:
+    except Exception:
         print(f"{collection_id} collection is empty")
     for t in collection_tweets:
         url = f"https://api.twitter.com/1.1/collections/entries/remove.json?id={collection_id}&tweet_id={t}"
@@ -300,6 +299,6 @@ def get_collection_list(collection_id, auth_path):
     try:
         collection_tweets = list(collection_tweets["objects"]["tweets"])
         return collection_tweets
-    except:
+    except Exception:
         print(f"{collection_id} contains 0 tweets")
         return []
