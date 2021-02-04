@@ -2,7 +2,15 @@ import json
 from datetime import datetime
 import pandas as pd
 
-from pipeline_functions import *
+from pipeline_functions import (
+    get_collection_id,
+    count_collection,
+    rem_from_collection,
+    prepare_batch,
+    processing_list,
+    rem_muted,
+    get_collection_list,
+)
 
 
 owner_id = "143058191"
@@ -20,7 +28,9 @@ with open("src/data/mute_list.txt", "r") as f:
     mute_list = json.loads(f.read())
 with open("src/data/mute_list_cs.txt", "r") as f:
     mute_list_cs = json.loads(f.read())
-tweets_df = prepare_batch(days=21, mute_list=mute_list, mute_list_cs=mute_list_cs)
+tweets_df = prepare_batch(
+    days=21, mute_list=mute_list, mute_list_cs=mute_list_cs
+)
 
 tweets_df = rem_muted(tweets_df, owner_id, auth)
 tweet_list = tweets_df["id"].tolist()[:200]
@@ -38,7 +48,9 @@ seen_tweets_old.to_csv("src/data/seen_old.csv", index=False)
 # update seen.csv file
 df.to_csv("src/data/seen.csv", mode="a", header=False, index=False)
 
-not_relevant_list = get_collection_list(get_collection_id(owner_id, "not_relevant", auth), auth)
+not_relevant_list = get_collection_list(
+    get_collection_id(owner_id, "not_relevant", auth), auth
+)
 if len(not_relevant_list) > 150:
     print("max limit hit soon!")
 with open(f"{datetime.now():%Y_%m_%d_%H%M}_not_relevant_list.txt", "w") as f:

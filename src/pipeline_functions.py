@@ -122,15 +122,17 @@ def news_in_qt_rt(df):
     df_qt.columns = ["quoted_status", "qt_news"]
     df = df.merge(df_qt, on="quoted_status", how="left")
     df["qt_news"] = df["qt_news"].fillna(0).astype(np.int64)
-    df["all_news"] = df["qt_news"].astype(np.int64) + df["contains_news"].astype(
-        np.int64
-    )
+    df["all_news"] = df["qt_news"].astype(np.int64) + df[
+        "contains_news"
+    ].astype(np.int64)
 
     df_qt = df[["id", "contains_news"]].copy()
     df_qt.columns = ["in_reply_to_status_id", "rt_news"]
     df = df.merge(df_qt, on="in_reply_to_status_id", how="left")
     df["rt_news"] = df["rt_news"].fillna(0).astype(np.int64)
-    df["all_news"] = df["rt_news"].astype(np.int64) + df["all_news"].astype(np.int64)
+    df["all_news"] = df["rt_news"].astype(np.int64) + df["all_news"].astype(
+        np.int64
+    )
 
     return df
 
@@ -154,7 +156,9 @@ def prepare_batch(days, mute_list, mute_list_cs):
         ~df_tweets["id"].isin(seen_tweets["tweet_id"].tolist())
     ]  # filter out seen tweets
 
-    df_tweets = df_tweets[df_tweets["lang"] == "en"]  # take only english lang tweets
+    df_tweets = df_tweets[
+        df_tweets["lang"] == "en"
+    ]  # take only english lang tweets
 
     # filter out tweets with news links
     to_custom_news_feed = (
@@ -166,7 +170,10 @@ def prepare_batch(days, mute_list, mute_list_cs):
         to_custom_news_feed, column_name="full_text", str_list=mute_list
     )
     to_custom_news_feed = drop_contains(
-        to_custom_news_feed, column_name="full_text", str_list=mute_list_cs, lower=False
+        to_custom_news_feed,
+        column_name="full_text",
+        str_list=mute_list_cs,
+        lower=False,
     )
 
     df = to_custom_news_feed[["id", "user"]]
@@ -205,7 +212,9 @@ def get_list_id(owner_id, list_name, auth_path):
 def get_collection_id(owner_id, collection_name, auth_path):
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
-    url = f"https://api.twitter.com/1.1/collections/list.json?user_id={owner_id}"
+    url = (
+        f"https://api.twitter.com/1.1/collections/list.json?user_id={owner_id}"
+    )
     response = session.get(url)
     collections = response.json()["objects"]["timelines"]
     for k in collections.keys():
@@ -263,7 +272,9 @@ def processing_list(collection_id, tweet_list, auth_path):
                     {"tweet_id": tweet_id, "err_reason": errors[0]["reason"]}
                 )
             else:
-                procc_list.append({"tweet_id": tweet_id, "err_reason": "no_errors"})
+                procc_list.append(
+                    {"tweet_id": tweet_id, "err_reason": "no_errors"}
+                )
     df = pd.DataFrame(procc_list)
     print(df["err_reason"].value_counts())
     return df
