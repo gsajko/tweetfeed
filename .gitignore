@@ -128,9 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# database
-*.db
-*.db-journal
+
 
 # twitter auth
 auth/auth.json
@@ -151,8 +149,13 @@ conf.py
 settings.json
 auth.json
 
+# database
+src/home.db
+/*.db
+*.db-journal
+
 # data
 *.csv
 *.txt
-# *.ipynb
+*.ipynb
 
