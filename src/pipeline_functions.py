@@ -11,7 +11,16 @@ from twitter_to_sqlite import utils
 
 
 # load tweets
-def load_tweets(db_path, days):
+def load_tweets(db_path: str, days: int) -> pd.DataFrame:
+    """loads tweets from SQLite database, older then number of days
+
+    Args:
+        db_path (str): path to database
+        days (int): days from today - how old should the newest returned tweets should be
+
+    Returns:
+        pd.DataFrame: pandas Dataframe
+    """
     time_delta = date.today() - timedelta(days=days)
     cnx = sqlite3.connect(db_path)
     columns = [
@@ -28,7 +37,10 @@ def load_tweets(db_path, days):
     columns_null = [
         "retweeted_status",
         "quoted_status",
-    ]  # columns that need NULL replaced to avoid precision error -pandas converts int to floats
+        "in_reply_to_status_id",
+    ]
+    # columns that need NULL replaced to avoid precision error
+    # pandas converts int to floats if there are NaNs
 
     qr_string = columns[0]  # primary key
     for col in columns[1:]:
@@ -36,35 +48,70 @@ def load_tweets(db_path, days):
             col = f"ifnull({col}, 'N/A') AS {col}"
         qr_string += f", {col}"
     query = f"SELECT {qr_string} FROM tweets WHERE created_at < '{str(time_delta)}'"
-    # TODO add restrain, to remove tweets I liked
+    # TODO add restraint, to remove tweets I liked
     # but for that I need to setup another cron job too.
     df = pd.read_sql_query(query, cnx)
     return df
 
 
 # utils
-def find_url(tweet):
+def find_url(tweet: str) -> list:
+    """find all urls in string and returns a list of all urls
+
+    Args:
+        tweet (str): tweet full text
+
+    Returns:
+        list: List of urls
+    """
     return re.findall(r"http\S+", tweet)
 
 
-def clean_links(tweet):
-    tweet = re.sub(r"bit.ly/\S+", "", tweet)
-    tweet = re.sub(r"t.co/\S+", "", tweet)
-    tweet = re.sub(r"buff.ly/\S+", "", tweet)
-    return tweet
+def remove_tw_urls(tweet: str) -> str:
+    """removes twitter links / urls from tweet
 
+    Args:
+        tweet (str): tweet full text
 
-def remove_tw_urls(tweet):
+    Returns:
+        str: full text without twitter urls
+    """
     tweet = re.sub(r"https://twitter.com/\S+", "", tweet)
     tweet = re.sub(r"http://twitter.com/\S+", "", tweet)
+    tweet = re.sub(r"https://api.twitter.com/\S+", "", tweet)
+    tweet = re.sub(r"http://api.twitter.com/\S+", "", tweet)
     return tweet
 
 
-def get_domain(url):
+def rem_short_links(tweet: str) -> str:
+    """removes some of short links (bit.ly, buff.ly, t.co) from tweets
+
+    Args:
+        tweet (str): tweet full text
+
+    Returns:
+        str: full text without short links
+    """
+    tweet = re.sub(r"https://bit.ly/\S+", "", tweet)
+    tweet = re.sub(r"http://bit.ly/\S+", "", tweet)
+    tweet = re.sub(r"https://buff.ly/\S+", "", tweet)
+    tweet = re.sub(r"http://buff.ly/\S+", "", tweet)
+    tweet = re.sub(r"https://t.co/\S+", "", tweet)
+    tweet = re.sub(r"http://t.co/\S+", "", tweet)
+
+    return tweet
+
+
+def get_domain(url: str) -> str:
+    """extracts domain from url, returns it
+
+    Args:
+        url (str): url
+
+    Returns:
+        str: domain
+    """
     domain = urlparse(url).netloc
-    dot_split = domain.split(".")
-    if len(dot_split) > 2:
-        return ".".join(dot_split[1:])
     return domain
 
 
@@ -87,14 +134,16 @@ def drop_contains(df, column_name, str_list, lower=True):
 
 
 def find_news(df, news_domains_list):
-    df["clean_text"] = df["full_text"].apply(remove_tw_urls)
+    #TODO concat RT and create new column with full_text or full_text from RT
+    df["clean_text"] = df["full_text"].apply(remove_tw_urls) #TODO can I chain .apply?
+    df["clean_text"] = df["clean_text"].apply(rem_short_links)
     df["urls"] = df["clean_text"].apply(find_url)
     df.drop(["clean_text"], axis=1, inplace=True)
-    df["urls"] = df.urls.apply(lambda x: [clean_links(d) for d in x])
     df["domains"] = df.urls.apply(lambda x: [get_domain(d) for d in x])
     df["domains"] = df.domains.apply(remove_empty_str)
     df.drop(["urls"], axis=1, inplace=True)
 
+    # get max value of domains, expand each one to new column (unpack from list)
     new_columns_list = []
     max_nr_dom = df.domains.str.len().max()
     for i in range(max_nr_dom):
@@ -105,9 +154,10 @@ def find_news(df, news_domains_list):
         df[col] = df[col].isin(news_domains_list)
 
     df.drop(["domains"], axis=1, inplace=True)
-
+    # sum it all up
     df["contains_news"] = df[new_columns_list].sum(axis=1)
     df["contains_news"] = df.contains_news.apply(lambda x: x if x == 0 else 1)
+    # remove added columns
     df.drop(new_columns_list, axis=1, inplace=True)
 
     return df
@@ -141,10 +191,6 @@ def prepare_batch(days, mute_list, mute_list_cs):
         news_domains = json.loads(f.read())
 
     df_tweets = load_tweets("home.db", days)  # load tweets
-    # convert columns to avoid merge problems
-    for col in ["in_reply_to_status_id"]:
-        df_tweets[col] = df_tweets[col].fillna(0).astype(np.int64)
-
     df_tweets = find_news(df_tweets, news_domains)  # add news column
     df_tweets = news_in_qt_rt(df_tweets)  # find news in reweets and reply-to
 
