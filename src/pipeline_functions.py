@@ -56,26 +56,12 @@ def load_tweets(db_path: str, days: int) -> pd.DataFrame:
 
 # utils
 def find_url(tweet: str) -> list:
-    """find all urls in string and returns a list of all urls
-
-    Args:
-        tweet (str): tweet full text
-
-    Returns:
-        list: List of urls
-    """
+    """find all urls in string and returns a list of all urls"""
     return re.findall(r"http\S+", tweet)
 
 
 def remove_tw_urls(tweet: str) -> str:
-    """removes twitter links / urls from tweet
-
-    Args:
-        tweet (str): tweet full text
-
-    Returns:
-        str: full text without twitter urls
-    """
+    """removes twitter links / urls from tweet"""
     tweet = re.sub(r"https://twitter.com/\S+", "", tweet)
     tweet = re.sub(r"http://twitter.com/\S+", "", tweet)
     tweet = re.sub(r"https://api.twitter.com/\S+", "", tweet)
@@ -84,14 +70,7 @@ def remove_tw_urls(tweet: str) -> str:
 
 
 def rem_short_links(tweet: str) -> str:
-    """removes some of short links (bit.ly, buff.ly, t.co) from tweets
-
-    Args:
-        tweet (str): tweet full text
-
-    Returns:
-        str: full text without short links
-    """
+    """removes some of short links (bit.ly, buff.ly, t.co) from tweets"""
     tweet = re.sub(r"https://bit.ly/\S+", "", tweet)
     tweet = re.sub(r"http://bit.ly/\S+", "", tweet)
     tweet = re.sub(r"https://buff.ly/\S+", "", tweet)
@@ -103,26 +82,35 @@ def rem_short_links(tweet: str) -> str:
 
 
 def get_domain(url: str) -> str:
-    """extracts domain from url, returns it
-
-    Args:
-        url (str): url
-
-    Returns:
-        str: domain
-    """
+    """extracts domain from url, returns it"""
     domain = urlparse(url).netloc
     return domain
 
 
-def remove_empty_str(string_list):
+def remove_empty_str(string_list: list) -> list:
+    """removes items that are empty strings from the list"""
     for i in string_list:
         if len(string_list) == 0:
             string_list.remove(i)
     return string_list
 
 
-def drop_contains(df, column_name, str_list, lower=True):
+def drop_contains(
+    df: pd.DataFrame, column_name: str, str_list: list, case_sensitive=True
+) -> pd.DataFrame:
+    """takes a list of strings, and removes rows from chosen column, that contain those strings
+    By default, it's case sensitive.
+
+    Args:
+        df (pd.DataFrame): DataFrame
+        column_name (str): Column containing strings
+        str_list (list): List of strings we want to remove
+        case_sensitive (bool, optional): Defaults to True.
+
+    Returns:
+        pd.DataFrame: DataFrame with rows removed
+    """
+    lower = case_sensitive
     for string in str_list:
         if lower:
             df["filter"] = df[column_name].str.lower().copy()
@@ -134,8 +122,9 @@ def drop_contains(df, column_name, str_list, lower=True):
 
 
 def find_news(df, news_domains_list):
-    #TODO concat RT and create new column with full_text or full_text from RT
-    df["clean_text"] = df["full_text"].apply(remove_tw_urls) #TODO can I chain .apply?
+    df["clean_text"] = df["full_text"].apply(
+        remove_tw_urls
+    )  # TODO can I chain .apply?
     df["clean_text"] = df["clean_text"].apply(rem_short_links)
     df["urls"] = df["clean_text"].apply(find_url)
     df.drop(["clean_text"], axis=1, inplace=True)
@@ -191,6 +180,7 @@ def prepare_batch(days, mute_list, mute_list_cs):
         news_domains = json.loads(f.read())
 
     df_tweets = load_tweets("home.db", days)  # load tweets
+    df_tweets = df_tweets[df_tweets["retweeted_status"] == "N/A"]  # remove RT
     df_tweets = find_news(df_tweets, news_domains)  # add news column
     df_tweets = news_in_qt_rt(df_tweets)  # find news in reweets and reply-to
 
@@ -218,7 +208,7 @@ def prepare_batch(days, mute_list, mute_list_cs):
         to_custom_news_feed,
         column_name="full_text",
         str_list=mute_list_cs,
-        lower=False,
+        case_sensitive=False,
     )
 
     df = to_custom_news_feed[["id", "user"]]
@@ -270,6 +260,7 @@ def get_collection_id(owner_id, collection_name, auth_path):
 
 
 def err_handling(response, sleep=60):
+    """Handles Too Many Requests error"""
     while response.reason != "OK":
         print(response.reason)
         if response.reason == "Too Many Requests":
@@ -285,7 +276,7 @@ def err_handling(response, sleep=60):
             raise Exception(f"Status code: {response.status_code}")
 
 
-def rem_from_collection(collection_id, auth_path):
+def rem_from_collection(collection_id: str, auth_path: str):
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
