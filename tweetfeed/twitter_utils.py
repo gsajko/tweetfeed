@@ -10,16 +10,19 @@ def get_list_id(owner_id, list_name, auth_path):
     session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
     response = session.get(url)
-    for item in response.json():
-        if item["name"] == list_name:
-            return item["id"]
-        return None
+    try:
+        for item in response.json():
+            if item["name"] == list_name:
+                return item["id"]
+    except Exception as ex:
+        print(ex)
 
 
 def rem_muted(df, owner_id, auth_path):
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
     muted_list = get_list_id(owner_id, "muted", auth_path)
+    #TODO what if there is no list named "muted"?
     url = f"https://api.twitter.com/1.1/lists/members.json?list_id={muted_list}&owner_id={owner_id}"
     response = session.get(url)
     muted_accounts = [i["id"] for i in response.json()["users"]]
@@ -56,7 +59,7 @@ def get_collection_id(owner_id, collection_name, auth_path):
     for k in collections.keys():
         if collections[k]["name"] == collection_name:
             return k
-        return None
+    return None
 
 
 def timeout_handling(response, sleep=60):
@@ -101,8 +104,8 @@ def rem_from_collection(collection_id: str, auth_path: str):
     except Exception:
         print(f"{collection_id} collection is empty")
     for tweet in collection_tweets:
-        url = f"""https://api.twitter.com/1.1/collections/entries/
-        remove.json?id={collection_id}&tweet_id={tweet}"""
+        remove_url = "https://api.twitter.com/1.1/collections/entries/remove.json?"
+        url = f"{remove_url}id={collection_id}&tweet_id={tweet}"
         response = session.post(url)
         timeout_handling(response)
 
@@ -115,9 +118,8 @@ def processing_list(collection_id, tweet_list, auth_path):
     for counter, tweet_id in enumerate(tweet_list):
         if (counter + 1) % 20 == 0:
             print(f"{(counter+1)} / {len(tweet_list)}")
-        url = f"""
-        https://api.twitter.com/1.1/collections/entries/add.json?
-        tweet_id={tweet_id}&id={collection_id}"""
+        add_to_coll_url = "https://api.twitter.com/1.1/collections/entries/add.json?"
+        url = f"{add_to_coll_url}tweet_id={tweet_id}&id={collection_id}"
         response = session.post(url)
         timeout_handling(response)
         if response.reason == "OK":
