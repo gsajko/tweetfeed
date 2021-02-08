@@ -1,4 +1,3 @@
-import json
 import re
 import sqlite3
 from datetime import date, timedelta
@@ -80,7 +79,7 @@ def rem_short_links(tweet: str) -> str:
 
 def get_domain(url: str) -> str:
     """extracts domain from url, returns it"""
-    domain = urlparse(url).netloc
+    domain = urlparse(url).netloc.replace("www.", "")
     return domain
 
 
@@ -143,6 +142,7 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
     max_nr_dom = df.domains.str.len().max()
     for i in range(max_nr_dom):
         new_columns_list.append(f"domain{i+1}")
+    df.reset_index(drop=True, inplace=True)
     df[new_columns_list] = pd.DataFrame(df.domains.tolist())
 
     for col in new_columns_list:
@@ -177,52 +177,53 @@ def news_in_qt_rt(df: pd.DataFrame) -> pd.DataFrame:
     df["all_news"] = df["rt_news"].astype(np.int64) + df["all_news"].astype(
         np.int64
     )
+    df.drop(["contains_news"], axis=1, inplace=True)
+    df["contains_news"] = df["all_news"].copy()
+    df.drop(["all_news"], axis=1, inplace=True)
     return df
 
 
 def prepare_batch(
     df: pd.DataFrame,
     news_domains: list,
-    mute_list: list,
-    mute_list_cs: list,
-    data_path : str = "tweetfeed/data/",
+    mute_list: list = [],
+    mute_list_cs: list = [],
+    data_path: str = "tweetfeed/data/",
 ) -> pd.DataFrame:
     """Loads tweets from database. Applies transformation to them:
-    removes retweets, finds and remove tweets with links to news site.
+    removes retweets, finds and remove tweets with links to news site
 
     Args:
-        db_path (str): [description]
-        news_domains (list): [description]
-        days (int): [description]
-        mute_list (list): [description]
-        mute_list_cs (list): [description]
+        df (pd.DataFrame): input DataFrame
+        news_domains (list): list containing news sites domains
+        mute_list (list, optional): list of words, to remove additional tweets. Defaults to [].
+        mute_list_cs (list, optional): case-sensitive list of words, to remove additional tweets. Defaults to [].
+        data_path (str, optional): Path to folder with "seen.csv". Defaults to "tweetfeed/data/".
 
     Returns:
-        pd.DataFrame: [description]
+        pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
     """
 
-    df_tweets = df
-    df_tweets = df_tweets[df_tweets["retweeted_status"] == "N/A"]  # remove RT
-    df_tweets = find_news(df_tweets, news_domains)  # add news column
-    df_tweets = news_in_qt_rt(df_tweets)  # find news in reweets and reply-to
+
+
+    df = df[df["retweeted_status"] == "N/A"]  # remove RT
+    df = find_news(df, news_domains)  # add news column
+    #TODO uncomment bellow after refractoring 
+    #df = news_in_qt_rt(df)  # find news in reweets and reply-to 
 
     seen_tweets = pd.read_csv(f"{data_path}seen.csv")
     # what it there is no seen.csv?
     seen_tweets.drop_duplicates(inplace=True)
 
-    df_tweets = df_tweets[
-        ~df_tweets["id"].isin(seen_tweets["tweet_id"].tolist())
+    df = df[
+        ~df["id"].isin(seen_tweets["tweet_id"].tolist())
     ]  # filter out seen tweets
 
-    df_tweets = df_tweets[
-        df_tweets["lang"] == "en"
-    ]  # take only english lang tweets
+    df = df[df["lang"] == "en"]  # take only english lang tweets
 
     # filter out tweets with news links
     to_custom_news_feed = (
-        df_tweets[df_tweets["all_news"] == 0]
-        .sample(frac=1)
-        .reset_index(drop=True)[:1000]
+        df[df["contains_news"] == 0].sample(frac=1).reset_index(drop=True)[:1000]
     )
     to_custom_news_feed = drop_contains(
         to_custom_news_feed, column_name="full_text", str_list=mute_list
@@ -235,5 +236,5 @@ def prepare_batch(
     )
 
     df = to_custom_news_feed[["id", "user"]]
-    df.to_csv(f"{data_path}batch_to_add.csv")
+    df.to_csv(f"{data_path}batch_to_add.csv") #TODO remove this?
     return df

@@ -129,12 +129,8 @@ dmypy.json
 .pyre/
 
 
-
 # twitter auth
 auth/auth.json
-
-
-
 
 .venv/
 _build/
@@ -151,7 +147,7 @@ auth.json
 
 # database
 src/home.db
-/*.db
+*.db
 *.db-journal
 
 # data
