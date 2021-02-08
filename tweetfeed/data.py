@@ -6,12 +6,8 @@ from urllib.parse import urlparse
 
 import numpy as np
 import pandas as pd
-from twitter_to_sqlite import utils
-
-from tweet_collections import timeout_handling, get_list_id
 
 
-# load tweets
 def load_tweets(db_path: str, days: int) -> pd.DataFrame:
     """loads tweets from SQLite database, older then number of days
 
@@ -122,7 +118,16 @@ def drop_contains(
     return df
 
 
-def find_news(df, news_domains_list):
+def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
+    """Takes DataFrame, and list of domains of news sites.
+    Removes from DataFrame rows that contain links to sites from that list.
+    Args:
+        df (pd.DataFrame): DataFrame to be cleaned
+        news_domains_list (list): list of domains of news sites
+
+    Returns:
+        pd.DataFrame: DataFrame without tweets linking to news
+    """
     df["clean_text"] = df["full_text"].apply(
         remove_tw_urls
     )  # TODO can I chain .apply?
@@ -153,7 +158,7 @@ def find_news(df, news_domains_list):
     return df
 
 
-def news_in_qt_rt(df):
+def news_in_qt_rt(df: pd.DataFrame) -> pd.DataFrame:
     # TODO refractor this
     df["all_news"] = df["contains_news"].copy()
 
@@ -175,53 +180,34 @@ def news_in_qt_rt(df):
     return df
 
 
-def processing_list(collection_id, tweet_list, auth_path):
-    auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
-    procc_list = []
-    print(f"adding tweets to collection {collection_id}")
-    for counter, tweet_id in enumerate(tweet_list):
-        if (counter + 1) % 20 == 0:
-            print(f"{(counter+1)} / {len(tweet_list)}")
-        url = f"""
-        https://api.twitter.com/1.1/collections/entries/add.json?
-        tweet_id={tweet_id}&id={collection_id}"""
-        response = session.post(url)
-        timeout_handling(response)
-        if response.reason == "OK":
-            errors = response.json()["response"]["errors"]
-            if len(errors) > 0:
-                procc_list.append(
-                    {"tweet_id": tweet_id, "err_reason": errors[0]["reason"]}
-                )
-            else:
-                procc_list.append(
-                    {"tweet_id": tweet_id, "err_reason": "no_errors"}
-                )
-    df = pd.DataFrame(procc_list)
-    print(df["err_reason"].value_counts())
-    return df
+def prepare_batch(
+    df: pd.DataFrame,
+    news_domains: list,
+    mute_list: list,
+    mute_list_cs: list,
+    data_path : str = "tweetfeed/data/",
+) -> pd.DataFrame:
+    """Loads tweets from database. Applies transformation to them:
+    removes retweets, finds and remove tweets with links to news site.
 
-def rem_muted(df, owner_id, auth_path):
-    auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
-    muted_list = get_list_id(owner_id, "muted", auth_path)
-    url = f"https://api.twitter.com/1.1/lists/members.json?list_id={muted_list}&owner_id={owner_id}"
-    response = session.get(url)
-    muted_accounts = [i["id"] for i in response.json()["users"]]
-    df = df[~df["user"].isin(muted_accounts)]
-    return df
+    Args:
+        db_path (str): [description]
+        news_domains (list): [description]
+        days (int): [description]
+        mute_list (list): [description]
+        mute_list_cs (list): [description]
 
-def prepare_batch(days, mute_list, mute_list_cs):
-    with open("src/data/news_domains.txt", "r") as f:
-        news_domains = json.loads(f.read())
+    Returns:
+        pd.DataFrame: [description]
+    """
 
-    df_tweets = load_tweets("home.db", days)  # load tweets
+    df_tweets = df
     df_tweets = df_tweets[df_tweets["retweeted_status"] == "N/A"]  # remove RT
     df_tweets = find_news(df_tweets, news_domains)  # add news column
     df_tweets = news_in_qt_rt(df_tweets)  # find news in reweets and reply-to
 
-    seen_tweets = pd.read_csv("src/data/seen.csv")
+    seen_tweets = pd.read_csv(f"{data_path}seen.csv")
+    # what it there is no seen.csv?
     seen_tweets.drop_duplicates(inplace=True)
 
     df_tweets = df_tweets[
@@ -249,5 +235,5 @@ def prepare_batch(days, mute_list, mute_list_cs):
     )
 
     df = to_custom_news_feed[["id", "user"]]
-    df.to_csv("src/data/batch_to_add.csv")
+    df.to_csv(f"{data_path}batch_to_add.csv")
     return df

@@ -2,16 +2,15 @@ import json
 from datetime import datetime
 
 import pandas as pd
-
+from data import prepare_batch
 from twitter_utils import (
     count_collection,
     get_collection_id,
     get_collection_list,
     processing_list,
-    rem_from_collection
+    rem_from_collection,
+    rem_muted
 )
-
-from data import prepare_batch, rem_muted
 
 # remove tweets that are in collection
 AUTH = "auth/auth.json"
@@ -27,31 +26,36 @@ while count_collection(custom_newsfeed, AUTH) > 0:
     rem_from_collection(custom_newsfeed, AUTH)
 
 # load dataframe
-with open("src/data/mute_list.txt", "r") as f:
+with open("tweetdeck/data/mute_list.txt", "r") as f:
     mute_list = json.loads(f.read())
-with open("src/data/mute_list_cs.txt", "r") as f:
+with open("tweetdeck/data/mute_list_cs.txt", "r") as f:
     mute_list_cs = json.loads(f.read())
-
+with open("tweetdeck/data/news_domains.txt", "r") as f:
+    news_domains = json.loads(f.read())
 
 tweets_df = prepare_batch(
-    days=21, mute_list=mute_list, mute_list_cs=mute_list_cs
+    "home.db",
+    news_domains=news_domains,
+    days=21,
+    mute_list=mute_list,
+    mute_list_cs=mute_list_cs,
 )
 
 tweets_df = rem_muted(tweets_df, OWNER_ID, AUTH)
 tweet_list = tweets_df["id"].tolist()[:200]
 
 # TODO remove this- just for checking and backup
-with open("src/data/tweet_list.txt", "w") as write_file:
+with open("tweetdeck/data/tweet_list.txt", "w") as write_file:
     json.dump(tweet_list, write_file)
 
 df = processing_list(custom_newsfeed, tweet_list, AUTH)
 
 # backup old data
-seen_tweets_old = pd.read_csv("src/data/seen.csv")
-seen_tweets_old.to_csv("src/data/seen_old.csv", index=False)
+seen_tweets_old = pd.read_csv("tweetdeck/data/seen.csv")
+seen_tweets_old.to_csv("tweetdeck/data/seen_old.csv", index=False)
 
 # update seen.csv file
-df.to_csv("src/data/seen.csv", mode="a", header=False, index=False)
+df.to_csv("tweetdeck/data/seen.csv", mode="a", header=False, index=False)
 
 not_relevant_list = get_collection_list(
     get_collection_id(OWNER_ID, "not_relevant", AUTH), AUTH

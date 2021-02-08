@@ -1,7 +1,9 @@
 import json
 import time
-from twitter_to_sqlite import utils
+
 import pandas as pd
+from twitter_to_sqlite import utils
+
 
 def get_list_id(owner_id, list_name, auth_path):
     auth = json.load(open(auth_path))
@@ -12,7 +14,8 @@ def get_list_id(owner_id, list_name, auth_path):
         if item["name"] == list_name:
             return item["id"]
         return None
-        
+
+
 def rem_muted(df, owner_id, auth_path):
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
@@ -22,6 +25,7 @@ def rem_muted(df, owner_id, auth_path):
     muted_accounts = [i["id"] for i in response.json()["users"]]
     df = df[~df["user"].isin(muted_accounts)]
     return df
+
 
 def count_collection(collection_id, auth_path):
     auth = json.load(open(auth_path))
@@ -101,6 +105,7 @@ def rem_from_collection(collection_id: str, auth_path: str):
         remove.json?id={collection_id}&tweet_id={tweet}"""
         response = session.post(url)
         timeout_handling(response)
+
 
 def processing_list(collection_id, tweet_list, auth_path):
     auth = json.load(open(auth_path))
