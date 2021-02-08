@@ -3,15 +3,15 @@ from datetime import datetime
 
 import pandas as pd
 
-from pipeline_functions import (
+from twitter_utils import (
     count_collection,
     get_collection_id,
     get_collection_list,
-    prepare_batch,
     processing_list,
-    rem_from_collection,
-    rem_muted,
+    rem_from_collection
 )
+
+from data import prepare_batch, rem_muted
 
 # remove tweets that are in collection
 AUTH = "auth/auth.json"
@@ -20,6 +20,7 @@ OWNER_ID = "143058191"
 custom_newsfeed = get_collection_id(
     owner_id=OWNER_ID, collection_name="custom_newsfeed", auth_path=AUTH
 )
+
 
 while count_collection(custom_newsfeed, AUTH) > 0:
     print("removing tweets ...")
@@ -30,6 +31,8 @@ with open("src/data/mute_list.txt", "r") as f:
     mute_list = json.loads(f.read())
 with open("src/data/mute_list_cs.txt", "r") as f:
     mute_list_cs = json.loads(f.read())
+
+
 tweets_df = prepare_batch(
     days=21, mute_list=mute_list, mute_list_cs=mute_list_cs
 )
