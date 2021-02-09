@@ -9,7 +9,8 @@ from twitter_utils import (
     get_collection_list,
     processing_list,
     rem_from_collection,
-    rem_muted
+    rem_muted,
+    get_users_from_list
 )
 
 # remove tweets that are in collection
@@ -42,8 +43,9 @@ tweets_df = prepare_batch(
     mute_list=mute_list,
     mute_list_cs=mute_list_cs,
 )
-
-tweets_df = rem_muted(tweets_df, OWNER_ID, AUTH)
+muted_accounts = get_users_from_list(OWNER_ID, AUTH, list_name="muted")
+muted_ids = [user["id"] for user in muted_accounts]
+tweets_df = rem_muted(tweets_df, muted_ids)
 tweet_list = tweets_df["id"].tolist()[:200]
 
 # TODO remove this- just for checking and backup

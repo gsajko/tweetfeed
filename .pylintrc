@@ -1,2 +1,6 @@
 [BASIC]
 good-names=i,j,k,f,ex,df
+
+[MASTER]
+disable=
+    C0114

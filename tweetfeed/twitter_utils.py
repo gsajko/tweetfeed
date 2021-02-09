@@ -18,15 +18,28 @@ def get_list_id(owner_id, list_name, auth_path):
         print(ex)
 
 
-def rem_muted(df, owner_id, auth_path):
+def get_users_from_list(owner_id, auth_path, list_name)->list:
+    """Gets id, screen_names and names of users belonging to list
+
+    Args:
+        owner_id ([type]): user that the list belongs too
+        auth_path ([type]): path to auth.json
+        list_name ([type]): list name
+
+    Returns:
+        [list] return list of dictionaries {id, screen_name, name}
+    """
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
-    muted_list = get_list_id(owner_id, "muted", auth_path)
-    #TODO what if there is no list named "muted"?
-    url = f"https://api.twitter.com/1.1/lists/members.json?list_id={muted_list}&owner_id={owner_id}"
+    list_id = get_list_id(owner_id, list_name, auth_path)
+    #TODO what if there is no list named list_name?
+    url = f"https://api.twitter.com/1.1/lists/members.json?list_id={list_id}&owner_id={owner_id}&count=5000"
     response = session.get(url)
-    muted_accounts = [i["id"] for i in response.json()["users"]]
-    df = df[~df["user"].isin(muted_accounts)]
+    users_on_list = [{"id":i["id"], "screen_name":i["screen_name"], "name":i["name"]} for i in response.json()["users"]]
+    return users_on_list
+
+def rem_muted(df, users_list):
+    df = df[~df["user"].isin(users_list)]
     return df
 
 
