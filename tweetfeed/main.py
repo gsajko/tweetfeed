@@ -21,7 +21,6 @@ custom_newsfeed = get_collection_id(
     owner_id=OWNER_ID, collection_name="custom_newsfeed", auth_path=AUTH
 )
 
-
 while count_collection(custom_newsfeed, AUTH) > 0:
     print("removing tweets ...")
     rem_from_collection(custom_newsfeed, AUTH)

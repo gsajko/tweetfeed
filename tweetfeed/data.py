@@ -127,6 +127,7 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
     Returns:
         pd.DataFrame: DataFrame without tweets linking to news
     """
+    df = df.copy()
     df["clean_text"] = df["full_text"].apply(
         remove_tw_urls
     )  # TODO can I chain .apply?
