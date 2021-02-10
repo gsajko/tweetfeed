@@ -6,7 +6,7 @@ from twitter_to_sqlite import utils
 
 
 def get_list_id(owner_id, list_name, auth_path):
-    #TODO hard to debug- very easy to hit limits for lists. And limits are unknown
+    # TODO hard to debug- very easy to hit limits for lists. And limits are unknown
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"

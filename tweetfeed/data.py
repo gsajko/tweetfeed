@@ -186,8 +186,8 @@ def news_in_qt_rt(df: pd.DataFrame) -> pd.DataFrame:
 def prepare_batch(
     df: pd.DataFrame,
     news_domains: list,
-    mute_list: list = [],
-    mute_list_cs: list = [],
+    mute_list: list = None,
+    mute_list_cs: list = None,
     data_path: str = "tweetfeed/data/",
 ) -> pd.DataFrame:
     """Loads tweets from database. Applies transformation to them:
@@ -196,20 +196,18 @@ def prepare_batch(
     Args:
         df (pd.DataFrame): input DataFrame
         news_domains (list): list containing news sites domains
-        mute_list (list, optional): list of words, to remove additional tweets. Defaults to [].
-        mute_list_cs (list, optional): case-sensitive list of words, to remove additional tweets. Defaults to [].
+        mute_list (list, optional): list of words, to remove additional tweets. Defaults to None.
+        mute_list_cs (list, optional): case-sensitive list of words, as above. Defaults to None.
         data_path (str, optional): Path to folder with "seen.csv". Defaults to "tweetfeed/data/".
 
     Returns:
         pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
     """
 
-
-
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
     df = find_news(df, news_domains)  # add news column
-    #TODO uncomment bellow after refractoring 
-    #df = news_in_qt_rt(df)  # find news in reweets and reply-to 
+    # TODO uncomment bellow after refractoring
+    # df = news_in_qt_rt(df)  # find news in reweets and reply-to
 
     seen_tweets = pd.read_csv(f"{data_path}seen.csv")
     # what it there is no seen.csv?
@@ -223,7 +221,9 @@ def prepare_batch(
 
     # filter out tweets with news links
     to_custom_news_feed = (
-        df[df["contains_news"] == 0].sample(frac=1).reset_index(drop=True)[:1000]
+        df[df["contains_news"] == 0]
+        .sample(frac=1)
+        .reset_index(drop=True)[:1000]
     )
     to_custom_news_feed = drop_contains(
         to_custom_news_feed, column_name="full_text", str_list=mute_list
@@ -236,5 +236,5 @@ def prepare_batch(
     )
 
     df = to_custom_news_feed[["id", "user"]]
-    df.to_csv(f"{data_path}batch_to_add.csv") #TODO remove this?
+    df.to_csv(f"{data_path}batch_to_add.csv")  # TODO remove this?
     return df

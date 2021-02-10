@@ -7,10 +7,10 @@ from twitter_utils import (
     count_collection,
     get_collection_id,
     get_collection_list,
+    get_users_from_list,
     processing_list,
     rem_from_collection,
     rem_muted,
-    get_users_from_list
 )
 
 # remove tweets that are in collection
