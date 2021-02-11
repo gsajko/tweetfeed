@@ -151,7 +151,7 @@ src/home.db
 *.db-journal
 
 # data
-*.csv
-*.txt
+# *.csv
+# *.txt
 *.ipynb
 

@@ -210,13 +210,15 @@ def prepare_batch(
     # TODO uncomment bellow after refractoring
     # df = news_in_qt_rt(df)  # find news in reweets and reply-to
 
-    seen_tweets = pd.read_csv(f"{data_path}seen.csv")
-    # what it there is no seen.csv?
-    seen_tweets.drop_duplicates(inplace=True)
-
-    df = df[
-        ~df["id"].isin(seen_tweets["tweet_id"].tolist())
-    ]  # filter out seen tweets
+    try:
+        seen_tweets = pd.read_csv(f"{data_path}seen.csv")
+        seen_tweets.drop_duplicates(inplace=True)
+        # what it there is no seen.csv?
+        df = df[
+            ~df["id"].isin(seen_tweets["tweet_id"].tolist())
+        ]  # filter out seen tweets
+    except:
+        pass
 
     df = df[df["lang"] == "en"]  # take only english lang tweets
 

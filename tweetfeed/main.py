@@ -45,8 +45,9 @@ tweets_df = prepare_batch(
     mute_list=mute_list,
     mute_list_cs=mute_list_cs,
 )
+
 tweets_df = rem_muted(tweets_df, mutedacc)
-tweet_list = tweets_df["id"].tolist()[:200]
+tweet_list = tweets_df["id"].tolist()[:120]
 
 # TODO remove this- just for checking and backup
 with open("tweetfeed/data/tweet_list.txt", "w") as write_file:
@@ -54,12 +55,12 @@ with open("tweetfeed/data/tweet_list.txt", "w") as write_file:
 
 df = processing_list(custom_newsfeed, tweet_list, AUTH)
 
-# backup old data
-seen_tweets_old = pd.read_csv("tweetfeed/data/seen.csv")
-seen_tweets_old.to_csv("tweetfeed/data/seen_old.csv", index=False)
+# # backup old data
+# seen_tweets_old = pd.read_csv("tweetfeed/data/seen.csv")
+# seen_tweets_old.to_csv("tweetfeed/data/seen_old.csv", index=False)
 
-# update seen.csv file
-df.to_csv("tweetfeed/data/seen.csv", mode="a", header=False, index=False)
+# # update seen.csv file
+# df.to_csv("tweetfeed/data/seen.csv", mode="a", header=False, index=False)
 
 not_relevant_list = get_collection_list(
     get_collection_id(OWNER_ID, "not_relevant", AUTH), AUTH
