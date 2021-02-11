@@ -13,13 +13,14 @@ from twitter_utils import (
     rem_muted,
 )
 
-# remove tweets that are in collection
+
 AUTH = "auth/auth.json"
 OWNER_ID = "143058191"
 
 custom_newsfeed = get_collection_id(
     owner_id=OWNER_ID, collection_name="custom_newsfeed", auth_path=AUTH
 )
+# remove tweets that are already in collection
 
 while count_collection(custom_newsfeed, AUTH) > 0:
     print("removing tweets ...")
@@ -32,6 +33,8 @@ with open("tweetfeed/data/mute_list_cs.txt", "r") as f:
     mute_list_cs = json.loads(f.read())
 with open("tweetfeed/data/news_domains.txt", "r") as f:
     news_domains = json.loads(f.read())
+with open("tweetfeed/data/mutedacc.txt", "r") as f:
+    mutedacc = json.loads(f.read())
 
 
 df = load_tweets("home.db", days=21)
@@ -42,9 +45,7 @@ tweets_df = prepare_batch(
     mute_list=mute_list,
     mute_list_cs=mute_list_cs,
 )
-muted_accounts = get_users_from_list(OWNER_ID, AUTH, list_name="muted")
-muted_ids = [user["id"] for user in muted_accounts]
-tweets_df = rem_muted(tweets_df, muted_ids)
+tweets_df = rem_muted(tweets_df, mutedacc)
 tweet_list = tweets_df["id"].tolist()[:200]
 
 # TODO remove this- just for checking and backup

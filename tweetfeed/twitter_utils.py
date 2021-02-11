@@ -13,7 +13,7 @@ def get_list_id(owner_id, list_name, auth_path):
     try:
         while True:
             response = session.get(url)
-            timeout_handling(response, sleep=360)
+            timeout_handling(response, sleep=900)
             list_id = None
             for item in response.json():
                 if item["name"] == list_name:
@@ -61,12 +61,18 @@ def count_collection(collection_id, auth_path):
     response = session.get(url)
     if response.reason == "OK":
         collection_tweets = response.json()
-        collection_tweets = list(collection_tweets["objects"]["tweets"])
-        if len(collection_tweets) < 100:
-            print(f"{collection_id} contains {len(collection_tweets)} tweets")
-        else:
-            print(f"{collection_id} contains more then 100 tweets")
-        return len(collection_tweets)
+        try:
+            collection_tweets = list(collection_tweets["objects"]["tweets"])
+            if len(collection_tweets) < 100:
+                print(
+                    f"{collection_id} contains {len(collection_tweets)} tweets"
+                )
+            else:
+                print(f"{collection_id} contains more then 100 tweets")
+            return len(collection_tweets)
+        except Exception as ex:
+            print(ex, f"{collection_id} collection is empty")
+            return 0
     else:
         print(response.reason)
         raise Exception(str(response.json()["error"]))
@@ -163,6 +169,18 @@ def processing_list(collection_id, tweet_list, auth_path):
                 response = session.post(url)
                 timeout_handling(response)
                 if response.reason == "OK":
+                    errors = response.json()["response"]["errors"]
+                    if len(errors) > 0:
+                        procc_list.append(
+                            {
+                                "tweet_id": tweet_id,
+                                "err_reason": errors[0]["reason"],
+                            }
+                        )
+                    else:
+                        procc_list.append(
+                            {"tweet_id": tweet_id, "err_reason": "no_errors"}
+                        )
                     break
         except Exception as ex:
             print(str(ex, response.json()["errors"]))
