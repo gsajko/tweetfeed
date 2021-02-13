@@ -7,12 +7,10 @@ from twitter_utils import (
     count_collection,
     get_collection_id,
     get_collection_list,
-    get_users_from_list,
     processing_list,
     rem_from_collection,
     rem_muted,
 )
-
 
 AUTH = "auth/auth.json"
 OWNER_ID = "143058191"
@@ -55,12 +53,12 @@ with open("tweetfeed/data/tweet_list.txt", "w") as write_file:
 
 df = processing_list(custom_newsfeed, tweet_list, AUTH)
 
-# # backup old data
-# seen_tweets_old = pd.read_csv("tweetfeed/data/seen.csv")
-# seen_tweets_old.to_csv("tweetfeed/data/seen_old.csv", index=False)
+# backup old data
+seen_tweets_old = pd.read_csv("tweetfeed/data/seen.csv")
+seen_tweets_old.to_csv("tweetfeed/data/seen_old.csv", index=False)
 
-# # update seen.csv file
-# df.to_csv("tweetfeed/data/seen.csv", mode="a", header=False, index=False)
+# update seen.csv file
+df.to_csv("tweetfeed/data/seen.csv", mode="a", header=False, index=False)
 
 not_relevant_list = get_collection_list(
     get_collection_id(OWNER_ID, "not_relevant", AUTH), AUTH

@@ -53,6 +53,7 @@ def load_tweets(db_path: str, days: int) -> pd.DataFrame:
 # utils
 def find_url(tweet: str) -> list:
     """find all urls in string and returns a list of all urls"""
+    # TODO clean ")" - some url have it
     return re.findall(r"http\S+", tweet)
 
 
@@ -80,7 +81,13 @@ def rem_short_links(tweet: str) -> str:
 def get_domain(url: str) -> str:
     """extracts domain from url, returns it"""
     domain = urlparse(url).netloc.replace("www.", "")
-    return domain
+    dot_split = domain.split(".")
+    if (len(dot_split) > 2) & (
+        dot_split[-1] == "com"
+    ):  # for links like "edition.cnn.com", but not like "site.co.nz"
+        return ".".join(dot_split[1:])
+    else:
+        return domain
 
 
 def remove_empty_str(string_list: list) -> list:
@@ -107,12 +114,12 @@ def drop_contains(
         pd.DataFrame: DataFrame with rows removed
     """
     lower = case_sensitive
-    for string in str_list:
+    for item in str_list:
         if lower:
             df["filter"] = df[column_name].str.lower().copy()
         if not lower:
             df["filter"] = df[column_name].copy()
-        df = df[~df["filter"].str.contains(string)]
+        df = df[~df["filter"].str.contains(item)]
         df = df.drop(["filter"], axis=1).copy()
     return df
 
@@ -128,9 +135,9 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
         pd.DataFrame: DataFrame without tweets linking to news
     """
     df = df.copy()
-    df["clean_text"] = df["full_text"].apply(
-        remove_tw_urls
-    )  # TODO can I chain .apply?
+    df["clean_text"] = (
+        df["full_text"].apply(remove_tw_urls).apply(rem_short_links)
+    )
     df["clean_text"] = df["clean_text"].apply(rem_short_links)
     df["urls"] = df["clean_text"].apply(find_url)
     df.drop(["clean_text"], axis=1, inplace=True)
@@ -217,7 +224,7 @@ def prepare_batch(
         df = df[
             ~df["id"].isin(seen_tweets["tweet_id"].tolist())
         ]  # filter out seen tweets
-    except:
+    except Exception:
         pass
 
     df = df[df["lang"] == "en"]  # take only english lang tweets

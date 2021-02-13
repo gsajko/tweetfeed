@@ -146,11 +146,12 @@ settings.json
 auth.json
 
 # database
-tweetfeed/home.db
+home.db
 *.db-journal
 
 # data
 *.csv
 *.txt
-*.ipynb
+*.pkl
+# *.ipynb
 
