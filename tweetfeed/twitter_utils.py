@@ -16,7 +16,6 @@ def get_list_id(owner_id, list_name, auth_path):
             try:
                 list_id = ""
                 for item in response.json():
-                    print(item["name"])
                     if item["name"] == list_name:
                         list_id = item["id"]
                         return list_id

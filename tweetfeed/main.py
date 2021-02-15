@@ -31,6 +31,7 @@ with open("tweetfeed/data/mute_list_cs.txt", "r") as f:
     mute_list_cs = json.loads(f.read())
 with open("tweetfeed/data/news_domains.txt", "r") as f:
     news_domains = json.loads(f.read())
+# TODO setup cron for creating this file
 with open("tweetfeed/data/mutedacc.txt", "r") as f:
     mutedacc = json.loads(f.read())
 
