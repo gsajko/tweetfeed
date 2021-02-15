@@ -7,6 +7,7 @@ from twitter_utils import (
     count_collection,
     get_collection_id,
     get_collection_list,
+    get_users_from_list,
     processing_list,
     rem_from_collection,
     rem_muted,
@@ -31,10 +32,13 @@ with open("tweetfeed/data/mute_list_cs.txt", "r") as f:
     mute_list_cs = json.loads(f.read())
 with open("tweetfeed/data/news_domains.txt", "r") as f:
     news_domains = json.loads(f.read())
-# TODO setup cron for creating this file
-with open("tweetfeed/data/mutedacc.txt", "r") as f:
-    mutedacc = json.loads(f.read())
 
+mutedacc_rich = get_users_from_list(OWNER_ID, AUTH, list_name="muted")
+nytblock = get_users_from_list(OWNER_ID, AUTH, list_name="nytblock")
+mutedacc_rich = nytblock + mutedacc_rich
+with open("/tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
+    json.dump(mutedacc_rich, write_file)
+mutedacc = [user["id"] for user in mutedacc_rich]
 
 df = load_tweets("home.db", days=21)
 

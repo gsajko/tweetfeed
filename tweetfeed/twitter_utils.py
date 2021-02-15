@@ -20,7 +20,9 @@ def get_list_id(owner_id, list_name, auth_path):
                         list_id = item["id"]
                         return list_id
                 if list_id == "":
-                    raise ValueError(f"ValueError: No list with '{list_name}' name")
+                    raise ValueError(
+                        f"ValueError: No list with '{list_name}' name"
+                    )
             except ValueError:
                 raise
 
