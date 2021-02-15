@@ -6,22 +6,24 @@ from twitter_to_sqlite import utils
 
 
 def get_list_id(owner_id, list_name, auth_path):
-    # TODO hard to debug- very easy to hit limits for lists. And limits are unknown
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
-    try:
-        while True:
-            response = session.get(url)
-            timeout_handling(response, sleep=900)
-            list_id = None
-            for item in response.json():
-                if item["name"] == list_name:
-                    list_id = item["id"]
-            if list_id is not None:
-                return list_id
-    except Exception as ex:
-        print(ex, str(response.json()["errors"]))
+    response = session.get(url)
+    timeout_handling(response, sleep=900)
+    while True:
+        if response.reason == "OK":
+            try:
+                list_id = ""
+                for item in response.json():
+                    print(item["name"])
+                    if item["name"] == list_name:
+                        list_id = item["id"]
+                        return list_id
+                if list_id == "":
+                    raise ValueError(f"ValueError: No list with '{list_name}' name")
+            except ValueError:
+                raise
 
 
 def get_users_from_list(owner_id, auth_path, list_name) -> list:
