@@ -17,6 +17,7 @@
 # 1343991976534962179 for news with co.uk
 # 1330584730966716417 other news
 # 1002836386116980736 news faz.net
+# 1330560915616526339 news shorted atlantic?
 
 # from src.pipeline_functions import load_tweets
 
