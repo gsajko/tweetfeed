@@ -165,32 +165,6 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
 
     return df
 
-
-def news_in_qt_rt(df: pd.DataFrame) -> pd.DataFrame:
-    # TODO refractor this
-    df["all_news"] = df["contains_news"].copy()
-
-    df_qt = df[["id", "contains_news"]].copy()
-    df_qt.columns = ["quoted_status", "qt_news"]
-    df = df.merge(df_qt, on="quoted_status", how="left")
-    df["qt_news"] = df["qt_news"].fillna(0).astype(np.int64)
-    df["all_news"] = df["qt_news"].astype(np.int64) + df[
-        "contains_news"
-    ].astype(np.int64)
-
-    df_qt = df[["id", "contains_news"]].copy()
-    df_qt.columns = ["in_reply_to_status_id", "rt_news"]
-    df = df.merge(df_qt, on="in_reply_to_status_id", how="left")
-    df["rt_news"] = df["rt_news"].fillna(0).astype(np.int64)
-    df["all_news"] = df["rt_news"].astype(np.int64) + df["all_news"].astype(
-        np.int64
-    )
-    df.drop(["contains_news"], axis=1, inplace=True)
-    df["contains_news"] = df["all_news"].copy()
-    df.drop(["all_news"], axis=1, inplace=True)
-    return df
-
-
 def prepare_batch(
     df: pd.DataFrame,
     news_domains: list,
@@ -211,11 +185,37 @@ def prepare_batch(
     Returns:
         pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
     """
-
+    df = df.rename({"full_text": "full_text_short"}, axis=1)
+    df.quoted_status = (
+        df.quoted_status.replace("N/A", 0).fillna(0).astype(np.int64)
+    )
+    df.in_reply_to_status_id = (
+        df.in_reply_to_status_id.replace("N/A", 0).fillna(0).astype(np.int64)
+    )
+    df.insert(
+        3,
+        "in_reply_to_text",
+        df["in_reply_to_status_id"].map(df.set_index("id")["full_text_short"]),
+    )
+    df.insert(
+        3,
+        "quoted_text",
+        df["quoted_status"].map(df.set_index("id")["full_text_short"]),
+    )
+    df.insert(
+        2,
+        "full_text",
+        (
+            df.full_text_short
+            + " "
+            + df.in_reply_to_text.fillna("")
+            + " "
+            + df.quoted_text.fillna("")
+        ),
+    )
+    df.drop(["full_text_short", "quoted_text", "in_reply_to_text"], axis=1, inplace=True)
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
     df = find_news(df, news_domains)  # add news column
-    # TODO uncomment bellow after refractoring
-    # df = news_in_qt_rt(df)  # find news in reweets and reply-to
 
     try:
         seen_tweets = pd.read_csv(f"{data_path}seen.csv")
