@@ -165,6 +165,7 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
 
     return df
 
+
 def prepare_batch(
     df: pd.DataFrame,
     news_domains: list,
@@ -213,7 +214,11 @@ def prepare_batch(
             + df.quoted_text.fillna("")
         ),
     )
-    df.drop(["full_text_short", "quoted_text", "in_reply_to_text"], axis=1, inplace=True)
+    df.drop(
+        ["full_text_short", "quoted_text", "in_reply_to_text"],
+        axis=1,
+        inplace=True,
+    )
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
     df = find_news(df, news_domains)  # add news column
 

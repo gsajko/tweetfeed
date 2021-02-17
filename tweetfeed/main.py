@@ -36,8 +36,9 @@ with open("tweetfeed/data/news_domains.txt", "r") as f:
 mutedacc_rich = get_users_from_list(OWNER_ID, AUTH, list_name="muted")
 nytblock = get_users_from_list(OWNER_ID, AUTH, list_name="nytblock")
 mutedacc_rich = nytblock + mutedacc_rich
-with open("/tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
+with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
     json.dump(mutedacc_rich, write_file)
+
 mutedacc = [user["id"] for user in mutedacc_rich]
 
 df = load_tweets("home.db", days=21)
