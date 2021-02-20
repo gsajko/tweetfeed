@@ -54,6 +54,8 @@ def get_users_from_list(owner_id, auth_path, list_name) -> list:
 
 def rem_muted(df, users_list):
     df = df[~df["user"].isin(users_list)]
+    #TODO should expand this to include in reply too/ quoted?
+    #whould have to create new column 
     return df
 
 

@@ -35,6 +35,7 @@ with open("tweetfeed/data/news_domains.txt", "r") as f:
 
 mutedacc_rich = get_users_from_list(OWNER_ID, AUTH, list_name="muted")
 nytblock = get_users_from_list(OWNER_ID, AUTH, list_name="nytblock")
+#TODO idea - scrape https://www.politwoops.com/ for politician accounts
 mutedacc_rich = nytblock + mutedacc_rich
 with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
     json.dump(mutedacc_rich, write_file)
@@ -48,6 +49,7 @@ tweets_df = prepare_batch(
     news_domains=news_domains,
     mute_list=mute_list,
     mute_list_cs=mute_list_cs,
+    data_path="tweetfeed/data/"
 )
 
 tweets_df = rem_muted(tweets_df, mutedacc)
@@ -57,7 +59,7 @@ tweet_list = tweets_df["id"].tolist()[:120]
 with open("tweetfeed/data/tweet_list.txt", "w") as write_file:
     json.dump(tweet_list, write_file)
 
-df = processing_list(custom_newsfeed, tweet_list, AUTH)
+df = processing_list(custom_newsfeed, tweet_list, AUTH) #adds to collection
 
 # backup old data
 seen_tweets_old = pd.read_csv("tweetfeed/data/seen.csv")

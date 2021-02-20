@@ -21,5 +21,8 @@ def bye(name: Optional[str] = None):
         typer.echo("Goodbye!")
 
 
+# TODO option for feed: onlyfollow, nofollow
+# grab only people I follow, and grab people I don't follow
+
 if __name__ == "__main__":
     app()
