@@ -9,9 +9,9 @@ def get_list_id(owner_id, list_name, auth_path):
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
-    response = session.get(url)
-    timeout_handling(response, sleep=900)
     while True:
+        response = session.get(url)
+        timeout_handling(response, sleep=900)
         if response.reason == "OK":
             try:
                 list_id = ""
@@ -25,6 +25,18 @@ def get_list_id(owner_id, list_name, auth_path):
                     )
             except ValueError:
                 raise
+
+
+def get_friends_ids(auth_path):
+    auth = json.load(open(auth_path))
+    session = utils.session_for_auth(auth)
+    url = "https://api.twitter.com/1.1/friends/ids.json"
+    while True:
+        response = session.get(url)
+        timeout_handling(response, sleep=60)
+        if response.reason == "OK":
+            ids = response.json()["ids"]
+            return ids
 
 
 def get_users_from_list(owner_id, auth_path, list_name) -> list:
@@ -52,10 +64,13 @@ def get_users_from_list(owner_id, auth_path, list_name) -> list:
     return users_on_list
 
 
-def rem_muted(df, users_list):
-    df = df[~df["user"].isin(users_list)]
-    #TODO should expand this to include in reply too/ quoted?
-    #whould have to create new column 
+def filter_users(df, users_list, remove=True):
+    if remove:
+        df = df[~df["user"].isin(users_list)]
+    if not remove:
+        df = df[df["user"].isin(users_list)]
+    # TODO should expand this to include in reply too/ quoted?
+    # whould have to create new column
     return df
 
 

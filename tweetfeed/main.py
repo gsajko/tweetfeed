@@ -5,12 +5,13 @@ import pandas as pd
 from data import load_tweets, prepare_batch
 from twitter_utils import (
     count_collection,
+    filter_users,
     get_collection_id,
     get_collection_list,
+    get_friends_ids,
     get_users_from_list,
     processing_list,
     rem_from_collection,
-    rem_muted,
 )
 
 AUTH = "auth/auth.json"
@@ -35,31 +36,33 @@ with open("tweetfeed/data/news_domains.txt", "r") as f:
 
 mutedacc_rich = get_users_from_list(OWNER_ID, AUTH, list_name="muted")
 nytblock = get_users_from_list(OWNER_ID, AUTH, list_name="nytblock")
-#TODO idea - scrape https://www.politwoops.com/ for politician accounts
+# TODO idea - scrape https://www.politwoops.com/ for politician accounts
 mutedacc_rich = nytblock + mutedacc_rich
 with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
     json.dump(mutedacc_rich, write_file)
 
-mutedacc = [user["id"] for user in mutedacc_rich]
-
 df = load_tweets("home.db", days=21)
+mutedacc = [user["id"] for user in mutedacc_rich]
+df = filter_users(df, mutedacc)
+friends = get_friends_ids(AUTH)
+df = filter_users(df, friends, remove=False)
 
 tweets_df = prepare_batch(
     df=df,
     news_domains=news_domains,
     mute_list=mute_list,
     mute_list_cs=mute_list_cs,
-    data_path="tweetfeed/data/"
+    data_path="tweetfeed/data/",
 )
 
-tweets_df = rem_muted(tweets_df, mutedacc)
+
 tweet_list = tweets_df["id"].tolist()[:120]
 
 # TODO remove this- just for checking and backup
 with open("tweetfeed/data/tweet_list.txt", "w") as write_file:
     json.dump(tweet_list, write_file)
 
-df = processing_list(custom_newsfeed, tweet_list, AUTH) #adds to collection
+df = processing_list(custom_newsfeed, tweet_list, AUTH)  # adds to collection
 
 # backup old data
 seen_tweets_old = pd.read_csv("tweetfeed/data/seen.csv")
