@@ -37,6 +37,7 @@ with open("tweetfeed/data/news_domains.txt", "r") as f:
 mutedacc_rich = get_users_from_list(OWNER_ID, AUTH, list_name="muted")
 nytblock = get_users_from_list(OWNER_ID, AUTH, list_name="nytblock")
 # TODO idea - scrape https://www.politwoops.com/ for politician accounts
+# drop accounts that follow more than 15k people
 mutedacc_rich = nytblock + mutedacc_rich
 with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
     json.dump(mutedacc_rich, write_file)
