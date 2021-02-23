@@ -74,7 +74,7 @@ def rem_short_links(tweet: str) -> str:
     tweet = re.sub(r"http://buff.ly/\S+", "", tweet)
     tweet = re.sub(r"https://t.co/\S+", "", tweet)
     tweet = re.sub(r"http://t.co/\S+", "", tweet)
-
+    tweet = re.sub(r"www.google.com/amp/s/", "", tweet)
     return tweet
 
 

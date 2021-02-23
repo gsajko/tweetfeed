@@ -153,5 +153,5 @@ home.db
 *.csv
 *.txt
 *.pkl
-*.ipynb
+
 
