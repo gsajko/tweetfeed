@@ -60,9 +60,14 @@ def upload_to_collection(name: Optional[str] = None):
 
     df = load_tweets("home.db", days=21)
     mutedacc = [user["id"] for user in mutedacc_rich]
+
+    # TODO option
     df = filter_users(df, mutedacc)
-    friends = get_friends_ids(AUTH)
-    df = filter_users(df, friends, remove=False)
+    # friends = get_friends_ids(AUTH) #get tweet only from acc I follow
+    # df = filter_users(df, friends, remove=False)
+    Q1_acc = get_users_from_list(OWNER_ID, AUTH, list_name="Q1") #get tweets from my Q1 list
+    Q1_acc = [acc["id"] for acc in Q1_acc]
+    df = filter_users(df, Q1_acc, remove=False)
 
     tweets_df = prepare_batch(
         df=df,
@@ -72,7 +77,7 @@ def upload_to_collection(name: Optional[str] = None):
         data_path="tweetfeed/data/",
     )
 
-    tweet_list = tweets_df["id"].tolist()[:120]
+    tweet_list = tweets_df["id"].tolist()[:60] # TODO option
 
     # TODO remove this- just for checking and backup
     with open("tweetfeed/data/tweet_list.txt", "w") as write_file:
@@ -104,4 +109,4 @@ def upload_to_collection(name: Optional[str] = None):
 # grab only people I follow, and grab people I don't follow
 
 if __name__ == "__main__":
-    app()
+    upload_to_collection()
