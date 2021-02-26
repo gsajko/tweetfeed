@@ -78,6 +78,14 @@ def rem_short_links(tweet: str) -> str:
     return tweet
 
 
+def clean_up_url(url: str) -> str:
+    "removes selected characters from url"
+    char_to_rem = "',)\"!"
+    for char in char_to_rem:
+        url = url.replace(char, "")
+    return url
+
+
 def get_domain(url: str) -> str:
     """extracts domain from url, returns it"""
     domain = urlparse(url).netloc.replace("www.", "")
@@ -95,6 +103,7 @@ def remove_empty_str(string_list: list) -> list:
     for i in string_list:
         if len(string_list) == 0:
             string_list.remove(i)
+
     return string_list
 
 
@@ -141,6 +150,7 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
     df["clean_text"] = df["clean_text"].apply(rem_short_links)
     df["urls"] = df["clean_text"].apply(find_url)
     df.drop(["clean_text"], axis=1, inplace=True)
+    df["domains"] = df.urls.apply(lambda x: [clean_up_url(d) for d in x])
     df["domains"] = df.urls.apply(lambda x: [get_domain(d) for d in x])
     df["domains"] = df.domains.apply(remove_empty_str)
     df.drop(["urls"], axis=1, inplace=True)
