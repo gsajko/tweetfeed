@@ -17,19 +17,30 @@ from tweetfeed.twitter_utils import (
     rem_from_collection,
 )
 
-app = typer.Typer()
+app = typer.Typer(help = "awesome custom twitter feed")
 
 
 @app.command()
-def hello(name: Optional[str] = None):
-    if name:
-        typer.echo(f"Hello {name}")
+def hello():
+    """[summary]
+
+    Args:
+        name (Optional[str], optional): [description]. Defaults to None.
+    """
+    nr_tweets = 2 
+    if nr_tweets:
+        typer.echo(f"Hello {nr_tweets}")
     else:
         typer.echo("Hello World!")
 
 
 @app.command()
-def upload_to_collection(name: Optional[str] = None):
+def to_collection(nr_tweets: int):
+    """[summary]
+
+    Args:
+        name (Optional[str], optional): [description]. Defaults to None.
+    """
     AUTH = "auth/auth.json"
     OWNER_ID = "143058191"
 
@@ -77,8 +88,8 @@ def upload_to_collection(name: Optional[str] = None):
         data_path="tweetfeed/data/",
     )
 
-    tweet_list = tweets_df["id"].tolist()[:60] # TODO option
-
+    tweet_list = tweets_df["id"].tolist()[:nr_tweets] # TODO option
+    typer.echo(f"Adding {nr_tweets} tweets")
     # TODO remove this- just for checking and backup
     with open("tweetfeed/data/tweet_list.txt", "w") as write_file:
         json.dump(tweet_list, write_file)
@@ -109,4 +120,4 @@ def upload_to_collection(name: Optional[str] = None):
 # grab only people I follow, and grab people I don't follow
 
 if __name__ == "__main__":
-    upload_to_collection()
+    app()

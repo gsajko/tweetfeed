@@ -61,7 +61,7 @@ virtual_env = "venv"
 
 [tool.poetry.scripts]
 my_script = "app.cli:hello"
-to_coll = "app.cli:upload_to_collection"
+tweetfeed = "app.cli:app"
 
 [build-system]
 requires = ["poetry>=0.12"]
