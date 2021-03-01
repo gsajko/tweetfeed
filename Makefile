@@ -11,7 +11,7 @@ test: clean ## Run the tests.
 	@echo -e "The tests pass! ✨ 🍰 ✨"
 
 lint: ## Run the code linter.
-	@poetry run pylint custom_twitter_feed --reports=n
+	@poetry run pylint app tweetfeed --reports=n
 
 check: test lint mypy
 

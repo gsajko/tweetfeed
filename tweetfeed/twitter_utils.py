@@ -27,7 +27,7 @@ def get_list_id(owner_id, list_name, auth_path):
                 raise
 
 
-def get_friends_ids(auth_path:str) -> list:
+def get_friends_ids(auth_path: str) -> list:
     auth = json.load(open(auth_path))
     session = utils.session_for_auth(auth)
     url = "https://api.twitter.com/1.1/friends/ids.json"

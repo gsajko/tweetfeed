@@ -1,6 +1,7 @@
 import re
 import sqlite3
 from datetime import date, timedelta
+from typing import List
 from urllib.parse import urlparse
 
 import numpy as np
@@ -53,8 +54,15 @@ def load_tweets(db_path: str, days: int) -> pd.DataFrame:
 # utils
 def find_url(tweet: str) -> list:
     """find all urls in string and returns a list of all urls"""
-    # TODO clean ")" - some url have it
     return re.findall(r"http\S+", tweet)
+
+
+def clean_up_url(url: str) -> str:
+    "removes selected characters from url"
+    char_to_rem = "',)\"!"
+    for char in char_to_rem:
+        url = url.replace(char, "")
+    return url
 
 
 def remove_tw_urls(tweet: str) -> str:
@@ -78,14 +86,6 @@ def rem_short_links(tweet: str) -> str:
     return tweet
 
 
-def clean_up_url(url: str) -> str:
-    "removes selected characters from url"
-    char_to_rem = "',)\"!"
-    for char in char_to_rem:
-        url = url.replace(char, "")
-    return url
-
-
 def get_domain(url: str) -> str:
     """extracts domain from url, returns it"""
     domain = urlparse(url).netloc.replace("www.", "")
@@ -94,8 +94,7 @@ def get_domain(url: str) -> str:
         dot_split[-1] == "com"
     ):  # for links like "edition.cnn.com", but not like "site.co.nz"
         return ".".join(dot_split[1:])
-    else:
-        return domain
+    return domain
 
 
 def remove_empty_str(string_list: list) -> list:
@@ -108,7 +107,7 @@ def remove_empty_str(string_list: list) -> list:
 
 
 def drop_contains(
-    df: pd.DataFrame, column_name: str, str_list: list, case_sensitive=True
+    df: pd.DataFrame, column_name: str, str_list: List, case_sensitive=True
 ) -> pd.DataFrame:
     """takes a list of strings, and removes rows from chosen column, that contain those strings
     By default, it's case sensitive.
@@ -196,6 +195,9 @@ def prepare_batch(
     Returns:
         pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
     """
+    if df.empty:
+        raise ValueError("ValueError: DataFrame is empty, nothing to add")
+
     df = df.rename({"full_text": "full_text_short"}, axis=1)
     df.quoted_status = (
         df.quoted_status.replace("N/A", 0).fillna(0).astype(np.int64)
@@ -250,16 +252,17 @@ def prepare_batch(
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
-    to_custom_news_feed = drop_contains(
-        to_custom_news_feed, column_name="full_text", str_list=mute_list
-    )
-    to_custom_news_feed = drop_contains(
-        to_custom_news_feed,
-        column_name="full_text",
-        str_list=mute_list_cs,
-        case_sensitive=False,
-    )
+    if mute_list:
+        to_custom_news_feed = drop_contains(
+            to_custom_news_feed, column_name="full_text", str_list=mute_list
+        )
+    if mute_list_cs:
+        to_custom_news_feed = drop_contains(
+            to_custom_news_feed,
+            column_name="full_text",
+            str_list=mute_list_cs,
+            case_sensitive=False,
+        )
 
     df = to_custom_news_feed[["id", "user"]]
-    df.to_csv(f"{data_path}batch_to_add.csv")  # TODO remove this?
     return df
