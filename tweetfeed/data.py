@@ -252,6 +252,7 @@ def prepare_batch(
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
+    # TODO drop tweets from ME 
     if mute_list:
         to_custom_news_feed = drop_contains(
             to_custom_news_feed, column_name="full_text", str_list=mute_list

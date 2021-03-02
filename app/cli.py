@@ -36,8 +36,9 @@ OWNER_ID = "143058191"
 def to_collection(
     auth="auth/auth.json",
     owner_id="143058191",
-    nr_tweets: int = typer.Option(..., "--tweets", "-t"),
-    users_from_list: str = typer.Option(None, "--users_from_list", "-ufl"),
+    age: int = typer.Option(21, "--age", "-a", prompt="How old tweet should be? Enter nr of days"),
+    nr_tweets: int = typer.Option(..., "--tweets", "-t", prompt="How many tweets?"),
+    users_from_list: str = typer.Option(None, "--users_from_list", "-fl"),
     friends: bool = typer.Option(False, "--only_friends", "-of"),
     notfriends: bool = typer.Option(False, "--only_not_friends", "-onf"),
 ):
@@ -48,7 +49,7 @@ def to_collection(
     # remove tweets that are already in collection
 
     while count_collection(custom_newsfeed, auth) > 0:
-        typer.echo("removing tweets ...")
+        typer.echo("removing old tweets from collection ...")
         rem_from_collection(custom_newsfeed, auth)
 
     # load dataframe
@@ -67,7 +68,7 @@ def to_collection(
     with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
         json.dump(mutedacc_rich, write_file)
 
-    df = load_tweets("home.db", days=21)  # TODO CLI
+    df = load_tweets("home.db", days=age)
     mutedacc = [user["id"] for user in mutedacc_rich]
 
     df = filter_users(df, mutedacc)

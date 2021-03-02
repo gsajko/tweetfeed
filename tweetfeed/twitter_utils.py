@@ -11,7 +11,7 @@ def get_list_id(owner_id, list_name, auth_path):
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
     while True:
         response = session.get(url)
-        timeout_handling(response, sleep=900)
+        timeout_handling(response)
         if response.reason == "OK":
             try:
                 list_id = ""
