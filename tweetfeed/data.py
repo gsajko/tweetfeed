@@ -197,7 +197,6 @@ def prepare_batch(
     """
     if df.empty:
         raise ValueError("ValueError: DataFrame is empty, nothing to add")
-
     df = df.rename({"full_text": "full_text_short"}, axis=1)
     df.quoted_status = (
         df.quoted_status.replace("N/A", 0).fillna(0).astype(np.int64)
@@ -233,7 +232,10 @@ def prepare_batch(
     )
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
     df = find_news(df, news_domains)  # add news column
-
+    if df.empty:
+        raise ValueError(
+            "ValueError: after removing news, DataFrame is empty, nothing to add"
+        )
     try:
         seen_tweets = pd.read_csv(f"{data_path}seen.csv")
         seen_tweets.drop_duplicates(inplace=True)
@@ -243,7 +245,10 @@ def prepare_batch(
         ]  # filter out seen tweets
     except Exception:
         pass
-
+    if df.empty:
+        raise ValueError(
+            "ValueError: after removing seen, DataFrame is empty, nothing to add"
+        )
     df = df[df["lang"] == "en"]  # take only english lang tweets
 
     # filter out tweets with news links
@@ -252,7 +257,7 @@ def prepare_batch(
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
-    # TODO drop tweets from ME 
+    # TODO drop tweets from ME
     if mute_list:
         to_custom_news_feed = drop_contains(
             to_custom_news_feed, column_name="full_text", str_list=mute_list
@@ -264,6 +269,10 @@ def prepare_batch(
             str_list=mute_list_cs,
             case_sensitive=False,
         )
-
+    if df.empty:
+        raise ValueError(
+            "ValueError: after removing muted, DataFrame is empty, nothing to add"
+        )
     df = to_custom_news_feed[["id", "user"]]
+
     return df

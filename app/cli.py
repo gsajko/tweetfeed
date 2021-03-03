@@ -34,10 +34,17 @@ OWNER_ID = "143058191"
 
 @app.command()
 def to_collection(
-    auth="auth/auth.json",
-    owner_id="143058191",
-    age: int = typer.Option(21, "--age", "-a", prompt="How old tweet should be? Enter nr of days"),
-    nr_tweets: int = typer.Option(..., "--tweets", "-t", prompt="How many tweets?"),
+    auth: str = "auth/auth.json",
+    owner_id: str = "143058191",
+    age: int = typer.Option(
+        21, "--age", "-a", prompt="How old tweet should be? Enter nr of days"
+    ),
+    nr_tweets: int = typer.Option(
+        ..., "--tweets", "-t", prompt="How many tweets?"
+    ),
+    ignore_lists: bool = typer.Option(
+        False, "--ignore_lists", "-il"
+    ),  # bypass too much requests
     users_from_list: str = typer.Option(None, "--users_from_list", "-fl"),
     friends: bool = typer.Option(False, "--only_friends", "-of"),
     notfriends: bool = typer.Option(False, "--only_not_friends", "-onf"),
@@ -60,18 +67,20 @@ def to_collection(
     with open("tweetfeed/data/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
 
-    mutedacc_rich = get_users_from_list(owner_id, auth, list_name="muted")
-    nytblock = get_users_from_list(owner_id, auth, list_name="nytblock")
-    # TODO idea - scrape https://www.politwoops.com/ for politician accounts
-    # drop accounts that follow more than 15k people
-    mutedacc_rich = nytblock + mutedacc_rich
-    with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
-        json.dump(mutedacc_rich, write_file)
+    if not ignore_lists:
+        mutedacc_rich = get_users_from_list(owner_id, auth, list_name="muted")
+        nytblock = get_users_from_list(owner_id, auth, list_name="nytblock")
+        # TODO idea - scrape https://www.politwoops.com/ for politician accounts
+        # drop accounts that follow more than 15k people
+        mutedacc_rich = nytblock + mutedacc_rich
+        with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
+            json.dump(mutedacc_rich, write_file)
 
     df = load_tweets("home.db", days=age)
-    mutedacc = [user["id"] for user in mutedacc_rich]
+    if not ignore_lists:
+        mutedacc = [user["id"] for user in mutedacc_rich]
+        df = filter_users(df, mutedacc)
 
-    df = filter_users(df, mutedacc)
     if friends:
         friends = get_friends_ids(auth)
         df = filter_users(df, friends, remove=False)
@@ -94,7 +103,7 @@ def to_collection(
     )
 
     tweet_list = tweets_df["id"].tolist()[:nr_tweets]
-    typer.echo(f"Adding {nr_tweets} tweets")
+    typer.echo(f"Adding {len(tweet_list)} tweets")
 
     df = processing_list(
         custom_newsfeed, tweet_list, auth
