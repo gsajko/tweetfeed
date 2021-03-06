@@ -280,6 +280,7 @@ def prepare_batch(
             case_sensitive=False,
         )
     df = to_custom_news_feed[["id", "user"]]
+    print(f"{df.shape[0]} tweets in a batch")
     if df.shape[0] == 0:
         raise ValueError(
             "after removing tweets containing muted words, DataFrame is empty, nothing to add"

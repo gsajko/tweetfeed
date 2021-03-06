@@ -131,14 +131,9 @@ def get_collection_id(
 def timeout_handling(response, sleep=60):
     """Handles Too Many Requests error"""
     counter = 0
-    while response.reason != "OK":
+    if response.reason != "OK":
         print(response.reason)
-        counter += 1
         if response.reason == "Too Many Requests":
-            if counter > 1:
-                print(f"waited {counter} times")
-            if counter > 5:
-                print("consider 'ignore_lists' flag to deal with rate limits")
             print(f"Rate limit error - waiting for {sleep} seconds")
             time.sleep(sleep)
 
@@ -173,7 +168,7 @@ def rem_from_collection(collection_id: str, auth_path: str):
         )
         url = f"{remove_url}id={collection_id}&tweet_id={tweet}"
         response = session.post(url)
-        timeout_handling(response)
+        timeout_handling(response, sleep=60)
 
 
 def processing_list(collection_id, tweet_list, auth_path):

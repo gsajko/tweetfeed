@@ -135,4 +135,4 @@ def to_collection(
 
 if __name__ == "__main__":
     app()
-    # to_collection(age =3, reverse_age=True, nr_tweets=100, users_from_list="Q1", friends=False, notfriends=False)
+    # to_collection(age =17, reverse_age=True, nr_tweets=1, users_from_list="Q1", friends=False, notfriends=False)
