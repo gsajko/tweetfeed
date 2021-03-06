@@ -155,3 +155,4 @@ home.db
 *.pkl
 
 
+notebooks/ftest.py

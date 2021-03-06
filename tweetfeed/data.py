@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 
-def load_tweets(db_path: str, days: int) -> pd.DataFrame:
+def load_tweets(db_path: str, days: int, latest=False) -> pd.DataFrame:
     """loads tweets from SQLite database, older then number of days
 
     Args:
@@ -44,7 +44,10 @@ def load_tweets(db_path: str, days: int) -> pd.DataFrame:
         if col in columns_null:
             col = f"ifnull({col}, 'N/A') AS {col}"
         qr_string += f", {col}"
-    query = f"SELECT {qr_string} FROM tweets WHERE created_at < '{str(time_delta)}'"
+    if latest:
+        query = f"SELECT {qr_string} FROM tweets WHERE created_at > '{str(time_delta)}'"
+    else:
+        query = f"SELECT {qr_string} FROM tweets WHERE created_at < '{str(time_delta)}'"
     # TODO add restraint, to remove tweets I liked
     # but for that I need to setup another cron job too.
     df = pd.read_sql_query(query, cnx)
@@ -127,7 +130,7 @@ def drop_contains(
             df["filter"] = df[column_name].str.lower().copy()
         if not lower:
             df["filter"] = df[column_name].copy()
-        df = df[~df["filter"].str.contains(item)]
+        df = df[~df["filter"].str.contains(item, regex=False)]
         df = df.drop(["filter"], axis=1).copy()
     return df
 
@@ -232,7 +235,7 @@ def prepare_batch(
     )
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
     df = find_news(df, news_domains)  # add news column
-    if df.empty:
+    if df.shape[0] == 0:
         raise ValueError(
             "ValueError: after removing news, DataFrame is empty, nothing to add"
         )
@@ -245,18 +248,25 @@ def prepare_batch(
         ]  # filter out seen tweets
     except Exception:
         pass
-    if df.empty:
+    if df.shape[0] == 0:
         raise ValueError(
-            "ValueError: after removing seen, DataFrame is empty, nothing to add"
+            "after removing seen, DataFrame is empty, nothing to add"
         )
     df = df[df["lang"] == "en"]  # take only english lang tweets
-
+    if df.shape[0] == 0:
+        raise ValueError(
+            "after removing non-english tweets, DataFrame is empty, nothing to add"
+        )
     # filter out tweets with news links
     to_custom_news_feed = (
         df[df["contains_news"] == 0]
         .sample(frac=1)
         .reset_index(drop=True)[:1000]
     )
+    if to_custom_news_feed.shape[0] == 0:
+        raise ValueError(
+            "after removing tweets containing news, DataFrame is empty, nothing to add"
+        )
     # TODO drop tweets from ME
     if mute_list:
         to_custom_news_feed = drop_contains(
@@ -269,10 +279,9 @@ def prepare_batch(
             str_list=mute_list_cs,
             case_sensitive=False,
         )
-    if df.empty:
-        raise ValueError(
-            "ValueError: after removing muted, DataFrame is empty, nothing to add"
-        )
     df = to_custom_news_feed[["id", "user"]]
-
+    if df.shape[0] == 0:
+        raise ValueError(
+            "after removing tweets containing muted words, DataFrame is empty, nothing to add"
+        )
     return df

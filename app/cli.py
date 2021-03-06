@@ -39,6 +39,7 @@ def to_collection(
     age: int = typer.Option(
         21, "--age", "-a", prompt="How old tweet should be? Enter nr of days"
     ),
+    reverse_age: bool = typer.Option(False, "--reverse", "-r"),
     nr_tweets: int = typer.Option(
         ..., "--tweets", "-t", prompt="How many tweets?"
     ),
@@ -75,8 +76,10 @@ def to_collection(
         mutedacc_rich = nytblock + mutedacc_rich
         with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
             json.dump(mutedacc_rich, write_file)
-
-    df = load_tweets("home.db", days=age)
+    if reverse_age:
+        df = load_tweets("home.db", days=age, latest=True)
+    else:
+        df = load_tweets("home.db", days=age)
     if not ignore_lists:
         mutedacc = [user["id"] for user in mutedacc_rich]
         df = filter_users(df, mutedacc)
@@ -132,3 +135,4 @@ def to_collection(
 
 if __name__ == "__main__":
     app()
+    # to_collection(age =3, reverse_age=True, nr_tweets=100, users_from_list="Q1", friends=False, notfriends=False)
