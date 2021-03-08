@@ -6,13 +6,13 @@ import typer
 
 from tweetfeed.data import load_tweets, prepare_batch
 from tweetfeed.twitter_utils import (
+    add_list_to_collection,
     count_collection,
     filter_users,
     get_collection_id,
     get_collection_list,
     get_friends_ids,
     get_users_from_list,
-    processing_list,
     rem_from_collection,
 )
 
@@ -47,8 +47,8 @@ def to_collection(
         False, "--ignore_lists", "-il"
     ),  # bypass too much requests
     users_from_list: str = typer.Option(None, "--users_from_list", "-fl"),
-    friends: bool = typer.Option(False, "--only_friends", "-of"),
-    notfriends: bool = typer.Option(False, "--only_not_friends", "-onf"),
+    friends: bool = typer.Option(False, "--friends_only", "-fo"),
+    notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
 ):
 
     custom_newsfeed = get_collection_id(
@@ -106,9 +106,7 @@ def to_collection(
     )
 
     tweet_list = tweets_df["id"].tolist()[:nr_tweets]
-    typer.echo(f"Adding {len(tweet_list)} tweets")
-
-    df = processing_list(
+    df = add_list_to_collection(
         custom_newsfeed, tweet_list, auth
     )  # adds to collection
 

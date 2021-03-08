@@ -2,12 +2,21 @@ import json
 import time
 
 import pandas as pd
-from twitter_to_sqlite import utils
+from requests_oauthlib import OAuth1Session
+
+
+def session_for_auth(auth):
+    return OAuth1Session(
+        client_key=auth["api_key"],
+        client_secret=auth["api_secret_key"],
+        resource_owner_key=auth["access_token"],
+        resource_owner_secret=auth["access_token_secret"],
+    )
 
 
 def get_list_id(owner_id, list_name, auth_path):
     auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
+    session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
     while True:
         response = session.get(url)
@@ -29,7 +38,7 @@ def get_list_id(owner_id, list_name, auth_path):
 
 def get_friends_ids(auth_path: str) -> list:
     auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
+    session = session_for_auth(auth)
     url = "https://api.twitter.com/1.1/friends/ids.json"
     while True:
         response = session.get(url)
@@ -51,7 +60,7 @@ def get_users_from_list(owner_id, auth_path, list_name) -> list:
         [list] return list of dictionaries {id, screen_name, name}
     """
     auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
+    session = session_for_auth(auth)
     list_id = get_list_id(owner_id, list_name, auth_path)
     # TODO what if there is no list named list_name?
     params = f"list_id={list_id}&owner_id={owner_id}&count=5000"
@@ -76,7 +85,7 @@ def filter_users(df, users_list, remove=True):
 
 def count_collection(collection_id, auth_path):
     auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
+    session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url)
     if response.reason == "OK":
@@ -116,7 +125,7 @@ def get_collection_id(
         str: [description]
     """
     auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
+    session = session_for_auth(auth)
     url = (
         f"https://api.twitter.com/1.1/collections/list.json?user_id={owner_id}"
     )
@@ -130,7 +139,6 @@ def get_collection_id(
 
 def timeout_handling(response, sleep=60):
     """Handles Too Many Requests error"""
-    counter = 0
     if response.reason != "OK":
         print(response.reason)
         if response.reason == "Too Many Requests":
@@ -140,7 +148,7 @@ def timeout_handling(response, sleep=60):
 
 def get_collection_list(collection_id, auth_path):
     auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
+    session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url)
     collection_tweets = response.json()
@@ -154,7 +162,7 @@ def get_collection_list(collection_id, auth_path):
 
 def rem_from_collection(collection_id: str, auth_path: str):
     auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
+    session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url)
     collection_tweets = response.json()
@@ -171,14 +179,14 @@ def rem_from_collection(collection_id: str, auth_path: str):
         timeout_handling(response, sleep=60)
 
 
-def processing_list(collection_id, tweet_list, auth_path):
+def add_list_to_collection(collection_id, tweet_list, auth_path):
     auth = json.load(open(auth_path))
-    session = utils.session_for_auth(auth)
+    session = session_for_auth(auth)
     procc_list = []
-    print(f"adding tweets to collection {collection_id}")
+    print(f"Adding {len(tweet_list)} tweets to collection {collection_id}")
     for counter, tweet_id in enumerate(tweet_list):
-        if (counter + 1) % 20 == 0:
-            print(f"{(counter+1)} / {len(tweet_list)}")
+        if (counter + 1) % 100 == 0:
+            print(f"{(counter+1)} / {len(tweet_list)} added")
         try:
             while True:
                 add_to_coll_url = (
