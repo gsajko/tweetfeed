@@ -179,7 +179,7 @@ def rem_from_collection(collection_id: str, auth_path: str):
         timeout_handling(response, sleep=60)
 
 
-def add_list_to_collection(collection_id, tweet_list, auth_path):
+def add_tweets_to_collection(collection_id, tweet_list, auth_path):
     auth = json.load(open(auth_path))
     session = session_for_auth(auth)
     procc_list = []

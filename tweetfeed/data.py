@@ -178,7 +178,7 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
     return df
 
 
-def prepare_batch(
+def rem_news_and_RT(
     df: pd.DataFrame,
     news_domains: list,
     mute_list: list = None,
@@ -198,8 +198,11 @@ def prepare_batch(
     Returns:
         pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
     """
+
     if df.empty:
         raise ValueError("ValueError: DataFrame is empty, nothing to add")
+
+    # concat tweet with in_reply, quoted tweets
     df = df.rename({"full_text": "full_text_short"}, axis=1)
     df.quoted_status = (
         df.quoted_status.replace("N/A", 0).fillna(0).astype(np.int64)
@@ -233,12 +236,18 @@ def prepare_batch(
         axis=1,
         inplace=True,
     )
+
+    # remove retweets
+    # TODO should be an option
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
-    df = find_news(df, news_domains)  # add news column
     if df.shape[0] == 0:
         raise ValueError(
-            "ValueError: after removing news, DataFrame is empty, nothing to add"
+            "ValueError:After removing RT, DataFrame is empty, nothing to add"
         )
+
+    # mark tweets as news
+    df = find_news(df, news_domains)  # add news column
+
     try:
         seen_tweets = pd.read_csv(f"{data_path}seen.csv")
         seen_tweets.drop_duplicates(inplace=True)
@@ -257,6 +266,7 @@ def prepare_batch(
         raise ValueError(
             "after removing non-english tweets, DataFrame is empty, nothing to add"
         )
+
     # filter out tweets with news links
     to_custom_news_feed = (
         df[df["contains_news"] == 0]

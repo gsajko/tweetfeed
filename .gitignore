@@ -131,6 +131,7 @@ dmypy.json
 
 # twitter auth
 auth/auth.json
+config/auth.json
 
 .venv/
 _build/

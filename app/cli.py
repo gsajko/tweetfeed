@@ -4,9 +4,9 @@ from datetime import datetime
 import pandas as pd
 import typer
 
-from tweetfeed.data import load_tweets, prepare_batch
+from tweetfeed.data import load_tweets, rem_news_and_RT
 from tweetfeed.twitter_utils import (
-    add_list_to_collection,
+    add_tweets_to_collection,
     count_collection,
     filter_users,
     get_collection_id,
@@ -28,13 +28,9 @@ def hello():
         typer.echo("Hello World!")
 
 
-AUTH = "auth/auth.json"
-OWNER_ID = "143058191"
-
-
 @app.command()
 def to_collection(
-    auth: str = "auth/auth.json",
+    auth: str = "config/auth.json",
     owner_id: str = "143058191",
     age: int = typer.Option(
         21, "--age", "-a", prompt="How old tweet should be? Enter nr of days"
@@ -54,13 +50,13 @@ def to_collection(
     custom_newsfeed = get_collection_id(
         owner_id=owner_id, collection_name="custom_newsfeed", auth_path=auth
     )
-    # remove tweets that are already in collection
+    # clean up collection
 
     while count_collection(custom_newsfeed, auth) > 0:
         typer.echo("removing old tweets from collection ...")
         rem_from_collection(custom_newsfeed, auth)
 
-    # load dataframe
+    # load files
     with open("tweetfeed/data/mute_list.txt", "r") as f:
         mute_list = json.loads(f.read())
     with open("tweetfeed/data/mute_list_cs.txt", "r") as f:
@@ -76,6 +72,8 @@ def to_collection(
         mutedacc_rich = nytblock + mutedacc_rich
         with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
             json.dump(mutedacc_rich, write_file)
+
+    # load tweets
     if reverse_age:
         df = load_tweets("home.db", days=age, latest=True)
     else:
@@ -97,7 +95,8 @@ def to_collection(
         list_acc = [acc["id"] for acc in list_acc]
         df = filter_users(df, list_acc, remove=False)
 
-    tweets_df = prepare_batch(
+    # remove news and
+    tweets_df = rem_news_and_RT(
         df=df,
         news_domains=news_domains,
         mute_list=mute_list,
@@ -106,7 +105,7 @@ def to_collection(
     )
 
     tweet_list = tweets_df["id"].tolist()[:nr_tweets]
-    df = add_list_to_collection(
+    df = add_tweets_to_collection(
         custom_newsfeed, tweet_list, auth
     )  # adds to collection
 
