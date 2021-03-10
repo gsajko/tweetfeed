@@ -85,11 +85,11 @@ def to_collection(
         df = filter_users(df, mutedacc)
 
     if friends:
-        friends = get_friends_ids(auth)
-        df = filter_users(df, friends, remove=False)
+        friends_idx = get_friends_ids(auth)
+        df = filter_users(df, friends_idx, remove=False)
     if notfriends:
-        friends = get_friends_ids(auth)
-        df = filter_users(df, friends, remove=True)
+        friends_idx = get_friends_ids(auth)
+        df = filter_users(df, friends_idx, remove=True)
     if users_from_list is not None:
         list_acc = get_users_from_list(
             owner_id, auth, list_name=users_from_list

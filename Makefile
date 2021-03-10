@@ -8,14 +8,21 @@ clean:
 
 test: clean ## Run the tests.
 	@pytest --cov=tweetfeed --cov-report=term-missing --cov-fail-under 95
-	@echo -e "The tests pass! ✨ 🍰 ✨"
+	@echo "The tests pass! ✨ 🍰 ✨"
 
 lint: ## Run the code linter.
-	@poetry run pylint app tweetfeed --reports=n
+	@poetry run pylint --fail-under=9.5 app tweetfeed --reports=n
+	@echo "The lint pass! ✨ 🍰 ✨"
 
-check: test lint mypy
+mypy:
+	@poetry run mypy tweetfeed app
+
 
 style:
 	black .
 	flake8
 	isort .
+	@echo "The style pass! ✨ 🍰 ✨"	
+
+check: test lint style
+# check: test lint style mypy
