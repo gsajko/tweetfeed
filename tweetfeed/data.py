@@ -178,7 +178,7 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
     return df
 
 
-def rem_news_and_RT(
+def rem_news_and_rt(
     df: pd.DataFrame,
     news_domains: list,
     mute_list: list = None,

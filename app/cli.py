@@ -4,14 +4,14 @@ from datetime import datetime
 import pandas as pd
 import typer
 
-from tweetfeed.data import load_tweets, rem_news_and_RT
+from tweetfeed.data import load_tweets, rem_news_and_rt
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
     count_collection,
     filter_users,
     get_collection_id,
-    get_collection_list,
     get_friends_ids,
+    get_tweets_from_collection,
     get_users_from_list,
     rem_from_collection,
 )
@@ -48,7 +48,9 @@ def to_collection(
 ):
 
     custom_newsfeed = get_collection_id(
-        owner_id=owner_id, collection_name="custom_newsfeed", auth_path=auth
+        owner_id=owner_id,
+        auth_path=auth,
+        collection_name="custom_newsfeed",
     )
     # clean up collection
 
@@ -96,7 +98,7 @@ def to_collection(
         df = filter_users(df, list_acc, remove=False)
 
     # remove news and
-    tweets_df = rem_news_and_RT(
+    tweets_df = rem_news_and_rt(
         df=df,
         news_domains=news_domains,
         mute_list=mute_list,
@@ -116,8 +118,8 @@ def to_collection(
     # update seen.csv file
     df.to_csv("tweetfeed/data/seen.csv", mode="a", header=False, index=False)
 
-    not_relevant_list = get_collection_list(
-        get_collection_id(owner_id, "not_relevant", auth), auth
+    not_relevant_list = get_tweets_from_collection(
+        get_collection_id(owner_id, auth, "not_relevant"), auth
     )
     if len(not_relevant_list) > 150:
         typer.echo("max limit hit soon!")
@@ -132,4 +134,5 @@ def to_collection(
 
 if __name__ == "__main__":
     app()
-    # to_collection(age =17, reverse_age=True, nr_tweets=1, users_from_list="Q1", friends=False, notfriends=False)
+    # to_collection(age =17, reverse_age=True, nr_tweets=1,
+    # users_from_list="Q1", friends=False, notfriends=False)

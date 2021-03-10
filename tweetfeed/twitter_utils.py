@@ -108,7 +108,9 @@ def count_collection(collection_id, auth_path):
 
 
 def get_collection_id(
-    owner_id: str, collection_name: str, auth_path: str
+    owner_id: str,
+    auth_path: str,
+    collection_name: str,
 ) -> str:
     """looks up user collections and return ID for a given name.
 
@@ -130,6 +132,7 @@ def get_collection_id(
         f"https://api.twitter.com/1.1/collections/list.json?user_id={owner_id}"
     )
     response = session.get(url)
+    # TODO add timeout handling
     collections = response.json()["objects"]["timelines"]
     for k in collections.keys():
         if collections[k]["name"] == collection_name:
@@ -144,9 +147,10 @@ def timeout_handling(response, sleep=60):
         if response.reason == "Too Many Requests":
             print(f"Rate limit error - waiting for {sleep} seconds")
             time.sleep(sleep)
+    pass
 
 
-def get_collection_list(collection_id, auth_path):
+def get_tweets_from_collection(collection_id, auth_path):
     auth = json.load(open(auth_path))
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
@@ -177,6 +181,7 @@ def rem_from_collection(collection_id: str, auth_path: str):
         url = f"{remove_url}id={collection_id}&tweet_id={tweet}"
         response = session.post(url)
         timeout_handling(response, sleep=60)
+    return count_collection(collection_id, auth_path)
 
 
 def add_tweets_to_collection(collection_id, tweet_list, auth_path):
@@ -187,33 +192,34 @@ def add_tweets_to_collection(collection_id, tweet_list, auth_path):
     for counter, tweet_id in enumerate(tweet_list):
         if (counter + 1) % 100 == 0:
             print(f"{(counter+1)} / {len(tweet_list)} added")
-        try:
-            while True:
-                add_to_coll_url = (
-                    "https://api.twitter.com/1.1/collections/entries/add.json?"
-                )
-                url = (
-                    f"{add_to_coll_url}tweet_id={tweet_id}&id={collection_id}"
-                )
-                response = session.post(url)
-                timeout_handling(response)
-                if response.reason == "OK":
-                    errors = response.json()["response"]["errors"]
-                    if len(errors) > 0:
-                        procc_list.append(
-                            {
-                                "tweet_id": tweet_id,
-                                "err_reason": errors[0]["reason"],
-                            }
-                        )
-                    else:
-                        procc_list.append(
-                            {"tweet_id": tweet_id, "err_reason": "no_errors"}
-                        )
-                    break
-        except Exception as ex:
-            print(str(ex, response.json()["errors"]))
+        while True:
+            add_to_coll_url = (
+                "https://api.twitter.com/1.1/collections/entries/add.json?"
+            )
+            url = f"{add_to_coll_url}tweet_id={tweet_id}&id={collection_id}"
+            response = session.post(url)
+            timeout_handling(response)
+            if response.reason == "OK":
+                errors = response.json()["response"]["errors"]
+                if len(errors) > 0:
+                    procc_list.append(
+                        {
+                            "tweet_id": tweet_id,
+                            "err_reason": errors[0]["reason"],
+                        }
+                    )
+                else:
+                    procc_list.append(
+                        {"tweet_id": tweet_id, "err_reason": "no_errors"}
+                    )
+                break
 
     df = pd.DataFrame(procc_list)
+    reasons = df["err_reason"].value_counts().reset_index().values.tolist()
+    for i in reasons:
+        if i[0] == "no_errors":
+            print("tweets added: ", i[1])
+        else:
+            print(f"tweets not added / {i[0]}: ", i[1])
     print(df["err_reason"].value_counts())
     return df
