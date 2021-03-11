@@ -62,9 +62,12 @@ def find_url(tweet: str) -> list:
 
 def clean_up_url(url: str) -> str:
     "removes selected characters from url"
-    char_to_rem = "',)\"!"
+    char_to_rem = ',)"!'
     for char in char_to_rem:
         url = url.replace(char, "")
+    url = url.split("\u2019")[0]
+    url = url.split("’")[0]
+
     return url
 
 
@@ -103,14 +106,14 @@ def get_domain(url: str) -> str:
 def remove_empty_str(string_list: list) -> list:
     """removes items that are empty strings from the list"""
     for i in string_list:
-        if len(string_list) == 0:
+        if len(i) == 0:
             string_list.remove(i)
 
     return string_list
 
 
 def drop_contains(
-    df: pd.DataFrame, column_name: str, str_list: List, case_sensitive=True
+    df: pd.DataFrame, column_name: str, str_list: List, case_sensitive=False
 ) -> pd.DataFrame:
     """takes a list of strings, and removes rows from chosen column, that contain those strings
     By default, it's case sensitive.
@@ -124,9 +127,10 @@ def drop_contains(
     Returns:
         pd.DataFrame: DataFrame with rows removed
     """
-    lower = case_sensitive
+    lower = not case_sensitive
     for item in str_list:
         if lower:
+            item = item.lower()
             df["filter"] = df[column_name].str.lower().copy()
         if not lower:
             df["filter"] = df[column_name].copy()
@@ -203,6 +207,7 @@ def rem_news_and_rt(
         raise ValueError("ValueError: DataFrame is empty, nothing to add")
 
     # concat tweet with in_reply, quoted tweets
+    # TODO make this into separate function
     df = df.rename({"full_text": "full_text_short"}, axis=1)
     df.quoted_status = (
         df.quoted_status.replace("N/A", 0).fillna(0).astype(np.int64)
@@ -238,7 +243,7 @@ def rem_news_and_rt(
     )
 
     # remove retweets
-    # TODO should be an option
+    # TODO this should be options
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
     if df.shape[0] == 0:
         raise ValueError(
@@ -248,6 +253,7 @@ def rem_news_and_rt(
     # mark tweets as news
     df = find_news(df, news_domains)  # add news column
 
+    # TODO change this into function
     try:
         seen_tweets = pd.read_csv(f"{data_path}seen.csv")
         seen_tweets.drop_duplicates(inplace=True)
@@ -261,6 +267,7 @@ def rem_news_and_rt(
         raise ValueError(
             "after removing seen, DataFrame is empty, nothing to add"
         )
+
     df = df[df["lang"] == "en"]  # take only english lang tweets
     if df.shape[0] == 0:
         raise ValueError(

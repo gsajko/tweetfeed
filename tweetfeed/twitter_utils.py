@@ -99,8 +99,7 @@ def count_collection(collection_id, auth_path):
             else:
                 print(f"{collection_id} contains more then 100 tweets")
             return len(collection_tweets)
-        except Exception as ex:
-            print(ex, f"{collection_id} collection is empty")
+        except KeyError:
             return 0
     else:
         print(response.reason)

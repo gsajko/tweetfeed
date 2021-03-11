@@ -2,7 +2,14 @@ import json
 
 import pytest
 
-from tweetfeed import twitter_utils
+from tweetfeed import twitter_utils, data
+
+@pytest.fixture
+def test_df():
+    df = data.load_tweets(
+        "tweetfeed/data/test_tweets.db", days=0, latest=False
+    )
+    return df
 
 auth_path: str = "config/auth.json"
 owner_id: str = "143058191"
@@ -44,6 +51,12 @@ def test_count_collection():
             collection_id="bad_collection_name", auth_path=auth_path
         )
     assert str(execinfo.value) == "Invalid required parameter 'id'."
+
+    # with pytest.raises(Exception) as execinfo:
+    #     twitter_utils.count_collection(
+    #         collection_id=test_collection, auth_path=""
+    #     )
+    # assert str(execinfo.value) == "Invalid required parameter 'id'."
 
 
 def test_rem_from_collection():
@@ -120,3 +133,15 @@ def test_add_tweets_to_collection():
         test_collection, tweet_list, auth_path
     )
     assert df["err_reason"].value_counts()["duplicate"] == 2
+
+
+def test_filter_users(test_df):
+    test_df_shape = test_df.shape
+    mute_users = [760303]
+    df = twitter_utils.filter_users(test_df, mute_users)
+    assert df.shape[0] == (test_df_shape[0] - 1)
+    df = twitter_utils.filter_users(test_df, mute_users, remove=False)
+    assert df.shape[0] == 1
+
+
+
