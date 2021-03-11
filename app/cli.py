@@ -47,7 +47,7 @@ def to_collection(
     users_from_list: str = typer.Option(None, "--users_from_list", "-fl"),
     friends: bool = typer.Option(False, "--friends_only", "-fo"),
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
-    rem_news: bool = typer.Option(True, "--remove_news", "-rn"),
+    dont_rem_news: bool = typer.Option(False, "--dont_remove_news", "-n"),
 ):
     """Grabs tweets from database, applies filters and transformations,
     and uploads them to collection.
@@ -123,7 +123,7 @@ def to_collection(
         mute_list=mute_list,
         mute_list_cs=mute_list_cs,
         data_path="tweetfeed/data/",
-        remove_news=rem_news,
+        remove_news=not dont_rem_news,
     )
 
     tweet_list = tweets_df["id"].tolist()[:nr_tweets]

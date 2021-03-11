@@ -197,12 +197,7 @@ def rem_seen_tweets(df: pd.DataFrame, data_path: str) -> pd.DataFrame:
 
 
 def rem_news_and_rt(
-    df: pd.DataFrame,
-    news_domains: list,
-    mute_list: list = None,
-    mute_list_cs: list = None,
-    data_path: str = "tweetfeed/data/",
-    remove_news: bool = True,
+    df: pd.DataFrame, news_domains: list, remove_news=True, **kwargs
 ) -> pd.DataFrame:
     """Loads tweets from database. Applies transformation to them:
     removes retweets, finds and remove tweets with links to news site
@@ -210,10 +205,15 @@ def rem_news_and_rt(
     Args:
         df (pd.DataFrame): input DataFrame
         news_domains (list): list containing news sites domains
-        mute_list (list, optional): list of words, to remove additional tweets. Defaults to None.
-        mute_list_cs (list, optional): case-sensitive list of words, as above. Defaults to None.
-        data_path (str, optional): Path to folder with "seen.csv". Defaults to "tweetfeed/data/".
-        remove_news (bool, optional): If you want to remove news from feed. Defaults to "True"
+        remove_news (bool, optional): 
+            If you want to remove news from feed. Defaults to "True"
+        kwargs:
+            mute_list (list, optional):
+                list of words, to remove additional tweets. Defaults to None.
+            mute_list_cs (list, optional):
+                case-sensitive list of words, as above. Defaults to None.
+            data_path (str, optional):
+                Path to folder with "seen.csv". Defaults to "tweetfeed/data/".
 
     Returns:
         pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
@@ -266,12 +266,9 @@ def rem_news_and_rt(
             "ValueError:After removing RT, DataFrame is empty, nothing to add"
         )
 
-    # mark tweets as news
-    df = find_news(df, news_domains)  # add news column
-
     # TODO change this into function
 
-    df = rem_seen_tweets(df, data_path)
+    df = rem_seen_tweets(df, kwargs["data_path"])
     if df.shape[0] == 0:
         raise ValueError(
             "after removing seen, DataFrame is empty, nothing to add"
@@ -284,6 +281,9 @@ def rem_news_and_rt(
         )
 
     # filter out tweets with news links
+    # mark tweets as news
+    df = find_news(df, news_domains)  # add news column
+
     if remove_news:
         to_custom_news_feed = (
             df[df["contains_news"] == 0]
@@ -298,15 +298,17 @@ def rem_news_and_rt(
             "after removing tweets containing news, DataFrame is empty, nothing to add"
         )
     # TODO drop tweets from ME
-    if mute_list:
-        to_custom_news_feed = drop_contains(
-            to_custom_news_feed, column_name="full_text", str_list=mute_list
-        )
-    if mute_list_cs:
+    if "mute_list" in kwargs:
         to_custom_news_feed = drop_contains(
             to_custom_news_feed,
             column_name="full_text",
-            str_list=mute_list_cs,
+            str_list=kwargs["mute_list"],
+        )
+    if "mute_list_cs" in kwargs:
+        to_custom_news_feed = drop_contains(
+            to_custom_news_feed,
+            column_name="full_text",
+            str_list=kwargs["mute_list_cs"],
             case_sensitive=False,
         )
     df = to_custom_news_feed[["id", "user"]]
