@@ -12,7 +12,7 @@ test: clean ## Run the tests.
 	@echo "The tests pass! ✨ 🍰 ✨"
 
 lint: ## Run the code linter.
-	@poetry run pylint --fail-under=9.5 app tweetfeed --reports=n
+	@poetry run pylint --fail-under=9.8 app tweetfeed --reports=n
 	@echo "The lint pass! ✨ 🍰 ✨"
 
 mypy:

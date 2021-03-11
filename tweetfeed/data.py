@@ -182,6 +182,20 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
     return df
 
 
+def rem_seen_tweets(df: pd.DataFrame, data_path: str) -> pd.DataFrame:
+    "removes tweets stored in 'seen.csv' from DataFrame"
+    try:
+        seen_tweets = pd.read_csv(f"{data_path}seen.csv")
+    except FileNotFoundError:
+        print("No 'seen.csv' file loaded. No such file or directory")
+        seen_tweets = pd.DataFrame(columns=["tweet_id", "err_reason"])
+    seen_tweets.drop_duplicates(inplace=True)
+    df = df[
+        ~df["id"].isin(seen_tweets["tweet_id"].tolist())
+    ]  # filter out seen tweets
+    return df
+
+
 def rem_news_and_rt(
     df: pd.DataFrame,
     news_domains: list,
@@ -254,15 +268,8 @@ def rem_news_and_rt(
     df = find_news(df, news_domains)  # add news column
 
     # TODO change this into function
-    try:
-        seen_tweets = pd.read_csv(f"{data_path}seen.csv")
-        seen_tweets.drop_duplicates(inplace=True)
-        # what it there is no seen.csv?
-        df = df[
-            ~df["id"].isin(seen_tweets["tweet_id"].tolist())
-        ]  # filter out seen tweets
-    except Exception:
-        pass
+
+    df = rem_seen_tweets(df, data_path)
     if df.shape[0] == 0:
         raise ValueError(
             "after removing seen, DataFrame is empty, nothing to add"

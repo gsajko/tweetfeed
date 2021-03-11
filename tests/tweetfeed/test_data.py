@@ -105,6 +105,20 @@ def test_drop_contains(test_df):
     assert df.shape[0] == test_df_shape[0] - 1
 
 
+def test_rem_seen_tweets(test_df, capsysbinary):
+    data_path = "tweetfeed/data/test_"
+    df = data.rem_seen_tweets(test_df, data_path)
+    assert df.shape[0] == 0
+    data_path = "wrong_path"
+    df = data.rem_seen_tweets(test_df, data_path)
+    captured = capsysbinary.readouterr()
+    assert (
+        captured.out
+        == b"No 'seen.csv' file loaded. No such file or directory\n"
+    )
+    assert df.shape[0] == test_df.shape[0]
+
+
 def test_find_news(test_df, test_news_domains):
     df = data.find_news(test_df, test_news_domains)
     assert df.shape[1] == 10
@@ -112,10 +126,9 @@ def test_find_news(test_df, test_news_domains):
 
 
 def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
-    to_rem = 0 
-
+    to_rem = 0
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(empty_df, test_news_domains)
+        data.rem_news_and_rt(empty_df, test_news_domains, data_path="")
     assert (
         str(execinfo.value) == "ValueError: DataFrame is empty, nothing to add"
     )
@@ -123,7 +136,7 @@ def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
     df_rt = test_df[~(test_df["retweeted_status"] == "N/A")]
     to_rem += df_rt.shape[0]
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(df_rt, test_news_domains)
+        data.rem_news_and_rt(df_rt, test_news_domains, data_path="")
     assert (
         str(execinfo.value)
         == "ValueError:After removing RT, DataFrame is empty, nothing to add"
@@ -132,36 +145,31 @@ def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
     df_en = test_df[~(test_df["lang"] == "en")]
     to_rem += df_en.shape[0]
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(df_en, test_news_domains)
+        data.rem_news_and_rt(df_en, test_news_domains, data_path="")
     assert (
         str(execinfo.value)
         == "after removing non-english tweets, DataFrame is empty, nothing to add"
     )
+
     df_news = data.find_news(test_df, test_news_domains)
     df_news = df_news[df_news["contains_news"] == 1]
     df_news.drop(["contains_news"], axis=1, inplace=True)
     to_rem += df_news.shape[0]
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(df_news, test_news_domains)
+        data.rem_news_and_rt(df_news, test_news_domains, data_path="")
     assert (
         str(execinfo.value)
         == "after removing tweets containing news, DataFrame is empty, nothing to add"
     )
 
+    df = data.rem_news_and_rt(test_df, test_news_domains, data_path="")
+    assert df.shape[0] == (test_df.shape[0] - to_rem)
 
-    df = data.rem_news_and_rt(test_df, test_news_domains)
-    assert df.shape[0] == to_rem
-
-    # df_rt = test_df[~(test_df["retweeted_status"] == "N/A")]
-    # with pytest.raises(ValueError) as execinfo:
-    #     data.rem_news_and_rt(df_rt, test_news_domains)
-    # assert (
-    #     str(execinfo.value)
-    #     == "ValueError:After removing RT, DataFrame is empty, nothing to add"
-    # )
-
-
-
-# test_dfx = data.load_tweets("tweetfeed/data/test_tweets.db", days=0, latest=False)
-# df = data.drop_contains(test_dfx, column_name="full_text", str_list=["TWITTER"],case_sensitive=True)
-# print("hi")
+    with pytest.raises(ValueError) as execinfo:
+        data.rem_news_and_rt(
+            test_df, test_news_domains, data_path="tweetfeed/data/test_"
+        )
+    assert (
+        str(execinfo.value)
+        == "after removing seen, DataFrame is empty, nothing to add"
+    )

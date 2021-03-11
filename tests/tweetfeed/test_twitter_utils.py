@@ -2,7 +2,8 @@ import json
 
 import pytest
 
-from tweetfeed import twitter_utils, data
+from tweetfeed import data, twitter_utils
+
 
 @pytest.fixture
 def test_df():
@@ -10,6 +11,7 @@ def test_df():
         "tweetfeed/data/test_tweets.db", days=0, latest=False
     )
     return df
+
 
 auth_path: str = "config/auth.json"
 owner_id: str = "143058191"
@@ -70,7 +72,7 @@ def test_get_list_id():
     list_id = twitter_utils.get_list_id(
         owner_id, list_name="test_list", auth_path=auth_path
     )
-    assert list_id == 1369691201033691138
+    assert list_id == "1369691201033691138"
     with pytest.raises(ValueError) as execinfo:
         twitter_utils.get_list_id(
             owner_id, list_name="bad_list_name", auth_path=auth_path
@@ -142,6 +144,4 @@ def test_filter_users(test_df):
     assert df.shape[0] == (test_df_shape[0] - 1)
     df = twitter_utils.filter_users(test_df, mute_users, remove=False)
     assert df.shape[0] == 1
-
-
 

@@ -21,6 +21,8 @@ app = typer.Typer(help="awesome custom twitter feed")
 
 @app.command()
 def hello():
+    "test function"
+    # TODO delete later
     nr_tweets = 2
     if nr_tweets:
         typer.echo(f"Hello {nr_tweets}")
@@ -46,6 +48,22 @@ def to_collection(
     friends: bool = typer.Option(False, "--friends_only", "-fo"),
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
 ):
+    """Grabs tweets from database, applies filters and transformations,
+    and uploads them to collection.
+
+    Args:
+        auth (str): Path to your twitter credential. Defaults to "config/auth.json".
+        owner_id (str): Owner of list and collections. Defaults to "143058191".
+        age (int, optional): How old (in days) should be the most recent tweet. Defaults to 21.
+        reverse_age (bool, optional): If chosed, no tweets older than age (in days) will be shown.
+        nr_tweets (int): How many tweets upload to collection.
+        ignore_lists (bool, optional): If `True` it prevents from using
+            Twitter API and list functionality.
+            This functionality causes most "Too Many Requests" errors.
+        friends (bool, optional): If `True`, tweets by friends (who user follows) will be added.
+        notfriends (bool, optional): If `True`, tweets b
+            y non-friends (who user not follows) will be added.
+    """
 
     custom_newsfeed = get_collection_id(
         owner_id=owner_id,
