@@ -34,16 +34,10 @@ def hello():
 def to_collection(
     auth: str = "config/auth.json",
     owner_id: str = "143058191",
-    age: int = typer.Option(
-        21, "--age", "-a", prompt="How old tweet should be? Enter nr of days"
-    ),
+    age: int = typer.Option(21, "--age", "-a"),
     reverse_age: bool = typer.Option(False, "--reverse", "-r"),
-    nr_tweets: int = typer.Option(
-        ..., "--tweets", "-t", prompt="How many tweets?"
-    ),
-    ignore_lists: bool = typer.Option(
-        False, "--ignore_lists", "-il"
-    ),  # bypass too much requests
+    nr_tweets: int = typer.Option(30, "--tweets", "-t"),
+    ignore_lists: bool = typer.Option(False, "--ignore_lists", "-il"),
     users_from_list: str = typer.Option(None, "--users_from_list", "-fl"),
     friends: bool = typer.Option(False, "--friends_only", "-fo"),
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),

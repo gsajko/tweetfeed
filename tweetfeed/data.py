@@ -205,7 +205,7 @@ def rem_news_and_rt(
     Args:
         df (pd.DataFrame): input DataFrame
         news_domains (list): list containing news sites domains
-        remove_news (bool, optional): 
+        remove_news (bool, optional):
             If you want to remove news from feed. Defaults to "True"
         kwargs:
             mute_list (list, optional):
