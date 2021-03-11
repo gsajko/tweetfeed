@@ -202,6 +202,7 @@ def rem_news_and_rt(
     mute_list: list = None,
     mute_list_cs: list = None,
     data_path: str = "tweetfeed/data/",
+    remove_news: bool = True,
 ) -> pd.DataFrame:
     """Loads tweets from database. Applies transformation to them:
     removes retweets, finds and remove tweets with links to news site
@@ -212,6 +213,7 @@ def rem_news_and_rt(
         mute_list (list, optional): list of words, to remove additional tweets. Defaults to None.
         mute_list_cs (list, optional): case-sensitive list of words, as above. Defaults to None.
         data_path (str, optional): Path to folder with "seen.csv". Defaults to "tweetfeed/data/".
+        remove_news (bool, optional): If you want to remove news from feed. Defaults to "True"
 
     Returns:
         pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
@@ -282,11 +284,15 @@ def rem_news_and_rt(
         )
 
     # filter out tweets with news links
-    to_custom_news_feed = (
-        df[df["contains_news"] == 0]
-        .sample(frac=1)
-        .reset_index(drop=True)[:1000]
-    )
+    if remove_news:
+        to_custom_news_feed = (
+            df[df["contains_news"] == 0]
+            .sample(frac=1)
+            .reset_index(drop=True)[:1000]
+        )
+    if remove_news is False:
+        to_custom_news_feed = df.sample(frac=1).reset_index(drop=True)[:1000]
+
     if to_custom_news_feed.shape[0] == 0:
         raise ValueError(
             "after removing tweets containing news, DataFrame is empty, nothing to add"

@@ -156,7 +156,9 @@ def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
     df_news.drop(["contains_news"], axis=1, inplace=True)
     to_rem += df_news.shape[0]
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(df_news, test_news_domains, data_path="")
+        data.rem_news_and_rt(
+            df_news, test_news_domains, data_path="", remove_news=True
+        )
     assert (
         str(execinfo.value)
         == "after removing tweets containing news, DataFrame is empty, nothing to add"
@@ -173,3 +175,16 @@ def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
         str(execinfo.value)
         == "after removing seen, DataFrame is empty, nothing to add"
     )
+
+
+# test_dfx = data.load_tweets(
+#         "tweetfeed/data/test_tweets.db", days=0, latest=False
+#     )
+
+# with open("tweetfeed/data/news_domains.txt", "r") as f:
+#     news_domains = json.loads(f.read())
+
+# df_news = data.find_news(test_dfx, news_domains)
+# df_news = df_news[df_news["contains_news"] == 1]
+# df_news.drop(["contains_news"], axis=1, inplace=True)
+# data.rem_news_and_rt(df_news, news_domains, data_path="")

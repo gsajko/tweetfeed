@@ -144,4 +144,3 @@ def test_filter_users(test_df):
     assert df.shape[0] == (test_df_shape[0] - 1)
     df = twitter_utils.filter_users(test_df, mute_users, remove=False)
     assert df.shape[0] == 1
-
