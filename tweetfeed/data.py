@@ -30,6 +30,7 @@ def load_tweets(db_path: str, days: int, latest=False) -> pd.DataFrame:
         "quoted_status",
         "is_quote_status",
         "in_reply_to_status_id",
+        "favorite_count",
     ]  # columns from table
     columns_null = [
         "retweeted_status",
@@ -196,7 +197,21 @@ def rem_seen_tweets(df: pd.DataFrame, data_path: str) -> pd.DataFrame:
     return df
 
 
-def rem_news_and_rt(
+def rem_on_likes(
+    df: pd.DataFrame, likes: int, less: bool = True
+) -> pd.DataFrame:
+    """removes tweets from DataFrame, based on number of likes
+    this will also remove RT, since they have 0 likes
+    """
+    if less:
+        df = df[df["favorite_count"] > likes]
+    if not less:
+        df = df[df["favorite_count"] < likes]
+
+    return df
+
+
+def prep_batch(
     df: pd.DataFrame, news_domains: list, remove_news=True, **kwargs
 ) -> pd.DataFrame:
     """Loads tweets from database. Applies transformation to them:
@@ -279,6 +294,9 @@ def rem_news_and_rt(
         raise ValueError(
             "after removing non-english tweets, DataFrame is empty, nothing to add"
         )
+    if "likes" in kwargs:
+        df = rem_on_likes(df, likes=kwargs["likes"])
+    # TODO refractor so I dont repeat those all raise ValueErrors
 
     # filter out tweets with news links
     # mark tweets as news

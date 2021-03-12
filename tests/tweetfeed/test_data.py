@@ -29,11 +29,11 @@ def test_news_domains():
 
 def test_load_tweets():
     df = data.load_tweets("tweetfeed/data/test_tweets.db", days=0, latest=True)
-    assert df.shape == (0, 9)
+    assert df.shape == (0, 10)
     df = data.load_tweets(
         "tweetfeed/data/test_tweets.db", days=0, latest=False
     )
-    assert df.shape == (16, 9)
+    assert df.shape == (16, 10)
 
 
 def test_find_url(test_df):
@@ -119,16 +119,23 @@ def test_rem_seen_tweets(test_df, capsysbinary):
     assert df.shape[0] == test_df.shape[0]
 
 
+def test_rem_on_likes(test_df):
+    df = data.rem_on_likes(test_df, 5)
+    assert df.shape[0] == (test_df.shape[0] - 3)
+    df = data.rem_on_likes(test_df, 5, less=False)
+    assert df.shape[0] == (test_df.shape[0] - 13)
+
+
 def test_find_news(test_df, test_news_domains):
     df = data.find_news(test_df, test_news_domains)
-    assert df.shape[1] == 10
+    assert df.shape[1] == (test_df.shape[1] + 1)
     assert sum(df["contains_news"].tolist()) == 3
 
 
-def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
+def test_prep_batch(test_df, empty_df, test_news_domains):
     to_rem = 0
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(empty_df, test_news_domains, data_path="")
+        data.prep_batch(empty_df, test_news_domains, data_path="")
     assert (
         str(execinfo.value) == "ValueError: DataFrame is empty, nothing to add"
     )
@@ -136,7 +143,7 @@ def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
     df_rt = test_df[~(test_df["retweeted_status"] == "N/A")]
     to_rem += df_rt.shape[0]
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(df_rt, test_news_domains, data_path="")
+        data.prep_batch(df_rt, test_news_domains, data_path="")
     assert (
         str(execinfo.value)
         == "ValueError:After removing RT, DataFrame is empty, nothing to add"
@@ -145,7 +152,7 @@ def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
     df_en = test_df[~(test_df["lang"] == "en")]
     to_rem += df_en.shape[0]
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(df_en, test_news_domains, data_path="")
+        data.prep_batch(df_en, test_news_domains, data_path="")
     assert (
         str(execinfo.value)
         == "after removing non-english tweets, DataFrame is empty, nothing to add"
@@ -156,7 +163,7 @@ def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
     df_news.drop(["contains_news"], axis=1, inplace=True)
     to_rem += df_news.shape[0]
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(
+        data.prep_batch(
             df_news, test_news_domains, data_path="", remove_news=True
         )
     assert (
@@ -164,11 +171,11 @@ def test_rem_news_and_rt(test_df, empty_df, test_news_domains):
         == "after removing tweets containing news, DataFrame is empty, nothing to add"
     )
 
-    df = data.rem_news_and_rt(test_df, test_news_domains, data_path="")
+    df = data.prep_batch(test_df, test_news_domains, data_path="")
     assert df.shape[0] == (test_df.shape[0] - to_rem)
 
     with pytest.raises(ValueError) as execinfo:
-        data.rem_news_and_rt(
+        data.prep_batch(
             test_df, test_news_domains, data_path="tweetfeed/data/test_"
         )
     assert (

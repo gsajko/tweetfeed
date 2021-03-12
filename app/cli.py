@@ -4,7 +4,7 @@ from datetime import datetime
 import pandas as pd
 import typer
 
-from tweetfeed.data import load_tweets, rem_news_and_rt
+from tweetfeed.data import load_tweets, prep_batch
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
     count_collection,
@@ -42,6 +42,7 @@ def to_collection(
     friends: bool = typer.Option(False, "--friends_only", "-fo"),
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
     dont_rem_news: bool = typer.Option(False, "--dont_remove_news", "-n"),
+    min_likes: int = typer.Option(0, "--min_likes", "-l"),
 ):
     """Grabs tweets from database, applies filters and transformations,
     and uploads them to collection.
@@ -111,13 +112,14 @@ def to_collection(
         df = filter_users(df, list_acc, remove=False)
 
     # remove news and RT
-    tweets_df = rem_news_and_rt(
+    tweets_df = prep_batch(
         df=df,
         news_domains=news_domains,
         mute_list=mute_list,
         mute_list_cs=mute_list_cs,
         data_path="tweetfeed/data/",
         remove_news=not dont_rem_news,
+        likes=min_likes,
     )
 
     tweet_list = tweets_df["id"].tolist()[:nr_tweets]
@@ -135,16 +137,17 @@ def to_collection(
     not_relevant_list = get_tweets_from_collection(
         get_collection_id(owner_id, auth, "not_relevant"), auth
     )
-    if len(not_relevant_list) > 150:
-        typer.echo("max limit hit soon!")
+    if len(not_relevant_list) > 180:
+        # TODO if criteria matched
+        # dump this to txt with date, and ZEROs collection
+        # some other "model" function later can sum-up from
+        # file and collection
+        typer.echo("collection 'not_relevant' will hit max limit soon!")
         with open(
             f"{datetime.now():%Y_%m_%d_%H%M}_not_relevant_list.txt", "w"
         ) as f:
             f.write(json.dumps(not_relevant_list))
 
-
-# TODO option for feed: onlyfollow, nofollow
-# grab only people I follow, and grab people I don't follow
 
 if __name__ == "__main__":
     app()
