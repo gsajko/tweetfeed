@@ -234,10 +234,13 @@ def add_tweets_to_collection(
 
     df = pd.DataFrame(procc_list)
     reasons = df["err_reason"].value_counts().reset_index().values.tolist()
-    for i in reasons:
-        if i[0] == "no_errors":
-            print("tweets added: ", i[1])
+    for reason in reasons:
+        if reason[0] == "no_errors":
+            if len(tweet_list) != reason[1]:
+                print(f"added all {reason[1]} tweets with errors")
+            print("tweets added : ", reason[1])
         else:
-            print(f"tweets not added / {i[0]}: ", i[1])
-    print(df["err_reason"].value_counts())
+            print(f"tweets not added / {reason[0]}: ", reason[1])
+    if len(tweet_list) != reason[1]:
+        print(df["err_reason"].value_counts())
     return df
