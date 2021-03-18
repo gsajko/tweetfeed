@@ -19,6 +19,7 @@ def load_tweets(db_path: str, days: int, latest=False) -> pd.DataFrame:
         pd.DataFrame: pandas Dataframe
     """
     time_delta = date.today() - timedelta(days=days)
+    # TODO redo this, make it two options, older than, younger than
     cnx = sqlite3.connect(db_path)
     columns = [
         "id",
@@ -211,6 +212,15 @@ def rem_on_likes(
     return df
 
 
+def if_empty_df_raise(
+    df: pd.DataFrame, to_print: str = "DataFrame is empty, nothing to add"
+):
+    if df.shape[0] == 0:
+        raise ValueError(to_print)
+    else:
+        pass
+
+
 def prep_batch(
     df: pd.DataFrame, news_domains: list, remove_news=True, **kwargs
 ) -> pd.DataFrame:
@@ -276,27 +286,25 @@ def prep_batch(
     # remove retweets
     # TODO this should be options
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
-    if df.shape[0] == 0:
-        raise ValueError(
-            "ValueError:After removing RT, DataFrame is empty, nothing to add"
-        )
-
+    if_empty_df_raise(
+        df,
+        to_print="ValueError:After removing RT, DataFrame is empty, nothing to add",
+    )
     # TODO change this into function
 
     df = rem_seen_tweets(df, kwargs["data_path"])
-    if df.shape[0] == 0:
-        raise ValueError(
-            "after removing seen, DataFrame is empty, nothing to add"
-        )
+    if_empty_df_raise(
+        df, to_print="after removing seen, DataFrame is empty, nothing to add"
+    )
 
     df = df[df["lang"] == "en"]  # take only english lang tweets
-    if df.shape[0] == 0:
-        raise ValueError(
-            "after removing non-english tweets, DataFrame is empty, nothing to add"
-        )
+    if_empty_df_raise(
+        df,
+        to_print="ValueError:After removing non-english tweets, DataFrame is empty, nothing to add",
+    )
+
     if "likes" in kwargs:
         df = rem_on_likes(df, likes=kwargs["likes"])
-    # TODO refractor so I dont repeat those all raise ValueErrors
 
     # filter out tweets with news links
     # mark tweets as news
@@ -310,12 +318,12 @@ def prep_batch(
         )
     if remove_news is False:
         to_custom_news_feed = df.sample(frac=1).reset_index(drop=True)[:1000]
-
-    if to_custom_news_feed.shape[0] == 0:
-        raise ValueError(
-            "after removing tweets containing news, DataFrame is empty, nothing to add"
-        )
+    if_empty_df_raise(
+        to_custom_news_feed,
+        to_print="after removing tweets containing news, DataFrame is empty, nothing to add",
+    )
     # TODO drop tweets from ME
+    # TODO create test mute lists
     if "mute_list" in kwargs:
         to_custom_news_feed = drop_contains(
             to_custom_news_feed,
@@ -331,8 +339,8 @@ def prep_batch(
         )
     df = to_custom_news_feed[["id", "user"]]
     print(f"{df.shape[0]} tweets in a batch")
-    if df.shape[0] == 0:
-        raise ValueError(
-            "after removing tweets containing muted words, DataFrame is empty, nothing to add"
-        )
+    if_empty_df_raise(
+        to_custom_news_feed,
+        to_print="after removing tweets containing muted words, DataFrame is empty, nothing to add",
+    )
     return df

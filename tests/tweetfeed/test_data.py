@@ -155,7 +155,7 @@ def test_prep_batch(test_df, empty_df, test_news_domains):
         data.prep_batch(df_en, test_news_domains, data_path="")
     assert (
         str(execinfo.value)
-        == "after removing non-english tweets, DataFrame is empty, nothing to add"
+        == "ValueError:After removing non-english tweets, DataFrame is empty, nothing to add"
     )
 
     df_news = data.find_news(test_df, test_news_domains)
