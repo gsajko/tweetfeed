@@ -33,7 +33,7 @@ def test_load_tweets():
     df = data.load_tweets(
         "tweetfeed/data/test_tweets.db", days=0, latest=False
     )
-    assert df.shape == (16, 10)
+    assert df.shape == (18, 10)
 
 
 def test_find_url(test_df):
@@ -86,7 +86,7 @@ def test_drop_contains(test_df):
     df = data.drop_contains(
         test_df, column_name="full_text", str_list=["Twitter"]
     )
-    assert df.shape[0] == test_df_shape[0] - 5
+    assert df.shape[0] == test_df_shape[0] - 6
 
     df = data.drop_contains(
         test_df,
@@ -123,13 +123,19 @@ def test_rem_on_likes(test_df):
     df = data.rem_on_likes(test_df, 5)
     assert df.shape[0] == (test_df.shape[0] - 3)
     df = data.rem_on_likes(test_df, 5, less=False)
-    assert df.shape[0] == (test_df.shape[0] - 13)
+    assert df.shape[0] == (test_df.shape[0] - 15)
 
 
 def test_find_news(test_df, test_news_domains):
     df = data.find_news(test_df, test_news_domains)
     assert df.shape[1] == (test_df.shape[1] + 1)
-    assert sum(df["contains_news"].tolist()) == 3
+    assert sum(df["contains_news"].tolist()) == 4
+
+
+def test_concat_tweet_text(test_df):
+    df = data.concat_tweet_text(test_df)
+    concated_tweet = df[df["id"] == 1338127864542203908]
+    assert len(concated_tweet["full_text"].iloc[0]) == 513
 
 
 def test_prep_batch(test_df, empty_df, test_news_domains):
@@ -141,7 +147,7 @@ def test_prep_batch(test_df, empty_df, test_news_domains):
     )
 
     df_rt = test_df[~(test_df["retweeted_status"] == "N/A")]
-    to_rem += df_rt.shape[0]
+    to_rem += df_rt.shape[0]  # 2
     with pytest.raises(ValueError) as execinfo:
         data.prep_batch(df_rt, test_news_domains, data_path="")
     assert (
@@ -150,18 +156,18 @@ def test_prep_batch(test_df, empty_df, test_news_domains):
     )
 
     df_en = test_df[~(test_df["lang"] == "en")]
-    to_rem += df_en.shape[0]
+    to_rem += df_en.shape[0]  # 1
     with pytest.raises(ValueError) as execinfo:
         data.prep_batch(df_en, test_news_domains, data_path="")
     assert (
         str(execinfo.value)
         == "ValueError:After removing non-english tweets, DataFrame is empty, nothing to add"
     )
-
-    df_news = data.find_news(test_df, test_news_domains)
+    df = data.concat_tweet_text(test_df)
+    df_news = data.find_news(df, test_news_domains)
     df_news = df_news[df_news["contains_news"] == 1]
     df_news.drop(["contains_news"], axis=1, inplace=True)
-    to_rem += df_news.shape[0]
+    to_rem += df_news.shape[0]  # 4 <- should be 5
     with pytest.raises(ValueError) as execinfo:
         data.prep_batch(
             df_news, test_news_domains, data_path="", remove_news=True
@@ -182,16 +188,3 @@ def test_prep_batch(test_df, empty_df, test_news_domains):
         str(execinfo.value)
         == "after removing seen, DataFrame is empty, nothing to add"
     )
-
-
-# test_dfx = data.load_tweets(
-#         "tweetfeed/data/test_tweets.db", days=0, latest=False
-#     )
-
-# with open("tweetfeed/data/news_domains.txt", "r") as f:
-#     news_domains = json.loads(f.read())
-
-# df_news = data.find_news(test_dfx, news_domains)
-# df_news = df_news[df_news["contains_news"] == 1]
-# df_news.drop(["contains_news"], axis=1, inplace=True)
-# data.rem_news_and_rt(df_news, news_domains, data_path="")

@@ -221,34 +221,7 @@ def if_empty_df_raise(
         pass
 
 
-def prep_batch(
-    df: pd.DataFrame, news_domains: list, remove_news=True, **kwargs
-) -> pd.DataFrame:
-    """Loads tweets from database. Applies transformation to them:
-    removes retweets, finds and remove tweets with links to news site
-
-    Args:
-        df (pd.DataFrame): input DataFrame
-        news_domains (list): list containing news sites domains
-        remove_news (bool, optional):
-            If you want to remove news from feed. Defaults to "True"
-        kwargs:
-            mute_list (list, optional):
-                list of words, to remove additional tweets. Defaults to None.
-            mute_list_cs (list, optional):
-                case-sensitive list of words, as above. Defaults to None.
-            data_path (str, optional):
-                Path to folder with "seen.csv". Defaults to "tweetfeed/data/".
-
-    Returns:
-        pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
-    """
-
-    if df.empty:
-        raise ValueError("ValueError: DataFrame is empty, nothing to add")
-
-    # concat tweet with in_reply, quoted tweets
-    # TODO make this into separate function
+def concat_tweet_text(df: pd.DataFrame) -> pd.DataFrame:
     df = df.rename({"full_text": "full_text_short"}, axis=1)
     df.quoted_status = (
         df.quoted_status.replace("N/A", 0).fillna(0).astype(np.int64)
@@ -282,6 +255,38 @@ def prep_batch(
         axis=1,
         inplace=True,
     )
+    return df
+
+
+def prep_batch(
+    df: pd.DataFrame, news_domains: list, remove_news=True, **kwargs
+) -> pd.DataFrame:
+    """Loads tweets from database. Applies transformation to them:
+    removes retweets, finds and remove tweets with links to news site
+
+    Args:
+        df (pd.DataFrame): input DataFrame
+        news_domains (list): list containing news sites domains
+        remove_news (bool, optional):
+            If you want to remove news from feed. Defaults to "True"
+        kwargs:
+            mute_list (list, optional):
+                list of words, to remove additional tweets. Defaults to None.
+            mute_list_cs (list, optional):
+                case-sensitive list of words, as above. Defaults to None.
+            data_path (str, optional):
+                Path to folder with "seen.csv". Defaults to "tweetfeed/data/".
+
+    Returns:
+        pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
+    """
+
+    if df.empty:
+        raise ValueError("ValueError: DataFrame is empty, nothing to add")
+
+    # concat tweet with in_reply, quoted tweets
+    # TODO make this into separate function
+    df = concat_tweet_text(df)
 
     # remove retweets
     # TODO this should be options
