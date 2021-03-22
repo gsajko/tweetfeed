@@ -84,17 +84,17 @@ def test_drop_contains(test_df):
     assert df.shape[0] == test_df_shape[0] - 2
 
     df = data.drop_contains(
-        test_df, column_name="full_text", str_list=["Twitter"]
+        test_df, column_name="full_text", str_list=["Democratic"]
     )
-    assert df.shape[0] == test_df_shape[0] - 6
+    assert df.shape[0] == test_df_shape[0] - 3
 
     df = data.drop_contains(
         test_df,
         column_name="full_text",
-        str_list=["Twitter"],
+        str_list=["Democratic"],
         case_sensitive=True,
     )
-    assert df.shape[0] == test_df_shape[0] - 2
+    assert df.shape[0] == test_df_shape[0] - 1
 
     df = data.drop_contains(
         test_df,

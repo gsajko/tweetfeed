@@ -137,7 +137,7 @@ def drop_contains(
         if not lower:
             df["filter"] = df[column_name].copy()
         df = df[~df["filter"].str.contains(item, regex=False)]
-        df = df.drop(["filter"], axis=1).copy()
+        df = df.drop(["filter"], axis=1)
     return df
 
 
@@ -340,7 +340,7 @@ def prep_batch(
             to_custom_news_feed,
             column_name="full_text",
             str_list=kwargs["mute_list_cs"],
-            case_sensitive=False,
+            case_sensitive=True,
         )
     df = to_custom_news_feed[["id", "user"]]
     print(f"{df.shape[0]} tweets in a batch")
