@@ -79,7 +79,7 @@ def filter_users(df: pd.DataFrame, users_list: List, remove=True):
 
     Args:
         df (pd.DataFrame)
-        users_list (List)
+        users_list (List) : list of int
         remove (bool, optional): If `False`, users not on the list will be removed
 
     Returns:
