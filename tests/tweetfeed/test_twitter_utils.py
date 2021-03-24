@@ -41,6 +41,7 @@ def test_get_collection_id():
         )
     assert str(execinfo.value) == "ValueError: No collection with that name"
 
+
 def test_add_tweets_to_collection(capsys):
     twitter_utils.rem_from_collection(empty_collection, auth_path=auth_path)
     df = twitter_utils.add_tweets_to_collection(
@@ -152,8 +153,6 @@ def test_get_tweets_from_collection():
         empty_collection, auth_path
     )
     assert empty_collection_list == []
-
-
 
 
 def test_filter_users(test_df):

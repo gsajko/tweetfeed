@@ -8,6 +8,7 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 
 from tweetfeed.data import load_tweets
+
 # %matplotlib inline
 
 # %%
@@ -26,10 +27,10 @@ with open("../tweetfeed/data/seen_idx.txt", "r") as f:
 
 # %%
 dataset_df = df_tweets[
-    df_tweets["id"].isin(neg_list_idx+positive_idx+seen_idx)
+    df_tweets["id"].isin(neg_list_idx + positive_idx + seen_idx)
 ]
 idx_in_df = dataset_df["id"].tolist()
-idx_for_df = neg_list_idx+positive_idx+seen_idx
+idx_for_df = neg_list_idx + positive_idx + seen_idx
 # %%
 missing_list = list(set(idx_for_df) - set(idx_in_df))
 

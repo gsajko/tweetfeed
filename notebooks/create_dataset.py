@@ -1,7 +1,7 @@
 # %%
 
 import json
-
+from datetime import datetime
 import pandas as pd
 import tweepy
 
@@ -126,7 +126,8 @@ api = tweepy.API(auth_tw)
 # %%
 def get_engagement():
     favorite_idx = [tweet.id for tweet in tweepy.Cursor(api.favorites).items()]
-    replied_to = []
+    # replied_to = [] I decided to ignore replied_to
+    # I sometimes reply to tweet I don't necessary want to see more.
     quoted = []
     retweeted = []
 
@@ -134,8 +135,8 @@ def get_engagement():
 
         if tweet.is_quote_status:
             quoted.append(tweet.quoted_status_id)
-        if tweet.in_reply_to_status_id:
-            replied_to.append(tweet.in_reply_to_status_id)
+        # if tweet.in_reply_to_status_id:
+        #     replied_to.append(tweet.in_reply_to_status_id)
         if tweet.retweeted:
             try:
                 retweeted.append(tweet.retweeted_status.id)
@@ -144,7 +145,7 @@ def get_engagement():
                 print(tweet.user.name, " ", tweet.id)
                 # print this to comfirm that only my own retweets
                 # are causing errors
-    return list(set(replied_to + quoted + retweeted + favorite_idx))
+    return list(set(quoted + retweeted + favorite_idx))
 
 
 positive_idx = get_engagement()
@@ -165,13 +166,18 @@ seen_idx = list(set(seen_idx) - set(positive_idx + positive_idx))
 
 
 # %%
-# TODO add date time to filenames
-with open("../tweetfeed/data/neg_list_idx.txt", "w") as f:
+with open(
+    f"../tweetfeed/data/{datetime.now():%Y_%m_%d_%H%M}_neg_list_idx.txt", "w"
+) as f:
     f.write(json.dumps(neg_list_idx))
 
-with open("../tweetfeed/data/seen_idx.txt", "w") as f:
+with open(
+    f"../tweetfeed/data/{datetime.now():%Y_%m_%d_%H%M}_seen_idx.txt", "w"
+) as f:
     f.write(json.dumps(seen_idx))
 
-with open("../tweetfeed/data/positive_idx.txt", "w") as f:
+with open(
+    f"../tweetfeed/data/{datetime.now():%Y_%m_%d_%H%M}_positive_idx.txt", "w"
+) as f:
     f.write(json.dumps(positive_idx))
 # %%
