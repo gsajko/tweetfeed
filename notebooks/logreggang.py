@@ -8,55 +8,6 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 
 from tweetfeed.data import load_tweets
-# %matplotlib inline
-pd.set_option('mode.chained_assignment', None)
-# %%
-## Load tweets
-# %%
-# don't grab tweets newer then initial creation of database
-t1 = date.fromisoformat('2021-03-16')
-time_diff = date.today() - t1
-df_tweets = load_tweets("20210315home_fav.db", days=time_diff.days)
-
-# %%
-with open("../tweetfeed/data/2021_03_24_1434_neg_list_idx.txt", "r") as f:
-    neg_list_idx = json.loads(f.read())
-with open("../tweetfeed/data/2021_03_24_1434_positive_idx.txt", "r") as f:
-    positive_idx = json.loads(f.read())
-with open("../tweetfeed/data/2021_03_24_1434_seen_idx.txt", "r") as f:
-    seen_idx = json.loads(f.read())
-
-# %%
-dataset_df = df_tweets[df_tweets["id"].isin(neg_list_idx + positive_idx)]
-idx_in_df = dataset_df["id"].tolist()
-idx_for_df = neg_list_idx+positive_idx+seen_idx
-# %%
-dataset_df.lang.value_counts()
-dataset_df = dataset_df[dataset_df.lang == "en"]
-
-# %%
-missing_lists = list(set(idx_for_df) - set(idx_in_df))
-
-# %%
-len(list(set(positive_idx) - set(idx_in_df)))
-# %%
-len(list(set(neg_list_idx) - set(idx_in_df)))
-# %%
-len(list(set(seen_idx) - set(idx_in_df)))
-# %%
-(set(neg_list_idx) - set(idx_in_df))
-
-# %%
-# %%
-import re
-import json
-from datetime import date, timedelta
-import numpy as np
-import pandas as pd
-import seaborn as sns
-from matplotlib import pyplot as plt
-
-from tweetfeed.data import load_tweets
 
 # %matplotlib inline
 pd.set_option("mode.chained_assignment", None)
@@ -64,6 +15,19 @@ pd.set_option("mode.chained_assignment", None)
 ## Load tweets
 # %%
 # don't grab tweets newer then initial creation of database
+t1 = date.fromisoformat("2021-03-16")
+time_diff = date.today() - t1
+df_tweets = load_tweets("20210315home_fav.db", days=time_diff.days)
+
+# %%
+
+with open("../tweetfeed/data/2021_03_24_1434_neg_list_idx.txt", "r") as f:
+    neg_list_idx = json.loads(f.read())
+with open("../tweetfeed/data/2021_03_24_1434_positive_idx.txt", "r") as f:
+    positive_idx = json.loads(f.read())
+with open("../tweetfeed/data/2021_03_24_1434_seen_idx.txt", "r") as f:
+    seen_idx = json.loads(f.read())
+
 
 # dataset_df.loc[32668, "clean_text"]
 # %%
@@ -93,7 +57,7 @@ from sklearn.model_selection import train_test_split
 
 # %%
 # Cleaning
-
+dataset_df = df_tweets[df_tweets["id"].isin(neg_list_idx + positive_idx)]
 dataset_df.loc[(dataset_df["id"].isin(neg_list_idx)), "labels"] = 0
 dataset_df.loc[(dataset_df["id"].isin(positive_idx)), "labels"] = 1
 
@@ -250,46 +214,13 @@ x_cv = cv.fit_transform(x)
 
 
 x_train_cv, x_test_cv, y_train_cv, y_test_cv = train_test_split(x_cv, y, test_size=0.2, random_state=0)
-
-# %%
-
-from sklearn.dummy import DummyClassifier
-clf = DummyClassifier(strategy='most_frequent', random_state=0)
-clf = clf.fit(x_train_cv, y_train_cv)
-
-from sklearn.metrics import confusion_matrix
-y_pred_cv = clf.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
-from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
-
-
-
-
-# %%
-
 from sklearn.linear_model import LogisticRegression
 log_cv = LogisticRegression() 
 log_cv.fit(x_train_cv,y_train_cv)
 
-from sklearn.metrics import confusion_matrix
-y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
-from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
-# %%
-weights = {0:0.008, 1:1.0} #TODO experiment with diff values here
-log_cv = LogisticRegression(class_weight=weights) 
-log_cv.fit(x_train_cv,y_train_cv)
 
-from sklearn.metrics import confusion_matrix
-y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
-from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
 # %%
-log_cv = LogisticRegression(class_weight="balanced") 
-log_cv.fit(x_train_cv,y_train_cv)
+
 
 from sklearn.metrics import confusion_matrix
 y_pred_cv = log_cv.predict(x_test_cv)
@@ -297,66 +228,9 @@ print(confusion_matrix(y_test_cv,y_pred_cv))
 from sklearn.metrics import classification_report
 print(classification_report(y_test_cv,y_pred_cv))
 
-# %%
-weights = {0:0.005, 1:1.0} #TODO experiment with diff values here
-log_cv = LogisticRegression(class_weight=weights) 
-log_cv.fit(x_train_cv,y_train_cv)
 
-from sklearn.metrics import confusion_matrix
-y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
-from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
-# %%
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
-lr = LogisticRegression(solver='newton-cg')
-
-#Setting the range for class weights
-weights = np.linspace(0.0,0.99,200)
-
-#Creating a dictionary grid for grid search
-param_grid = {'class_weight': [{0:x, 1:1.0-x} for x in weights]}
-
-#Fitting grid search to the train data with 5 folds
-gridsearch = GridSearchCV(estimator= lr, 
-                          param_grid= param_grid,
-                          cv=StratifiedKFold(), 
-                          n_jobs=-1, 
-                          scoring='f1', 
-                          verbose=2).fit(x_train_cv, y_train_cv)
-
-#Ploting the score for different values of weight
-sns.set_style('whitegrid')
-plt.figure(figsize=(12,8))
-weigh_data = pd.DataFrame({ 'score': gridsearch.cv_results_['mean_test_score'], 'weight': (1- weights)})
-sns.lineplot(weigh_data['weight'], weigh_data['score'])
-plt.xlabel('Weight for class 1')
-plt.ylabel('F1 score')
-plt.xticks([round(i/10,1) for i in range(0,11,1)])
-plt.title('Scoring for different class weights', fontsize=24)
-# %%
 # %%
 
-weights = {0:0.03, 1:0.97} 
-log_cv = LogisticRegression(class_weight=weights) 
-log_cv.fit(x_train_cv,y_train_cv)
-
-from sklearn.metrics import confusion_matrix
-y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
-from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
-# %%
-weights = {0:0.005, 1:1.0} #TODO experiment with diff values here
-log_cv = LogisticRegression(class_weight=weights) 
-log_cv.fit(x_train_cv,y_train_cv)
-
-from sklearn.metrics import confusion_matrix
-y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
-from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
-# %%
 
 tv = TfidfVectorizer(stop_words='english', binary=False, ngram_range=(1,3))
 x_tv = tv.fit_transform(x)
@@ -395,43 +269,6 @@ print(classification_report(y_test_tv,y_pred_tv))
 # %%
 # %%
 # %%
-
-## EDA
-## eda
-### most liked
-
-### tweet lenght
-### lang?
-
-## work on "full text"
-### concat with replies to... RT
-## clean it up
-### replace @
-### split mutliword hastags
-### replace url with page titles
-
-# %%
-
-
-# %%
-
-# %%
-
-
-# %%
-
-
-# %%
-
-
-# %%
-# %%
-# %%
-# %%
-# %%
-# %%
-
-
 
 ## EDA
 ## eda
