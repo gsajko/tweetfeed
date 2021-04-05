@@ -1,16 +1,12 @@
 # %%
 import re
 import json
-from datetime import date, timedelta
-import numpy as np
+from datetime import date
 import pandas as pd
-import seaborn as sns
-from matplotlib import pyplot as plt
 
 from nltk import word_tokenize
 
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
 from tweetfeed.data import load_tweets
@@ -74,7 +70,7 @@ clean_df.sentiment.value_counts()
 
 # %%
 # high class imbalances!
-clean_df.sentiment.value_counts()[1]/clean_df.shape[0]
+clean_df.sentiment.value_counts()[1] / clean_df.shape[0]
 
 # %%
 df = clean_df.copy()
@@ -100,33 +96,38 @@ test_size = 0.15
 # Split (train)
 X_train, X_, y_train, y_ = train_test_split(X, y, train_size=train_size)
 
-print (f"train: {X_train.shape[0]} ({(X_train.shape[0] / X.shape[0]):.2f})\n"
-       f"remaining: {X_.shape[0]} ({(X_.shape[0]) / X.shape[0]:.2f})")
+print(
+    f"train: {X_train.shape[0]} ({(X_train.shape[0] / X.shape[0]):.2f})\n"
+    f"remaining: {X_.shape[0]} ({(X_.shape[0]) / X.shape[0]:.2f})"
+)
 # %%
 # Split (test)
-X_val, X_test, y_val, y_test = train_test_split(
-    X_, y_, train_size=0.5)
+X_val, X_test, y_val, y_test = train_test_split(X_, y_, train_size=0.5)
 
-print(f"train: {X_train.shape[0]} ({X_train.shape[0]/X.shape[0]:.2f})\n"
-      f"val: {X_val.shape[0]} ({X_val.shape[0]/X.shape[0]:.2f})\n"
-      f"test: {X_test.shape[0]} ({X_test.shape[0]/X.shape[0]:.2f})")
+print(
+    f"train: {X_train.shape[0]} ({X_train.shape[0]/X.shape[0]:.2f})\n"
+    f"val: {X_val.shape[0]} ({X_val.shape[0]/X.shape[0]:.2f})\n"
+    f"test: {X_test.shape[0]} ({X_test.shape[0]/X.shape[0]:.2f})"
+)
 
 
 # %%
 # Get counts for each class
 counts = {}
 
-counts['train_counts'] = y_train.value_counts()
-counts['val_counts'] = y_val.value_counts()
-counts['test_counts'] = y_test.value_counts()
+counts["train_counts"] = y_train.value_counts()
+counts["val_counts"] = y_val.value_counts()
+counts["test_counts"] = y_test.value_counts()
 
-counts_df = pd.DataFrame({
-    'train': counts['train_counts'],
-    'val': counts['val_counts'],
-    'test': counts['test_counts']
-}).T.fillna(0)
+counts_df = pd.DataFrame(
+    {
+        "train": counts["train_counts"],
+        "val": counts["val_counts"],
+        "test": counts["test_counts"],
+    }
+).T.fillna(0)
 
 counts_df["ratio"] = counts_df[1.0] / (counts_df[1.0] + counts_df[0.0])
-counts_df
+print(counts_df)
 
-#it's ok. So let's move to building baseline.
+# it's ok-ish. So let's move to building baseline.

@@ -314,15 +314,18 @@ def prep_batch(
     # filter out tweets with news links
     # mark tweets as news
     df = find_news(df, news_domains)  # add news column
-
+    if "batch_size" in kwargs:
+        batch_size = kwargs["batch_size"]
+    else:
+        batch_size = 1000    
     if remove_news:
         to_custom_news_feed = (
             df[df["contains_news"] == 0]
             .sample(frac=1)
-            .reset_index(drop=True)[:1000]
+            .reset_index(drop=True)[:batch_size]
         )
     if remove_news is False:
-        to_custom_news_feed = df.sample(frac=1).reset_index(drop=True)[:1000]
+        to_custom_news_feed = df.sample(frac=1).reset_index(drop=True)[:batch_size]
     if_empty_df_raise(
         to_custom_news_feed,
         to_print="after removing tweets containing news, DataFrame is empty, nothing to add",
