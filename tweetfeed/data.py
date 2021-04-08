@@ -296,11 +296,12 @@ def prep_batch(
         to_print="ValueError:After removing RT, DataFrame is empty, nothing to add",
     )
     # TODO change this into function
-
-    df = rem_seen_tweets(df, kwargs["data_path"])
-    if_empty_df_raise(
-        df, to_print="after removing seen, DataFrame is empty, nothing to add"
-    )
+    if "data_path" in kwargs:
+        df = rem_seen_tweets(df, kwargs["data_path"])
+        if_empty_df_raise(
+            df,
+            to_print="after removing seen, DataFrame is empty, nothing to add",
+        )
 
     df = df[df["lang"] == "en"]  # take only english lang tweets
     if_empty_df_raise(
@@ -317,7 +318,7 @@ def prep_batch(
     if "batch_size" in kwargs:
         batch_size = kwargs["batch_size"]
     else:
-        batch_size = 1000    
+        batch_size = 1000
     if remove_news:
         to_custom_news_feed = (
             df[df["contains_news"] == 0]
@@ -325,7 +326,9 @@ def prep_batch(
             .reset_index(drop=True)[:batch_size]
         )
     if remove_news is False:
-        to_custom_news_feed = df.sample(frac=1).reset_index(drop=True)[:batch_size]
+        to_custom_news_feed = df.sample(frac=1).reset_index(drop=True)[
+            :batch_size
+        ]
     if_empty_df_raise(
         to_custom_news_feed,
         to_print="after removing tweets containing news, DataFrame is empty, nothing to add",
@@ -345,7 +348,7 @@ def prep_batch(
             str_list=kwargs["mute_list_cs"],
             case_sensitive=True,
         )
-    df = to_custom_news_feed[["id", "user"]]
+    df = to_custom_news_feed[["id", "user", "full_text"]]
     print(f"{df.shape[0]} tweets in a batch")
     if_empty_df_raise(
         to_custom_news_feed,

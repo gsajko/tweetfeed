@@ -1,20 +1,18 @@
 # %%
-import re
 import json
+import pickle
+import re
 from datetime import date
+
 import numpy as np
 import pandas as pd
-import pickle
 from nltk import word_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 
 from tweetfeed.data import load_tweets, prep_batch
-from tweetfeed.twitter_utils import (
-    filter_users,
-    get_users_from_list,
-)
+from tweetfeed.twitter_utils import filter_users, get_users_from_list
 
 # %matplotlib inline
 pd.set_option("mode.chained_assignment", None)
@@ -66,11 +64,13 @@ def cleaning(df):
 
 
 df = cleaning(dataset_df)
+import random
+
+import torch
+
 # %%
 # Baseline
 from sklearn.metrics import precision_recall_fscore_support
-import torch
-import random
 
 print("cuda: ", torch.cuda.is_available())
 # %%
@@ -173,16 +173,16 @@ print(log_cv.predict_proba(X_test)[:15])
 # %%
 
 # save model
-filename = 'log_cv_baseline.pkl'
+filename = "log_cv_baseline.pkl"
 # pickle.dump(log_cv, open(filename, 'wb'))
-d_filename = 'cv_baseline.pkl'
+d_filename = "cv_baseline.pkl"
 # pickle.dump(cv, open(d_filename, 'wb'))
 # save dictionary! too TODO
 
 # load model
-with open(filename, 'rb') as file:
+with open(filename, "rb") as file:
     model = pickle.load(file)
-with open(d_filename, 'rb') as file:
+with open(d_filename, "rb") as file:
     cv = pickle.load(file)
 # %%
 # prepare data
@@ -219,7 +219,7 @@ df_to_pred = prep_batch(
     mute_list=mute_list,
     mute_list_cs=mute_list_cs,
     data_path="../tweetfeed/data/",
-    batch_size = 100
+    batch_size=100,
 )
 
 # %%

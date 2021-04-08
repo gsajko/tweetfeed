@@ -2,19 +2,16 @@
 
 import json
 from datetime import datetime
+
 import pandas as pd
 import tweepy
 
-from tweetfeed.data import (
-    concat_tweet_text,
-    find_news,
-    load_tweets,
-)
+from tweetfeed.data import concat_tweet_text, find_news, load_tweets
 from tweetfeed.twitter_utils import (
+    filter_users,
     get_collection_id,
     get_tweets_from_collection,
     get_users_from_list,
-    filter_users,
 )
 
 # %%

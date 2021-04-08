@@ -1,20 +1,22 @@
 # %%
-import re
 import json
+import re
 from datetime import date, timedelta
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
 
 from tweetfeed.data import load_tweets
+
 # %matplotlib inline
-pd.set_option('mode.chained_assignment', None)
+pd.set_option("mode.chained_assignment", None)
 # %%
 ## Load tweets
 # %%
 # don't grab tweets newer then initial creation of database
-t1 = date.fromisoformat('2021-03-16')
+t1 = date.fromisoformat("2021-03-16")
 time_diff = date.today() - t1
 df_tweets = load_tweets("20210315home_fav.db", days=time_diff.days)
 
@@ -29,7 +31,7 @@ with open("../tweetfeed/data/2021_03_24_1434_seen_idx.txt", "r") as f:
 # %%
 dataset_df = df_tweets[df_tweets["id"].isin(neg_list_idx + positive_idx)]
 idx_in_df = dataset_df["id"].tolist()
-idx_for_df = neg_list_idx+positive_idx+seen_idx
+idx_for_df = neg_list_idx + positive_idx + seen_idx
 # %%
 dataset_df.lang.value_counts()
 dataset_df = dataset_df[dataset_df.lang == "en"]
@@ -46,11 +48,13 @@ len(list(set(seen_idx) - set(idx_in_df)))
 # %%
 (set(neg_list_idx) - set(idx_in_df))
 
+import json
+
 # %%
 # %%
 import re
-import json
 from datetime import date, timedelta
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -77,19 +81,19 @@ combined_pat = "|".join((pat1, pat2, pat3, pat4, pat5))
 
 # %%
 
+import re
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 # import nltk
 # nltk.download('punkt')
 # %%
 import pandas as pd
-import numpy as np
-import re
 from nltk import word_tokenize
-
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
+from wordcloud import WordCloud
 
 # %%
 # Cleaning
@@ -249,133 +253,159 @@ x_cv = cv.fit_transform(x)
 # %%
 
 
-x_train_cv, x_test_cv, y_train_cv, y_test_cv = train_test_split(x_cv, y, test_size=0.2, random_state=0)
+x_train_cv, x_test_cv, y_train_cv, y_test_cv = train_test_split(
+    x_cv, y, test_size=0.2, random_state=0
+)
 
 # %%
 
 from sklearn.dummy import DummyClassifier
-clf = DummyClassifier(strategy='most_frequent', random_state=0)
+
+clf = DummyClassifier(strategy="most_frequent", random_state=0)
 clf = clf.fit(x_train_cv, y_train_cv)
 
 from sklearn.metrics import confusion_matrix
+
 y_pred_cv = clf.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
+print(confusion_matrix(y_test_cv, y_pred_cv))
 from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
 
-
+print(classification_report(y_test_cv, y_pred_cv))
 
 
 # %%
 
 from sklearn.linear_model import LogisticRegression
-log_cv = LogisticRegression() 
-log_cv.fit(x_train_cv,y_train_cv)
+
+log_cv = LogisticRegression()
+log_cv.fit(x_train_cv, y_train_cv)
 
 from sklearn.metrics import confusion_matrix
+
 y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
+print(confusion_matrix(y_test_cv, y_pred_cv))
 from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
+
+print(classification_report(y_test_cv, y_pred_cv))
 # %%
-weights = {0:0.008, 1:1.0} #TODO experiment with diff values here
-log_cv = LogisticRegression(class_weight=weights) 
-log_cv.fit(x_train_cv,y_train_cv)
+weights = {0: 0.008, 1: 1.0}  # TODO experiment with diff values here
+log_cv = LogisticRegression(class_weight=weights)
+log_cv.fit(x_train_cv, y_train_cv)
 
 from sklearn.metrics import confusion_matrix
+
 y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
+print(confusion_matrix(y_test_cv, y_pred_cv))
 from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
+
+print(classification_report(y_test_cv, y_pred_cv))
 # %%
-log_cv = LogisticRegression(class_weight="balanced") 
-log_cv.fit(x_train_cv,y_train_cv)
+log_cv = LogisticRegression(class_weight="balanced")
+log_cv.fit(x_train_cv, y_train_cv)
 
 from sklearn.metrics import confusion_matrix
+
 y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
+print(confusion_matrix(y_test_cv, y_pred_cv))
 from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
+
+print(classification_report(y_test_cv, y_pred_cv))
 
 # %%
-weights = {0:0.005, 1:1.0} #TODO experiment with diff values here
-log_cv = LogisticRegression(class_weight=weights) 
-log_cv.fit(x_train_cv,y_train_cv)
+weights = {0: 0.005, 1: 1.0}  # TODO experiment with diff values here
+log_cv = LogisticRegression(class_weight=weights)
+log_cv.fit(x_train_cv, y_train_cv)
 
 from sklearn.metrics import confusion_matrix
+
 y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
+print(confusion_matrix(y_test_cv, y_pred_cv))
 from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
+
+print(classification_report(y_test_cv, y_pred_cv))
 # %%
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
-lr = LogisticRegression(solver='newton-cg')
 
-#Setting the range for class weights
-weights = np.linspace(0.0,0.99,200)
+lr = LogisticRegression(solver="newton-cg")
 
-#Creating a dictionary grid for grid search
-param_grid = {'class_weight': [{0:x, 1:1.0-x} for x in weights]}
+# Setting the range for class weights
+weights = np.linspace(0.0, 0.99, 200)
 
-#Fitting grid search to the train data with 5 folds
-gridsearch = GridSearchCV(estimator= lr, 
-                          param_grid= param_grid,
-                          cv=StratifiedKFold(), 
-                          n_jobs=-1, 
-                          scoring='f1', 
-                          verbose=2).fit(x_train_cv, y_train_cv)
+# Creating a dictionary grid for grid search
+param_grid = {"class_weight": [{0: x, 1: 1.0 - x} for x in weights]}
 
-#Ploting the score for different values of weight
-sns.set_style('whitegrid')
-plt.figure(figsize=(12,8))
-weigh_data = pd.DataFrame({ 'score': gridsearch.cv_results_['mean_test_score'], 'weight': (1- weights)})
-sns.lineplot(weigh_data['weight'], weigh_data['score'])
-plt.xlabel('Weight for class 1')
-plt.ylabel('F1 score')
-plt.xticks([round(i/10,1) for i in range(0,11,1)])
-plt.title('Scoring for different class weights', fontsize=24)
+# Fitting grid search to the train data with 5 folds
+gridsearch = GridSearchCV(
+    estimator=lr,
+    param_grid=param_grid,
+    cv=StratifiedKFold(),
+    n_jobs=-1,
+    scoring="f1",
+    verbose=2,
+).fit(x_train_cv, y_train_cv)
+
+# Ploting the score for different values of weight
+sns.set_style("whitegrid")
+plt.figure(figsize=(12, 8))
+weigh_data = pd.DataFrame(
+    {
+        "score": gridsearch.cv_results_["mean_test_score"],
+        "weight": (1 - weights),
+    }
+)
+sns.lineplot(weigh_data["weight"], weigh_data["score"])
+plt.xlabel("Weight for class 1")
+plt.ylabel("F1 score")
+plt.xticks([round(i / 10, 1) for i in range(0, 11, 1)])
+plt.title("Scoring for different class weights", fontsize=24)
 # %%
 # %%
 
-weights = {0:0.03, 1:0.97} 
-log_cv = LogisticRegression(class_weight=weights) 
-log_cv.fit(x_train_cv,y_train_cv)
+weights = {0: 0.03, 1: 0.97}
+log_cv = LogisticRegression(class_weight=weights)
+log_cv.fit(x_train_cv, y_train_cv)
 
 from sklearn.metrics import confusion_matrix
+
 y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
+print(confusion_matrix(y_test_cv, y_pred_cv))
 from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
+
+print(classification_report(y_test_cv, y_pred_cv))
 # %%
-weights = {0:0.005, 1:1.0} #TODO experiment with diff values here
-log_cv = LogisticRegression(class_weight=weights) 
-log_cv.fit(x_train_cv,y_train_cv)
+weights = {0: 0.005, 1: 1.0}  # TODO experiment with diff values here
+log_cv = LogisticRegression(class_weight=weights)
+log_cv.fit(x_train_cv, y_train_cv)
 
 from sklearn.metrics import confusion_matrix
+
 y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
+print(confusion_matrix(y_test_cv, y_pred_cv))
 from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
+
+print(classification_report(y_test_cv, y_pred_cv))
 # %%
 
-tv = TfidfVectorizer(stop_words='english', binary=False, ngram_range=(1,3))
+tv = TfidfVectorizer(stop_words="english", binary=False, ngram_range=(1, 3))
 x_tv = tv.fit_transform(x)
-x_train_tv, x_test_tv, y_train_tv, y_test_tv = train_test_split(x_tv, y, test_size=0.2, random_state=0)
+x_train_tv, x_test_tv, y_train_tv, y_test_tv = train_test_split(
+    x_tv, y, test_size=0.2, random_state=0
+)
 
 
 # %%
 
 
-log_tv = LogisticRegression() 
-log_tv.fit(x_train_tv,y_train_tv)
+log_tv = LogisticRegression()
+log_tv.fit(x_train_tv, y_train_tv)
 
 
 # %%
 
 
 y_pred_tv = log_tv.predict(x_test_tv)
-print(confusion_matrix(y_test_tv,y_pred_tv))
-print(classification_report(y_test_tv,y_pred_tv))
+print(confusion_matrix(y_test_tv, y_pred_tv))
+print(classification_report(y_test_tv, y_pred_tv))
 
 
 # %%
@@ -430,7 +460,6 @@ print(classification_report(y_test_tv,y_pred_tv))
 # %%
 # %%
 # %%
-
 
 
 ## EDA

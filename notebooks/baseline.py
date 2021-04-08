@@ -1,7 +1,8 @@
 # %%
-import re
 import json
+import re
 from datetime import date
+
 import numpy as np
 import pandas as pd
 from nltk import word_tokenize
@@ -60,11 +61,13 @@ def cleaning(df):
 
 
 df = cleaning(dataset_df)
+import random
+
+import torch
+
 # %%
 # Baseline
 from sklearn.metrics import precision_recall_fscore_support
-import torch
-import random
 
 print("cuda: ", torch.cuda.is_available())
 # %%
@@ -334,8 +337,7 @@ for s in solver:
 
 # %%
 # So for now, I'll be using default Logistic Regression with balanced wieghts
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.neighbors import KNeighborsClassifier

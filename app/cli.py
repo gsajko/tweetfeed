@@ -118,7 +118,7 @@ def to_collection(
         mute_list=mute_list,
         mute_list_cs=mute_list_cs,
         data_path="tweetfeed/data/",
-        remove_news=not dont_rem_news,
+        remove_news=True,
         likes=min_likes,
     )
 

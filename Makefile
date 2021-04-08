@@ -21,7 +21,7 @@ mypy:
 
 style:
 	black .
-	flake8
+	flake8 --exclude=notebooks/*
 	isort .
 	@echo "The style pass! ✨ 🍰 ✨"	
 

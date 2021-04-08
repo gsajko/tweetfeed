@@ -1,11 +1,10 @@
 # %%
-import re
 import json
+import re
 from datetime import date
+
 import pandas as pd
-
 from nltk import word_tokenize
-
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 

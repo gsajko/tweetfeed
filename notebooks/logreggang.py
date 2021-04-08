@@ -1,7 +1,8 @@
 # %%
-import re
 import json
+import re
 from datetime import date, timedelta
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -41,19 +42,19 @@ combined_pat = "|".join((pat1, pat2, pat3, pat4, pat5))
 
 # %%
 
+import re
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 # import nltk
 # nltk.download('punkt')
 # %%
 import pandas as pd
-import numpy as np
-import re
 from nltk import word_tokenize
-
-from wordcloud import WordCloud
-import matplotlib.pyplot as plt
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import train_test_split
+from wordcloud import WordCloud
 
 # %%
 # Cleaning
@@ -213,43 +214,50 @@ x_cv = cv.fit_transform(x)
 # %%
 
 
-x_train_cv, x_test_cv, y_train_cv, y_test_cv = train_test_split(x_cv, y, test_size=0.2, random_state=0)
+x_train_cv, x_test_cv, y_train_cv, y_test_cv = train_test_split(
+    x_cv, y, test_size=0.2, random_state=0
+)
 from sklearn.linear_model import LogisticRegression
-log_cv = LogisticRegression() 
-log_cv.fit(x_train_cv,y_train_cv)
+
+log_cv = LogisticRegression()
+log_cv.fit(x_train_cv, y_train_cv)
 
 
 # %%
 
 
 from sklearn.metrics import confusion_matrix
+
 y_pred_cv = log_cv.predict(x_test_cv)
-print(confusion_matrix(y_test_cv,y_pred_cv))
+print(confusion_matrix(y_test_cv, y_pred_cv))
 from sklearn.metrics import classification_report
-print(classification_report(y_test_cv,y_pred_cv))
+
+print(classification_report(y_test_cv, y_pred_cv))
 
 
 # %%
 
 
-tv = TfidfVectorizer(stop_words='english', binary=False, ngram_range=(1,3))
+tv = TfidfVectorizer(stop_words="english", binary=False, ngram_range=(1, 3))
 x_tv = tv.fit_transform(x)
-x_train_tv, x_test_tv, y_train_tv, y_test_tv = train_test_split(x_tv, y, test_size=0.2, random_state=0)
+x_train_tv, x_test_tv, y_train_tv, y_test_tv = train_test_split(
+    x_tv, y, test_size=0.2, random_state=0
+)
 
 
 # %%
 
 
-log_tv = LogisticRegression() 
-log_tv.fit(x_train_tv,y_train_tv)
+log_tv = LogisticRegression()
+log_tv.fit(x_train_tv, y_train_tv)
 
 
 # %%
 
 
 y_pred_tv = log_tv.predict(x_test_tv)
-print(confusion_matrix(y_test_tv,y_pred_tv))
-print(classification_report(y_test_tv,y_pred_tv))
+print(confusion_matrix(y_test_tv, y_pred_tv))
+print(classification_report(y_test_tv, y_pred_tv))
 
 
 # %%
