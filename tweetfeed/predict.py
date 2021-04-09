@@ -94,5 +94,5 @@ X = cv.transform(x)
 # get predictions
 df["predicted"] = model.predict_proba(X)[:, 1]
 # %%
-df[["id", "predicted"]].to_csv("data/predictions.csv", mode="a")
+df[["id", "predicted"]].to_csv("data/predictions.csv", mode="a", index=False)
 # %%
