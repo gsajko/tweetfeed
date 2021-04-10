@@ -297,11 +297,22 @@ def prep_batch(
     )
     # TODO change this into function
     if "data_path" in kwargs:
-        df = rem_seen_tweets(df, kwargs["data_path"])
+        d_path = kwargs["data_path"]
+        df = rem_seen_tweets(df, d_path)
         if_empty_df_raise(
             df,
             to_print="after removing seen, DataFrame is empty, nothing to add",
         )
+        predictions = pd.read_csv(f"{d_path}predictions.csv")
+        df.insert(
+            3,
+            "preds",
+            df["id"].map(
+                predictions.set_index("id")["predicted"], na_action="ignore"
+            ),
+        )
+        df["preds"] = df["preds"].fillna(0)
+        df.sort_values(by="preds", ascending=False, inplace=True)
 
     df = df[df["lang"] == "en"]  # take only english lang tweets
     if_empty_df_raise(
@@ -315,20 +326,23 @@ def prep_batch(
     # filter out tweets with news links
     # mark tweets as news
     df = find_news(df, news_domains)  # add news column
+    # TODO remove batch size, don't need it
     if "batch_size" in kwargs:
         batch_size = kwargs["batch_size"]
     else:
-        batch_size = 1000
+        batch_size = df.shape[0]
     if remove_news:
         to_custom_news_feed = (
             df[df["contains_news"] == 0]
-            .sample(frac=1)
+            # .sample(frac=1)
             .reset_index(drop=True)[:batch_size]
         )
     if remove_news is False:
-        to_custom_news_feed = df.sample(frac=1).reset_index(drop=True)[
-            :batch_size
-        ]
+        to_custom_news_feed = (
+            df
+            # .sample(frac=1)
+            .reset_index(drop=True)[:batch_size]
+        )
     if_empty_df_raise(
         to_custom_news_feed,
         to_print="after removing tweets containing news, DataFrame is empty, nothing to add",

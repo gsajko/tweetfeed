@@ -46,9 +46,11 @@ predictions = pd.read_csv(f"../tweetfeed/data/predictions.csv")
 df_to_pred.insert(
     3,
     "preds",
-    df_to_pred["id"].map(predictions.set_index("id")["predicted"], na_action="ignore"),
+    df_to_pred["id"].map(
+        predictions.set_index("id")["predicted"], na_action="ignore"
+    ),
 )
 # %%
-df_to_pred["preds"] =df_to_pred["preds"].fillna(0)
+df_to_pred["preds"] = df_to_pred["preds"].fillna(0)
 # %%
 df_to_pred.sort_values(by="preds", ascending=False)

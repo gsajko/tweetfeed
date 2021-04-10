@@ -37,6 +37,7 @@ seaborn = "^0.11.1"
 nltk = "^3.5"
 wordcloud = "^1.8.1"
 sklearn = "^0.0"
+mlflow = "1.15.0"
 
 [tool.black]
 line-length = 79
