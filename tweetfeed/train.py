@@ -3,12 +3,11 @@ from __future__ import print_function
 import mlflow
 import mlflow.sklearn
 import numpy as np
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_recall_fscore_support
 
-from tweetfeed.data import cleaning, create_dataset, get_data_splits_cv
 from tweetfeed import utils
+from tweetfeed.data import cleaning, create_dataset, get_data_splits_cv
 
 
 def get_performance(y_true, y_pred, classes):

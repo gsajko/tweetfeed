@@ -1,4 +1,4 @@
-# %%
+
 import json
 import pickle
 import re
@@ -8,8 +8,6 @@ from nltk import word_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
 
 from tweetfeed.data import load_tweets, prep_batch
-
-# %%
 
 # Cleaning
 
@@ -22,11 +20,9 @@ def preprocess_cv(x):
     return X
 
 
-# %%
-
 # classes = [0, 1]
-filename = "model/log_cv_baseline.pkl"
-d_filename = "model/cv_baseline.pkl"
+filename = "tweetfeed/model/log_cv_baseline.pkl"
+d_filename = "tweetfeed/model/cv_baseline.pkl"
 
 # load model
 with open(filename, "rb") as file:
@@ -35,15 +31,11 @@ with open(filename, "rb") as file:
 with open(d_filename, "rb") as file:
     cv = pickle.load(file)
 
-
-# %%
-# prepare data
-# %%
+# prepare dat
 # load data from SQL
 df_tweets = load_tweets("../home.db", days=0)
 
-# load files
-# %%
+# load file
 ## use prep_batch to concat tweet texts
 with open("data/news_domains.txt", "r") as f:
     news_domains = json.loads(f.read())
@@ -55,8 +47,6 @@ df_to_pred = prep_batch(
     batch_size=df_tweets.shape[0],
 )
 
-
-# %%
 # clean data
 def cleaning(df):
     pat1 = "@[^ ]+"
@@ -81,18 +71,11 @@ def cleaning(df):
     clean_df["full_text"] = pd.DataFrame(clean_tweet_texts, columns=["text"])
     return clean_df
 
-
-# %%
 df = cleaning(df_to_pred)
-
-# %%
 # preprocess using cv
 x = df["full_text"]
 # X = cv.fit_transform(x)
-X = cv.transform(x)
-# %%
+X = cv.transform(x
 # get predictions
-df["predicted"] = model.predict_proba(X)[:, 1]
-# %%
-df[["id", "predicted"]].to_csv("data/predictions.csv", mode="a", index=False)
-# %%
+df["predicted"] = model.predict_proba(X)[:, 1
+df[["id", "predicted"]].to_csv("data/predictions.csv", mode="a", index=False

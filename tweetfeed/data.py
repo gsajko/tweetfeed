@@ -8,7 +8,6 @@ from urllib.parse import urlparse
 import numpy as np
 import pandas as pd
 from nltk import word_tokenize
-
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 

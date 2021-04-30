@@ -1,5 +1,6 @@
-from tweetfeed import utils
 import numpy as np
+
+from tweetfeed import utils
 
 
 def test_set_seed():
