@@ -158,7 +158,7 @@ def test_prep_batch(test_df, empty_df, test_news_domains):
     df_en = test_df[~(test_df["lang"] == "en")]
     to_rem += df_en.shape[0]  # 1
     with pytest.raises(ValueError) as execinfo:
-        data.prep_batch(df_en, test_news_domains, data_path="")
+        data.prep_batch(df_en, test_news_domains)
     assert (
         str(execinfo.value)
         == "ValueError:After removing non-english tweets, DataFrame is empty, nothing to add"
@@ -169,15 +169,13 @@ def test_prep_batch(test_df, empty_df, test_news_domains):
     df_news.drop(["contains_news"], axis=1, inplace=True)
     to_rem += df_news.shape[0]  # 4 <- should be 5
     with pytest.raises(ValueError) as execinfo:
-        data.prep_batch(
-            df_news, test_news_domains, data_path="", remove_news=True
-        )
+        data.prep_batch(df_news, test_news_domains, remove_news=True)
     assert (
         str(execinfo.value)
         == "after removing tweets containing news, DataFrame is empty, nothing to add"
     )
 
-    df = data.prep_batch(test_df, test_news_domains, data_path="")
+    df = data.prep_batch(test_df, test_news_domains)
     assert df.shape[0] == (test_df.shape[0] - to_rem)
 
     with pytest.raises(ValueError) as execinfo:

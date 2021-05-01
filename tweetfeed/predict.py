@@ -1,4 +1,3 @@
-
 import json
 import pickle
 import re
@@ -31,11 +30,12 @@ with open(filename, "rb") as file:
 with open(d_filename, "rb") as file:
     cv = pickle.load(file)
 
-# prepare dat
+
+# prepare data
 # load data from SQL
 df_tweets = load_tweets("../home.db", days=0)
 
-# load file
+# load files
 ## use prep_batch to concat tweet texts
 with open("data/news_domains.txt", "r") as f:
     news_domains = json.loads(f.read())
@@ -46,6 +46,7 @@ df_to_pred = prep_batch(
     remove_news=False,
     batch_size=df_tweets.shape[0],
 )
+
 
 # clean data
 def cleaning(df):
@@ -71,11 +72,13 @@ def cleaning(df):
     clean_df["full_text"] = pd.DataFrame(clean_tweet_texts, columns=["text"])
     return clean_df
 
+
 df = cleaning(df_to_pred)
+
 # preprocess using cv
 x = df["full_text"]
 # X = cv.fit_transform(x)
-X = cv.transform(x
+X = cv.transform(x)
 # get predictions
-df["predicted"] = model.predict_proba(X)[:, 1
-df[["id", "predicted"]].to_csv("data/predictions.csv", mode="a", index=False
+df["predicted"] = model.predict_proba(X)[:, 1]
+df[["id", "predicted"]].to_csv("data/predictions.csv", mode="a", index=False)
