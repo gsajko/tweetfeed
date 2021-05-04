@@ -80,15 +80,14 @@ def cleaning(df):
         clean_tweet_texts.append(negations)
 
     clean_df = pd.DataFrame(clean_tweet_texts, columns=["text"])
-    clean_df["sentiment"] = df.reset_index()["labels"]
     return clean_df
 
 
-def create_dataset():
-    t1 = date.fromisoformat("2021-03-16")
+def create_dataset(path_to_db="../notebooks/20210315home_fav.db", cr_date="2021-03-16"):
+    #TODO make it universal
+    t1 = date.fromisoformat(cr_date)
     time_diff = date.today() - t1
-    df_tweets = load_tweets(
-        "../notebooks/20210315home_fav.db", days=time_diff.days
+    df_tweets = load_tweets(db_path=path_to_db, days=time_diff.days
     )
     df_tweets = df_tweets[df_tweets["lang"] == "en"]
 

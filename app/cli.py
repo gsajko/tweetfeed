@@ -74,11 +74,11 @@ def to_collection(
         rem_from_collection(custom_newsfeed, auth)
 
     # load files
-    with open("tweetfeed/data/mute_list.txt", "r") as f:
+    with open("data/mute_list.txt", "r") as f:
         mute_list = json.loads(f.read())
-    with open("tweetfeed/data/mute_list_cs.txt", "r") as f:
+    with open("data/mute_list_cs.txt", "r") as f:
         mute_list_cs = json.loads(f.read())
-    with open("tweetfeed/data/news_domains.txt", "r") as f:
+    with open("data/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
 
     if not ignore_lists:
@@ -87,14 +87,14 @@ def to_collection(
         # TODO idea - scrape https://www.politwoops.com/ for politician accounts
         # drop accounts that follow more than 15k people
         mutedacc_rich = nytblock + mutedacc_rich
-        with open("tweetfeed/data/mutedacc_rich.txt", "w") as write_file:
+        with open("data/mutedacc_rich.txt", "w") as write_file:
             json.dump(mutedacc_rich, write_file)
 
     # load tweets
     if reverse_age:
-        df = load_tweets("home.db", days=age, latest=True)
+        df = load_tweets("data/home.db", days=age, latest=True)
     else:
-        df = load_tweets("home.db", days=age)
+        df = load_tweets("data/home.db", days=age)
     if not ignore_lists:
         mutedacc = [user["id"] for user in mutedacc_rich]
         df = filter_users(df, mutedacc)
@@ -118,7 +118,7 @@ def to_collection(
         news_domains=news_domains,
         mute_list=mute_list,
         mute_list_cs=mute_list_cs,
-        data_path="tweetfeed/data/",
+        data_path="data/",
         remove_news=True,
         likes=min_likes,
     )
@@ -129,11 +129,11 @@ def to_collection(
     )  # adds to collection
 
     # backup old data
-    seen_tweets_old = pd.read_csv("tweetfeed/data/seen.csv")
-    seen_tweets_old.to_csv("tweetfeed/data/seen_old.csv", index=False)
+    seen_tweets_old = pd.read_csv("data/seen.csv")
+    seen_tweets_old.to_csv("data/seen_old.csv", index=False)
 
     # update seen.csv file
-    df.to_csv("tweetfeed/data/seen.csv", mode="a", header=False, index=False)
+    df.to_csv("data/seen.csv", mode="a", header=False, index=False)
 
     not_relevant_list = get_tweets_from_collection(
         get_collection_id(owner_id, auth, "not_relevant"), auth

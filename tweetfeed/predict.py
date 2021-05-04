@@ -74,6 +74,7 @@ def cleaning(df):
 
 
 df = cleaning(df_to_pred)
+df["sentiment"] = df.reset_index()["labels"]
 
 # preprocess using cv
 x = df["full_text"]

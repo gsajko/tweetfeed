@@ -64,6 +64,7 @@ def cleaning(df):
 
 
 df = cleaning(dataset_df)
+# %%
 import random
 
 import torch

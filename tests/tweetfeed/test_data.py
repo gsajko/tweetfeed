@@ -9,7 +9,7 @@ from tweetfeed import data
 @pytest.fixture
 def test_df():
     df = data.load_tweets(
-        "tweetfeed/data/test_tweets.db", days=0, latest=False
+        "data/test_tweets.db", days=0, latest=False
     )
     return df
 
@@ -22,16 +22,16 @@ def empty_df():
 
 @pytest.fixture
 def test_news_domains():
-    with open("tweetfeed/data/news_domains.txt", "r") as f:
+    with open("data/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
     return news_domains
 
 
 def test_load_tweets():
-    df = data.load_tweets("tweetfeed/data/test_tweets.db", days=0, latest=True)
+    df = data.load_tweets("data/test_tweets.db", days=0, latest=True)
     assert df.shape == (0, 10)
     df = data.load_tweets(
-        "tweetfeed/data/test_tweets.db", days=0, latest=False
+        "data/test_tweets.db", days=0, latest=False
     )
     assert df.shape == (18, 10)
 
@@ -106,7 +106,7 @@ def test_drop_contains(test_df):
 
 
 def test_rem_seen_tweets(test_df, capsysbinary):
-    data_path = "tweetfeed/data/test_"
+    data_path = "data/test_"
     df = data.rem_seen_tweets(test_df, data_path)
     assert df.shape[0] == 0
     data_path = "wrong_path"
@@ -180,9 +180,31 @@ def test_prep_batch(test_df, empty_df, test_news_domains):
 
     with pytest.raises(ValueError) as execinfo:
         data.prep_batch(
-            test_df, test_news_domains, data_path="tweetfeed/data/test_"
+            test_df, test_news_domains, data_path="data/test_"
         )
     assert (
         str(execinfo.value)
         == "after removing seen, DataFrame is empty, nothing to add"
+    )
+
+
+def test_cleaning(test_df, test_news_domains):
+    df_to_pred = data.prep_batch(
+        df=test_df,
+        news_domains=test_news_domains,
+        remove_news=False,
+        batch_size=test_df.shape[0],
+    )
+    df = data.cleaning(df_to_pred)
+    assert (
+        df["text"][0]
+        == "microsoft releases data for academic graph gb of `` paper-paper citations author-paper paper-topic and so forth ''"
+    )
+    assert (
+        df["text"][4]
+        == "it was quite heady experience talking to such large and attentive audience this morning on promised the slides and audio for my talk are available at the following links slides"
+    )
+    assert (
+        df["text"][10]
+        == "`` developers will be kicked off apple 's app store if they fail to play by the rules of the iphone new anti-tracking policy '' how does it fare with the european for example competition-wise not asking about or"
     )
