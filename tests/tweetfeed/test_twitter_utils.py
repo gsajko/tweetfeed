@@ -7,9 +7,7 @@ from tweetfeed import data, twitter_utils
 
 @pytest.fixture
 def test_df():
-    df = data.load_tweets(
-        "data/test_tweets.db", days=0, latest=False
-    )
+    df = data.load_tweets("data/test_tweets.db", days=0, latest=False)
     return df
 
 

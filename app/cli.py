@@ -4,7 +4,6 @@ from datetime import datetime
 import pandas as pd
 import typer
 
-from tweetfeed.data import load_tweets, prep_batch
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
     count_collection,
@@ -15,6 +14,7 @@ from tweetfeed.twitter_utils import (
     get_users_from_list,
     rem_from_collection,
 )
+from tweetfeed.utils import load_tweets, prep_batch
 
 app = typer.Typer(help="awesome custom twitter feed")
 
