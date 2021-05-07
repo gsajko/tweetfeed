@@ -242,3 +242,28 @@ def add_tweets_to_collection(
             print(f"tweets not added / {reason[0]}: ", reason[1])
     print("tweets added : ", tweets_added)
     return df
+
+
+def get_muted_acc(owner_id, auth):
+    mutedacc = get_users_from_list(owner_id, auth, list_name="muted")
+    nytblock = get_users_from_list(owner_id, auth, list_name="nytblock")
+    muted = []
+    for muted_list in [nytblock, mutedacc]:
+        for user in muted_list:
+            muted.append(user["id"])
+    return muted
+
+
+def from_muted_users_idx(df_tweets, muted_acc_list):
+    muted_users_idx = filter_users(df_tweets, muted_acc_list, remove=False)[
+        "id"
+    ].tolist()
+    return muted_users_idx
+
+
+def get_not_rel_idx(owner_id, auth):
+    not_relevant_col_idx = get_tweets_from_collection(
+        get_collection_id(owner_id, auth, "not_relevant"), auth
+    )
+    not_relevant_col_idx = [int(x) for x in not_relevant_col_idx]
+    return not_relevant_col_idx

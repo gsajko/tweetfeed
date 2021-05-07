@@ -18,6 +18,7 @@ def empty_df():
     df = pd.DataFrame()
     return df
 
+
 @pytest.fixture
 def test_news_domains():
     with open("data/news_domains.txt", "r") as f:
