@@ -1,4 +1,5 @@
 from argparse import Namespace
+from argparse import Namespace
 from pathlib import Path
 
 import mlflow
