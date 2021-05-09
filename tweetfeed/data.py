@@ -12,7 +12,12 @@ from tweetfeed.twitter_utils import (
     get_muted_acc,
     get_not_rel_idx,
 )
-from tweetfeed.utils import concat_tweet_text, find_news, load_tweets
+from tweetfeed.utils import (
+    concat_tweet_text,
+    find_news,
+    load_tweets,
+    load_favorites,
+)
 
 
 def cleaning(df):
@@ -41,22 +46,22 @@ def cleaning(df):
 # negative list
 
 
-def with_news_idx(df_tweets):
+def with_news_idx(df_tweets, data_path):
     df = concat_tweet_text(
         df_tweets
     )  # concat with in_reply to / qouted tweets
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
-    with open("data/news_domains.txt", "r") as f:
+    with open(f"{data_path}/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
     df = find_news(df, news_domains)
     df_news = df[df["contains_news"] == 1]  # select only news
     return df_news["id"].tolist()
 
 
-def idx_contain_muted_words(df_tweets):
-    with open("data/mute_list.txt", "r") as f:
+def idx_contain_muted_words(df_tweets, data_path):
+    with open(f"{data_path}/mute_list.txt", "r") as f:
         mute_list = json.loads(f.read())
-    with open("data/mute_list_cs.txt", "r") as f:
+    with open(f"{data_path}/mute_list_cs.txt", "r") as f:
         mute_list_cs = json.loads(f.read())
 
     contains_muted_words = []
@@ -77,36 +82,34 @@ def idx_contain_muted_words(df_tweets):
     return contains_muted_words
 
 
-def create_neg_list_idx(path_to_db, owner_id, auth):
+def create_neg_list_idx(path_to_db, owner_id, auth, muted_path):
     df_tweets = load_tweets(path_to_db, days=0)
     muted_acc_list = get_muted_acc(owner_id, auth)
     neg_list_idx = list(
         set(
-            idx_contain_muted_words(df_tweets)
+            idx_contain_muted_words(df_tweets, muted_path)
             + from_muted_users_idx(df_tweets, muted_acc_list)
-            + with_news_idx(df_tweets)
+            + with_news_idx(df_tweets, muted_path)
             + get_not_rel_idx(owner_id, auth)
         )
     )
     return neg_list_idx
 
 
-def create_dataset(
-    owner_id,
-    auth,
-    path_to_db="notebooks/20210315home_fav.db",
-    cr_date="2021-03-16",
-):
-    # TODO make it universal
-    neg_list_idx = create_neg_list_idx(path_to_db, owner_id, auth)
+def get_engagement(path_to_fav, path_to_timeline):
+    favorite_idx = load_favorites(path_to_fav).tweet.tolist()
+    df_timeline = load_tweets(path_to_timeline, days=0)
+    quoted = df_timeline[df_timeline.quoted_status == "N/A"].id.tolist()
+    retweeted = df_timeline[df_timeline.retweeted_status == "N/A"].id.tolist()
+    return list(set(quoted + retweeted + favorite_idx))
 
-    t1 = date.fromisoformat(cr_date)
-    time_diff = date.today() - t1
-    df_tweets = load_tweets(db_path=path_to_db, days=time_diff.days)
+
+def create_dataset(owner_id, auth, path_to_db, path_to_fav, path_to_timeline, muted_path):
+    # TODO add logging
+    df_tweets = load_tweets(db_path=path_to_db, days=0)
     df_tweets = df_tweets[df_tweets["lang"] == "en"]
-
-    with open("data/2021_03_24_1434_positive_idx.txt", "r") as f:
-        pos_list_idx = json.loads(f.read())
+    neg_list_idx = create_neg_list_idx(path_to_db, owner_id, auth,muted_path)
+    pos_list_idx = get_engagement(path_to_fav, path_to_timeline)
     dataset_df = df_tweets[df_tweets["id"].isin(neg_list_idx + pos_list_idx)]
     dataset_df.loc[(dataset_df["id"].isin(neg_list_idx)), "labels"] = 0
     dataset_df.loc[(dataset_df["id"].isin(pos_list_idx)), "labels"] = 1
@@ -145,8 +148,3 @@ def get_data_splits_cv(df, train_size=0.7):
     print(counts_df)
     return X_train, X_val, X_test, y_train, y_val, y_test
 
-
-dataset = create_dataset(owner_id="143058191", auth="config/auth.json")
-df_json = json.loads(dataset.to_json(orient="records"))
-with open("dataset.json", "w") as f:
-    json.dump(df_json, f)

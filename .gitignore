@@ -162,3 +162,7 @@ members.db
 notebooks/20210315home_fav.db
 20210315home_fav.db
 *mlruns/
+data/faves.db
+data/timeline.db
+tweetfeed/main.py
+data/to_del.db

@@ -69,6 +69,13 @@ def load_tweets(db_path: str, days: int, latest=False) -> pd.DataFrame:
     return df
 
 
+def load_favorites(db_path: str) -> pd.DataFrame:
+    cnx = sqlite3.connect(db_path)
+    query = "SELECT * FROM favorited_by"
+    df = pd.read_sql_query(query, cnx)
+    return df
+
+
 def find_url(tweet: str) -> list:
     """find all urls in string and returns a list of all urls"""
     return re.findall(r"http\S+", tweet)

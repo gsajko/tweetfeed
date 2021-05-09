@@ -6,7 +6,8 @@ from datetime import datetime
 import pandas as pd
 import tweepy
 
-from tweetfeed.data import concat_tweet_text, find_news, load_tweets
+from tweetfeed.data import load_tweets
+from tweetfeed.utils import concat_tweet_text, find_news
 from tweetfeed.twitter_utils import (
     filter_users,
     get_collection_id,
