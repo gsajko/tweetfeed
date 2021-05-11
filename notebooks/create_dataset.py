@@ -7,13 +7,13 @@ import pandas as pd
 import tweepy
 
 from tweetfeed.data import load_tweets
-from tweetfeed.utils import concat_tweet_text, find_news
 from tweetfeed.twitter_utils import (
     filter_users,
     get_collection_id,
     get_tweets_from_collection,
     get_users_from_list,
 )
+from tweetfeed.utils import concat_tweet_text, find_news
 
 # %%
 ## Load tweets

@@ -166,3 +166,8 @@ data/faves.db
 data/timeline.db
 tweetfeed/main.py
 data/to_del.db
+notebooks/ge.py
+data/dataset.json
+great_expectations/notebooks/pandas/validation_playground.ipynb
+great_expectations/notebooks/spark/validation_playground.ipynb
+great_expectations/notebooks/sql/validation_playground.ipynb

@@ -3,6 +3,7 @@ from __future__ import print_function
 import mlflow
 import mlflow.sklearn
 import numpy as np
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_recall_fscore_support
 
@@ -41,7 +42,9 @@ def get_performance(y_true, y_pred, classes):
 
 if __name__ == "__main__":
     # class_weight = sys.argv[1] if len(sys.argv) > 1 else "balanced"
-    dataset_df = create_dataset()
+    # dataset_df = create_dataset()
+    # dataset_df = load
+    dataset_df = pd.read_json("../data/dataset.json")
     df = cleaning(dataset_df)
     utils.set_seed()
     cleaned_df = df.copy()

@@ -1,6 +1,5 @@
 import json
 import re
-from datetime import date
 
 import pandas as pd
 from nltk import word_tokenize
@@ -15,8 +14,8 @@ from tweetfeed.twitter_utils import (
 from tweetfeed.utils import (
     concat_tweet_text,
     find_news,
-    load_tweets,
     load_favorites,
+    load_tweets,
 )
 
 
@@ -104,11 +103,13 @@ def get_engagement(path_to_fav, path_to_timeline):
     return list(set(quoted + retweeted + favorite_idx))
 
 
-def create_dataset(owner_id, auth, path_to_db, path_to_fav, path_to_timeline, muted_path):
+def create_dataset(
+    owner_id, auth, path_to_db, path_to_fav, path_to_timeline, muted_path
+):
     # TODO add logging
     df_tweets = load_tweets(db_path=path_to_db, days=0)
     df_tweets = df_tweets[df_tweets["lang"] == "en"]
-    neg_list_idx = create_neg_list_idx(path_to_db, owner_id, auth,muted_path)
+    neg_list_idx = create_neg_list_idx(path_to_db, owner_id, auth, muted_path)
     pos_list_idx = get_engagement(path_to_fav, path_to_timeline)
     dataset_df = df_tweets[df_tweets["id"].isin(neg_list_idx + pos_list_idx)]
     dataset_df.loc[(dataset_df["id"].isin(neg_list_idx)), "labels"] = 0
@@ -147,4 +148,3 @@ def get_data_splits_cv(df, train_size=0.7):
     counts_df["ratio"] = counts_df[1.0] / (counts_df[1.0] + counts_df[0.0])
     print(counts_df)
     return X_train, X_val, X_test, y_train, y_val, y_test
-
