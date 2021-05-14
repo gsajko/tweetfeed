@@ -12,7 +12,7 @@ test: clean ## Run the tests.
 	@echo "The tests pass! ✨ 🍰 ✨"
 
 lint: ## Run the code linter.
-	@poetry run pylint --fail-under=9.8 app tweetfeed --reports=n
+	@poetry run pylint --fail-under=9.5 app tweetfeed --reports=n
 	@echo "The lint pass! ✨ 🍰 ✨"
 
 mypy:
@@ -23,7 +23,10 @@ style:
 	black .
 	flake8 --exclude=notebooks/*
 	isort .
-	@echo "The style pass! ✨ 🍰 ✨"	
 
-check: test lint style
-# check: test lint style mypy
+great-expectations:
+	@poetry run great_expectations checkpoint run tweets
+	@echo "The great_expectations pass! ✨ 🍰 ✨"
+
+check: great-expectations test lint style 
+# check: test lint style mypy data

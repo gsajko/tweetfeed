@@ -1,0 +1,12 @@
+name: tweets
+config_version:
+module_name: great_expectations.checkpoint
+class_name: LegacyCheckpoint
+validation_operator_name:
+batches:
+  - batch_kwargs:
+      path: /home/gsajko/work/tweetfeed/great_expectations/../data/dataset.json
+      datasource: datasources
+      data_asset_name: dataset
+    expectation_suite_names:
+      - tweet_dataset
