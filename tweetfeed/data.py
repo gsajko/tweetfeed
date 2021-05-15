@@ -3,6 +3,7 @@ import re
 
 import pandas as pd
 from nltk import word_tokenize
+from pandas.core.frame import DataFrame
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
@@ -19,7 +20,9 @@ from tweetfeed.utils import (
 )
 
 
-def cleaning(df):
+def cleaning(df: pd.DataFrame) -> pd.DataFrame:
+    "clean Dataframe"
+
     pat1 = "@[^ ]+"
     pat2 = "http[^ ]+"
     pat3 = "www.[^ ]+"
@@ -45,7 +48,8 @@ def cleaning(df):
 # negative list
 
 
-def with_news_idx(df_tweets, data_path):
+def with_news_idx(df_tweets: pd.DataFrame, data_path: str) -> list:
+    "given DataFrame, return list of tweets id, that contain news"
     df = concat_tweet_text(
         df_tweets
     )  # concat with in_reply to / qouted tweets
@@ -57,7 +61,8 @@ def with_news_idx(df_tweets, data_path):
     return df_news["id"].tolist()
 
 
-def idx_contain_muted_words(df_tweets, data_path):
+def idx_contain_muted_words(df_tweets: pd.DataFrame, data_path: str) -> list:
+    "given DataFrame, return list of tweets id, that contain muted words"
     with open(f"{data_path}/mute_list.txt", "r") as f:
         mute_list = json.loads(f.read())
     with open(f"{data_path}/mute_list_cs.txt", "r") as f:

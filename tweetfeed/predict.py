@@ -1,29 +1,11 @@
 import json
 import pickle
-import re
 
-import pandas as pd
-from nltk import word_tokenize
-from sklearn.feature_extraction.text import CountVectorizer
-
-from tweetfeed.data import load_tweets
+from tweetfeed.data import cleaning, load_tweets
 from tweetfeed.utils import prep_batch
 
-# Cleaning
-
-
-def preprocess_cv(x):
-    cv = CountVectorizer(
-        stop_words="english", binary=False, ngram_range=(1, 3)
-    )
-    X = cv.fit_transform(x)
-    return X
-
-
-# classes = [0, 1]
 filename = "model/log_cv_baseline.pkl"
 d_filename = "model/cv_baseline.pkl"
-
 # load model
 with open(filename, "rb") as file:
     model = pickle.load(file)
@@ -50,30 +32,6 @@ df_to_pred = prep_batch(
 
 
 # clean data
-def cleaning(df):
-    pat1 = "@[^ ]+"
-    pat2 = "http[^ ]+"
-    pat3 = "www.[^ ]+"
-    pat4 = "#[^ ]+"
-    pat5 = "[0-9]"
-    combined_pat = "|".join((pat1, pat2, pat3, pat4, pat5))
-
-    clean_tweet_texts = []
-    clean_df = df.copy()
-    for t in clean_df["full_text"]:
-        t = t.lower()
-        stripped = re.sub(combined_pat, "", t)
-        tokens = word_tokenize(stripped)
-        words = [x for x in tokens if len(x) > 1]
-        sentences = " ".join(words)
-        negations = re.sub("n't", "not", sentences)
-
-        clean_tweet_texts.append(negations)
-
-    clean_df["full_text"] = pd.DataFrame(clean_tweet_texts, columns=["text"])
-    return clean_df
-
-
 df = cleaning(df_to_pred)
 
 # preprocess using cv
