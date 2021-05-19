@@ -1,4 +1,18 @@
 
+install twitter-to-sqlite
+
+using twitter-to-sqlite create auth.json file
+copy it into config folder
+
+run script:
+- run 3 diff twitter-to-sqlite commands
+    - create home.db
+    - create faves.db
+    - create timeline.db
+- create 2 empty mute lists:
+    - mute_list_cs.txt
+    - mute_list.txt
+
 
 crontab
 
