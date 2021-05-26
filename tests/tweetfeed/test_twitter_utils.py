@@ -160,3 +160,21 @@ def test_filter_users(test_df):
     assert df.shape[0] == (test_df_shape[0] - 1)
     df = twitter_utils.filter_users(test_df, mute_users, remove=False)
     assert df.shape[0] == 1
+
+
+def test_get_muted_acc():
+    muted_acc_list = twitter_utils.get_muted_acc(
+        owner_id, auth_path, muted_lists=["nytblock"]
+    )
+    assert len(muted_acc_list) == 928
+
+
+def test_from_muted_users_idx(test_df):
+    muted_acc_list = [760303]
+    from_muted = twitter_utils.from_muted_users_idx(test_df, muted_acc_list)
+    assert from_muted == [1338127864542203908]
+
+
+def test_get_not_rel_idx():
+    not_relevant_col_idx = twitter_utils.get_not_rel_idx(owner_id, auth_path)
+    assert type(not_relevant_col_idx[0]) == int

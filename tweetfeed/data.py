@@ -3,7 +3,6 @@ import re
 
 import pandas as pd
 from nltk import word_tokenize
-from pandas.core.frame import DataFrame
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
@@ -86,15 +85,17 @@ def idx_contain_muted_words(df_tweets: pd.DataFrame, data_path: str) -> list:
     return contains_muted_words
 
 
-def create_neg_list_idx(path_to_db, owner_id, auth, muted_path):
+def create_neg_list_idx(path_to_db, owner_id, auth_path, muted_path):
     df_tweets = load_tweets(path_to_db, days=0)
-    muted_acc_list = get_muted_acc(owner_id, auth)
+    muted_acc_list = get_muted_acc(
+        owner_id, auth_path, muted_lists=["nytblock", "muted"]
+    )
     neg_list_idx = list(
         set(
             idx_contain_muted_words(df_tweets, muted_path)
             + from_muted_users_idx(df_tweets, muted_acc_list)
             + with_news_idx(df_tweets, muted_path)
-            + get_not_rel_idx(owner_id, auth)
+            + get_not_rel_idx(owner_id, auth_path)
         )
     )
     return neg_list_idx
@@ -125,7 +126,7 @@ def create_dataset(
 def get_data_splits_cv(df, train_size=0.7):
     # get data
     x = df["text"]
-    y = df["sentiment"]
+    y = df["labels"]
     cv = CountVectorizer(
         stop_words="english", binary=False, ngram_range=(1, 3)
     )

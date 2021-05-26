@@ -46,6 +46,7 @@ if __name__ == "__main__":
     # dataset_df = load
     dataset_df = pd.read_json("../data/dataset.json")
     df = cleaning(dataset_df)
+    df["labels"] = dataset_df["labels"]
     utils.set_seed()
     cleaned_df = df.copy()
     X_train, X_val, X_test, y_train, y_val, y_test = get_data_splits_cv(df)

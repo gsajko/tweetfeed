@@ -151,7 +151,7 @@ def get_collection_id(
     raise ValueError("ValueError: No collection with that name")
 
 
-def timeout_handling(response, sleep=60):
+def timeout_handling(response, sleep=60):  # pragma: no cover, will block API
     """Handles "Too Many Requests" error"""
     if response.reason != "OK":
         print(response.reason)
@@ -244,26 +244,36 @@ def add_tweets_to_collection(
     return df
 
 
-def get_muted_acc(owner_id, auth):
-    mutedacc = get_users_from_list(owner_id, auth, list_name="muted")
-    nytblock = get_users_from_list(owner_id, auth, list_name="nytblock")
+def get_muted_acc(owner_id: str, auth_path: str, muted_lists: List) -> List:
+    """[summary]
+        muted_lists (list ): list of str. List of names of list containing users to mute,
+        in form of a string
+    Returns:
+        list: list of muted users
+    """
     muted = []
-    for muted_list in [nytblock, mutedacc]:
+    for muted_list in muted_lists:
+        muted_list = get_users_from_list(
+            owner_id, auth_path, list_name=muted_list
+        )
         for user in muted_list:
             muted.append(user["id"])
     return muted
 
 
-def from_muted_users_idx(df_tweets, muted_acc_list):
+def from_muted_users_idx(
+    df_tweets: pd.DataFrame, muted_acc_list: List
+) -> List:
+    "returns list of tweets from accounts from muted twitter lists"
     muted_users_idx = filter_users(df_tweets, muted_acc_list, remove=False)[
         "id"
     ].tolist()
     return muted_users_idx
 
 
-def get_not_rel_idx(owner_id, auth):
+def get_not_rel_idx(owner_id, auth_path):
     not_relevant_col_idx = get_tweets_from_collection(
-        get_collection_id(owner_id, auth, "not_relevant"), auth
+        get_collection_id(owner_id, auth_path, "not_relevant"), auth_path
     )
     not_relevant_col_idx = [int(x) for x in not_relevant_col_idx]
     return not_relevant_col_idx
