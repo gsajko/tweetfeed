@@ -29,8 +29,10 @@ def cleaning(df: pd.DataFrame) -> pd.DataFrame:
     pat5 = "[0-9]"
     combined_pat = "|".join((pat1, pat2, pat3, pat4, pat5))
 
+
     clean_tweet_texts = []
-    for t in df["full_text"]:
+    clean_df = df.copy()
+    for t in clean_df["full_text"]:
         t = t.lower()
         stripped = re.sub(combined_pat, "", t)
         tokens = word_tokenize(stripped)
@@ -40,8 +42,9 @@ def cleaning(df: pd.DataFrame) -> pd.DataFrame:
 
         clean_tweet_texts.append(negations)
 
-    clean_df = pd.DataFrame(clean_tweet_texts, columns=["text"])
+    clean_df["text"] = pd.DataFrame(clean_tweet_texts, columns=["text"])
     return clean_df
+
 
 
 # negative list

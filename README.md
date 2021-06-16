@@ -1,5 +1,11 @@
+### Setup
+git clone repository
 
-install twitter-to-sqlite
+poetry install
+
+poetry shell
+
+
 
 using twitter-to-sqlite create auth.json file
 copy it into config folder
@@ -9,10 +15,27 @@ run script:
     - create home.db
     - create faves.db
     - create timeline.db
-- create 2 empty mute lists:
+- create 2 empty mute lists in data folder:
     - mute_list_cs.txt
     - mute_list.txt
 
+- get your own twitter id, put it into config/settings.json as owner_id
+
+
+
+
+
+
+### Optional
+
+#### setup twitter-to-sqlite
+
+install twitter-to-sqlite outside of poetry shell.
+
+configure crontab and anacron.
+I use crontab to add data to databases, and anacron to delete favorites and timeline databases once a week - you are adding tweets to database using twitter-to-sqlite but this doesn't reflect Twitter use. Sometimes you delete your own tweets, undo retweets, un-like tweets by other. 
+
+My example:
 
 crontab
 
