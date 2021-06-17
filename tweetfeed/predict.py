@@ -40,8 +40,10 @@ x = df["text"]
 # X = cv.fit_transform(x)
 X = cv.transform(x)
 # get predictions
+#TODO predict only on those without predictions!
 df["predicted"] = model.predict_proba(X)[:, 1]
 # %%
-df[["id", "predicted"]].to_csv("../data/predictions.csv", mode="a", index=False)
+#TODO change mode to a once above implemented
+df[["id", "predicted"]].to_csv("../data/predictions.csv", mode="w", index=False)
 
 # %%

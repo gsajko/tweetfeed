@@ -11,7 +11,7 @@ test: clean ## Run the tests.
 	@echo "The tests pass! ✨ 🍰 ✨"
 
 lint: ## Run the code linter.
-	@poetry run pylint --fail-under=9.5 app tweetfeed --reports=n
+	@poetry run pylint --fail-under=9.0 app tweetfeed --reports=n
 	@echo "The lint pass! ✨ 🍰 ✨"
 
 mypy:
@@ -25,6 +25,7 @@ style:
 
 great-expectations:
 	@poetry run great_expectations checkpoint run tweets
+	@poetry run great_expectations checkpoint run preds
 	@echo "The great_expectations pass! ✨ 🍰 ✨"
 
 check: great-expectations test lint style 
