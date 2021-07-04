@@ -29,7 +29,6 @@ def cleaning(df: pd.DataFrame) -> pd.DataFrame:
     pat5 = "[0-9]"
     combined_pat = "|".join((pat1, pat2, pat3, pat4, pat5))
 
-
     clean_tweet_texts = []
     clean_df = df.copy()
     for t in clean_df["full_text"]:
@@ -44,7 +43,6 @@ def cleaning(df: pd.DataFrame) -> pd.DataFrame:
 
     clean_df["text"] = pd.DataFrame(clean_tweet_texts, columns=["text"])
     return clean_df
-
 
 
 # negative list
@@ -112,7 +110,7 @@ def get_engagement(path_to_fav, path_to_timeline):
     return list(set(quoted + retweeted + favorite_idx))
 
 
-def create_dataset(
+def create_dataset_df(
     owner_id, auth, path_to_db, path_to_fav, path_to_timeline, muted_path
 ):
     # TODO add logging

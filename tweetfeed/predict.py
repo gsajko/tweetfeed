@@ -4,6 +4,7 @@ import pickle
 
 from tweetfeed.data import cleaning, load_tweets
 from tweetfeed.utils import prep_batch
+
 # %%
 filename = "../model/log_cv_baseline.pkl"
 d_filename = "../model/cv_baseline.pkl"
@@ -40,10 +41,12 @@ x = df["text"]
 # X = cv.fit_transform(x)
 X = cv.transform(x)
 # get predictions
-#TODO predict only on those without predictions!
+# TODO predict only on those without predictions!
 df["predicted"] = model.predict_proba(X)[:, 1]
 # %%
-#TODO change mode to a once above implemented
-df[["id", "predicted"]].to_csv("../data/predictions.csv", mode="w", index=False)
+# TODO change mode to a once above implemented
+df[["id", "predicted"]].to_csv(
+    "../data/predictions.csv", mode="w", index=False
+)
 
 # %%

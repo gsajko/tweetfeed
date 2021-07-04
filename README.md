@@ -7,7 +7,7 @@ poetry shell
 
 
 
-using twitter-to-sqlite create auth.json file
+using twitter-to-sqlite generate auth.json file
 copy it into config folder
 
 run script:
@@ -52,3 +52,5 @@ anacron
 7	10	del-fav rm /home/gsajko/work/tweetfeed/data/faves.db
 7	15	del-timeline rm /home/gsajko/work/tweetfeed/data/timeline.db
 ```
+### next
+- do classifier based on list ("show me tweets similiar to those from people in list Q1")

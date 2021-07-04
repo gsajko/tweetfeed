@@ -166,7 +166,7 @@ def test_get_muted_acc():
     muted_acc_list = twitter_utils.get_muted_acc(
         owner_id, auth_path, muted_lists=["nytblock"]
     )
-    assert len(muted_acc_list) == 928
+    assert len(muted_acc_list) > 900
 
 
 def test_from_muted_users_idx(test_df):
