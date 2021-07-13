@@ -112,6 +112,7 @@ def count_collection(collection_id: str, auth_path: str) -> int:
                 print(f"{collection_id} contains more then 100 tweets")
             return len(collection_tweets)
         except KeyError:
+            print("KeyError")
             return 0
     else:
         print(response.reason)
@@ -181,6 +182,7 @@ def rem_from_collection(collection_id: str, auth_path: str):
     Collection can't have more than 200 tweets"""
     auth = json.load(open(auth_path))
     session = session_for_auth(auth)
+    print("❗️")
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url)
     collection_tweets = response.json()

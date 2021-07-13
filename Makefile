@@ -7,7 +7,7 @@ clean:
 	@find . -type f -name "*.py[co]" -exec rm -rf {} +
 
 test: clean ## Run the tests.
-	@pytest --cov tweetfeed --cov-report html
+	@pytest --cov tweetfeed -v --cov-report html 
 	@echo "The tests pass! ✨ 🍰 ✨"
 
 lint: ## Run the code linter.
