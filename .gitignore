@@ -152,7 +152,6 @@ home.db
 
 # data
 *.csv
-*.txt
 *.pkl
 
 
@@ -171,3 +170,5 @@ data/dataset.json
 great_expectations/notebooks/pandas/validation_playground.ipynb
 great_expectations/notebooks/spark/validation_playground.ipynb
 great_expectations/notebooks/sql/validation_playground.ipynb
+data/*.txt
+notebooks/*.txt
