@@ -61,6 +61,10 @@ def to_collection(
         notfriends (bool, optional): If `True`, tweets b
             y non-friends (who user not follows) will be added.
     """
+    # TODO
+    # use str from above:
+    # check if valid
+    # if not, get_collection_id
 
     custom_newsfeed = get_collection_id(
         owner_id=owner_id,

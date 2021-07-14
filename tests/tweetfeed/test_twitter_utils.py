@@ -90,10 +90,10 @@ def test_count_collection():
 
 
 def test_rem_from_collection():
-    nr_tweets = twitter_utils.rem_from_collection(
+    results = twitter_utils.rem_from_collection(
         empty_collection, auth_path=auth_path
     )
-    assert nr_tweets == 0
+    assert results == "finished removing tweets"
 
 
 def test_get_list_id():
@@ -123,7 +123,7 @@ def test_get_users_from_list():
         {
             "id": 143058191,
             "name": "grzegorz sajko",
-            "screen_name": "saiko_grzegorz",
+            "screen_name": "gSajko",
         }
     ]
 
@@ -135,7 +135,7 @@ def test_timeout_handling():
     auth = json.load(open(auth_path))
     session = twitter_utils.session_for_auth(auth)
     url = "https://api.twitter.com/1.1/friends/ids.json"
-    response = session.get(url)
+    response = session.get(url, timeout=5)
     assert twitter_utils.timeout_handling(response, sleep=60) is None
     # faux_response = {"response": "giberish", "reason": "fff"}
     # assert twitter_utils.timeout_handling(faux_response, sleep=60) is None

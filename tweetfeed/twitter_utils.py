@@ -22,7 +22,7 @@ def get_list_id(owner_id: str, list_name: str, auth_path: str) -> str:
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
     while True:
-        response = session.get(url)
+        response = session.get(url, timeout=5)
         timeout_handling(response)
         if response.reason == "OK":
             list_id = ""
@@ -42,7 +42,7 @@ def get_friends_ids(auth_path: str) -> list:
     session = session_for_auth(auth)
     url = "https://api.twitter.com/1.1/friends/ids.json"
     while True:
-        response = session.get(url)
+        response = session.get(url, timeout=5)
         timeout_handling(response, sleep=60)
         if response.reason == "OK":
             ids = response.json()["ids"]
@@ -66,7 +66,7 @@ def get_users_from_list(owner_id: str, auth_path: str, list_name: str) -> List:
     # TODO what if there is no list named list_name?
     params = f"list_id={list_id}&owner_id={owner_id}&count=5000"
     url = f"https://api.twitter.com/1.1/lists/members.json?{params}"
-    response = session.get(url)
+    response = session.get(url, timeout=5)
     users_on_list = [
         {"id": i["id"], "screen_name": i["screen_name"], "name": i["name"]}
         for i in response.json()["users"]
@@ -99,7 +99,7 @@ def count_collection(collection_id: str, auth_path: str) -> int:
     auth = json.load(open(auth_path))
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
-    response = session.get(url)
+    response = session.get(url, timeout=5)
     if response.reason == "OK":
         collection_tweets = response.json()
         try:
@@ -111,8 +111,8 @@ def count_collection(collection_id: str, auth_path: str) -> int:
             else:
                 print(f"{collection_id} contains more then 100 tweets")
             return len(collection_tweets)
-        except KeyError:
-            print("KeyError")
+        except KeyError as:
+            print(f"{collection_id} is empty")
             return 0
     else:
         print(response.reason)
@@ -143,7 +143,7 @@ def get_collection_id(
     url = (
         f"https://api.twitter.com/1.1/collections/list.json?user_id={owner_id}"
     )
-    response = session.get(url)
+    response = session.get(url, timeout=5)
     # TODO add timeout handling
     collections = response.json()["objects"]["timelines"]
     for k in collections.keys():
@@ -166,7 +166,7 @@ def get_tweets_from_collection(collection_id: str, auth_path: str) -> List:
     auth = json.load(open(auth_path))
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
-    response = session.get(url)
+    response = session.get(url, timeout=5)
     collection_tweets = response.json()
     # TODO add alert if collection has more than 200 tweets
     try:
@@ -182,9 +182,8 @@ def rem_from_collection(collection_id: str, auth_path: str):
     Collection can't have more than 200 tweets"""
     auth = json.load(open(auth_path))
     session = session_for_auth(auth)
-    print("❗️")
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
-    response = session.get(url)
+    response = session.get(url, timeout=5)
     collection_tweets = response.json()
     try:
         collection_tweets = list(collection_tweets["objects"]["tweets"])
@@ -197,7 +196,7 @@ def rem_from_collection(collection_id: str, auth_path: str):
         url = f"{remove_url}id={collection_id}&tweet_id={tweet}"
         response = session.post(url)
         timeout_handling(response, sleep=60)
-    return count_collection(collection_id, auth_path)
+    return ("finished removing tweets")
 
 
 def add_tweets_to_collection(
