@@ -111,8 +111,8 @@ def count_collection(collection_id: str, auth_path: str) -> int:
             else:
                 print(f"{collection_id} contains more then 100 tweets")
             return len(collection_tweets)
-        except KeyError as:
-            print(f"{collection_id} is empty")
+        except KeyError:
+            print("collection is empty")
             return 0
     else:
         print(response.reason)
@@ -196,7 +196,7 @@ def rem_from_collection(collection_id: str, auth_path: str):
         url = f"{remove_url}id={collection_id}&tweet_id={tweet}"
         response = session.post(url)
         timeout_handling(response, sleep=60)
-    return ("finished removing tweets")
+    return "finished removing tweets"
 
 
 def add_tweets_to_collection(

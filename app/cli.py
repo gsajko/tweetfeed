@@ -43,6 +43,7 @@ def to_collection(
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
     dont_rem_news: bool = typer.Option(False, "--dont_remove_news", "-n"),
     # TODO above
+    # add option to ignore tweets that I already liked
     min_likes: int = typer.Option(0, "--min_likes", "-l"),
 ):
     """Grabs tweets from database, applies filters and transformations,

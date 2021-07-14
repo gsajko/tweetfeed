@@ -332,6 +332,8 @@ def prep_batch(
         )
         df["preds"] = df["preds"].fillna(0)
         df.sort_values(by="preds", ascending=False, inplace=True)
+    else:
+        df["preds"] = 0
 
     df = df[df["lang"] == "en"]  # take only english lang tweets
     if_empty_df_raise(
@@ -340,8 +342,8 @@ def prep_batch(
     )
 
     if "likes" in kwargs:
-        df = rem_on_likes(df, likes=kwargs["likes"])
-
+        if kwargs["likes"] > 0:
+            df = rem_on_likes(df, likes=kwargs["likes"])
     # filter out tweets with news links
     # mark tweets as news
     df = find_news(df, news_domains)  # add news column
@@ -356,6 +358,7 @@ def prep_batch(
             # .sample(frac=1)
             .reset_index(drop=True)[:batch_size]
         )
+
     if remove_news is False:
         to_custom_news_feed = (
             df
@@ -368,6 +371,7 @@ def prep_batch(
     )
     # TODO drop tweets from ME
     # TODO create test mute lists
+
     if "mute_list" in kwargs:
         to_custom_news_feed = drop_contains(
             to_custom_news_feed,
@@ -381,10 +385,15 @@ def prep_batch(
             str_list=kwargs["mute_list_cs"],
             case_sensitive=True,
         )
-    df = to_custom_news_feed[["id", "user", "full_text"]]
+
+    df = to_custom_news_feed[["id", "user", "full_text", "preds"]]
     print(f"{df.shape[0]} tweets in a batch")
     if_empty_df_raise(
         to_custom_news_feed,
         to_print="after removing tweets containing muted words, DataFrame is empty, nothing to add",
     )
+    print("top prediction scores from batch: ")
+    top_pred_list = list(df["preds"].nlargest(n=3))
+    for score in top_pred_list:
+        print(score)
     return df
