@@ -14,7 +14,7 @@ from tweetfeed.twitter_utils import (
     get_users_from_list,
     rem_from_collection,
 )
-from tweetfeed.utils import load_tweets, prep_batch
+from tweetfeed.utils import load_favorites, load_tweets, prep_batch
 
 app = typer.Typer(help="awesome custom twitter feed")
 
@@ -41,6 +41,7 @@ def to_collection(
     users_from_list: str = typer.Option(None, "--users_from_list", "-fl"),
     friends: bool = typer.Option(False, "--friends_only", "-fo"),
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
+    remove_liked: bool = typer.Option(False, "--ignore_lists", "-rl"),
     dont_rem_news: bool = typer.Option(False, "--dont_remove_news", "-n"),
     # TODO above
     # add option to ignore tweets that I already liked
@@ -110,12 +111,16 @@ def to_collection(
     if notfriends:
         friends_idx = get_friends_ids(auth)
         df = filter_users(df, friends_idx, remove=True)
-    if users_from_list is not None:
+    if users_from_list:
         list_acc = get_users_from_list(
             owner_id, auth, list_name=users_from_list
-        )  # get tweets from my Q1 list
+        )
         list_acc = [acc["id"] for acc in list_acc]
         df = filter_users(df, list_acc, remove=False)
+    if remove_liked:
+        favorite_df = load_favorites("data/faves.db")
+        favorite_idx = favorite_df["tweet"].tolist()
+        df = df[~df["id"].isin(favorite_idx)]
 
     # remove news and RT
     tweets_df = prep_batch(
@@ -156,6 +161,13 @@ def to_collection(
 
 
 if __name__ == "__main__":
-    app()
-    # to_collection(age =17, reverse_age=True, nr_tweets=1,
-    # users_from_list="Q1", friends=False, notfriends=False)
+    app()  # comment to debug
+    # to_collection(
+    #     users_from_list=False,
+    #     friends=False,
+    #     notfriends=False,
+    #     age=30,
+    #     reverse_age=False,
+    #     nr_tweets=1,
+    #     remove_liked=True,
+    # )  # uncomment to debug, use explicit bool for filtering
