@@ -28,5 +28,11 @@ great-expectations:
 	@poetry run great_expectations checkpoint run preds
 	@echo "The great_expectations pass! ✨ 🍰 ✨"
 
+# DVC
+dvc:
+	dvc add data/dataset.json
+	dvc add data/predictions.csv
+	dvc push
+
 check: great-expectations test lint style 
 # check: test lint style mypy data
