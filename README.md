@@ -7,19 +7,22 @@ poetry shell
 
 
 
-using twitter-to-sqlite generate auth.json file
+using twitter-to-sqlite generate `auth.json` file
 copy it into config folder
 
 run script:
 - run 3 diff twitter-to-sqlite commands
-    - create home.db
-    - create faves.db
-    - create timeline.db
-- create 2 empty mute lists in data folder:
-    - mute_list_cs.txt
-    - mute_list.txt
+    - create `home.db`
+    - create `faves.db`
+    - create `timeline.db`
 
-- get your own twitter id, put it into config/settings.json as owner_id
+Mute lists are added to repo, but changes to them are not tracked:
+
+`git update-index --assume-unchanged [<file> ...]` was used on them.
+
+To undo this, you need to use `git update-index --no-assume-unchanged [<file> ...]`
+
+- get your own twitter id, put it into `config/settings.json` as `owner_id`
 
 
 
