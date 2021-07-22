@@ -4,6 +4,7 @@ from datetime import datetime
 import pandas as pd
 import typer
 
+from tweetfeed.data import create_dataset_df
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
     count_collection,
@@ -20,14 +21,23 @@ app = typer.Typer(help="awesome custom twitter feed")
 
 
 @app.command()
-def hello():
-    "test function"
-    # TODO delete later
-    nr_tweets = 2
-    if nr_tweets:
-        typer.echo(f"Hello {nr_tweets}")
-    else:
-        typer.echo("Hello World!")
+def create_dataset(
+    auth: str = "config/auth.json",
+    owner_id: str = "143058191",
+):
+    dataset_df = create_dataset_df(
+        owner_id=owner_id,
+        auth=auth,
+        path_to_db="data/home.db",
+        path_to_fav="data/faves.db",
+        path_to_timeline="data/timeline.db",
+        muted_path="data/",
+    )
+    df_json = json.loads(dataset_df.to_json(orient="records"))
+
+    with open("data/dataset.json", "w") as f:
+        json.dump(df_json, f)
+        f.write("\n")
 
 
 @app.command()
@@ -42,9 +52,8 @@ def to_collection(
     friends: bool = typer.Option(False, "--friends_only", "-fo"),
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
     remove_liked: bool = typer.Option(False, "--ignore_lists", "-rl"),
-    dont_rem_news: bool = typer.Option(False, "--dont_remove_news", "-n"),
+    # dont_rem_news: bool = typer.Option(False, "--dont_remove_news", "-n"),
     # TODO above
-    # add option to ignore tweets that I already liked
     min_likes: int = typer.Option(0, "--min_likes", "-l"),
 ):
     """Grabs tweets from database, applies filters and transformations,
@@ -59,9 +68,10 @@ def to_collection(
         ignore_lists (bool, optional): If `True` it prevents from using
             Twitter API and list functionality.
             This functionality causes most "Too Many Requests" errors.
-        friends (bool, optional): If `True`, tweets by friends (who user follows) will be added.
-        notfriends (bool, optional): If `True`, tweets b
-            y non-friends (who user not follows) will be added.
+        friends (bool, optional): If `True`, tweets by friends (who user is following) will be added.
+        notfriends (bool, optional): If `True`, tweets by
+             non-friends (who user does not follow) will be added.
+        remove_liked: If `True`, remove tweets from tweetfeed, that user already liked.
     """
     # TODO
     # use str from above:
@@ -161,7 +171,7 @@ def to_collection(
 
 
 if __name__ == "__main__":
-    app()  # comment to debug
+    app()  # comment `app()` to debug
     # to_collection(
     #     users_from_list=False,
     #     friends=False,
