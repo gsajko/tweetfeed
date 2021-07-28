@@ -293,5 +293,4 @@ def like_tweet(auth_path: str, idx):
             break
         if response.reason == "OK":
             print("tweet liked ❤️")
-            break       
-    
+            break

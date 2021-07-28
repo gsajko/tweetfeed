@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # class_weight = sys.argv[1] if len(sys.argv) > 1 else "balanced"
     # dataset_df = create_dataset()
     # dataset_df = load
-    dataset_df = pd.read_json("../data/dataset.json")
+    dataset_df = pd.read_json("data/dataset.json")
     df = cleaning(dataset_df)
     df["labels"] = dataset_df["labels"]
     utils.set_seed()

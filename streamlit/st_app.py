@@ -13,6 +13,7 @@ from io import StringIO
 auth: str = "config/auth.json"
 owner_id: str = "143058191"
 
+
 @contextmanager
 def st_capture(output_func):
     with StringIO() as stdout, redirect_stdout(stdout):
@@ -22,19 +23,23 @@ def st_capture(output_func):
             ret = old_write(string)
             output_func(stdout.getvalue())
             return ret
-        
+
         stdout.write = new_write
         yield
 
+
 st.title("tweetfeed")
 
-# TODO cache this list
+
 if "tweet_idx_list" not in st.session_state:
     st.session_state.tweet_idx_list = get_tweets_from_collection(
         get_collection_id(owner_id, auth, "custom_newsfeed"), auth
     )
-    # st.session_state.tweet_idx_list = [1415446064484651009,1415446071216508928]
     print("getting tweets")
+
+if "predictions" not in st.session_state:
+    st.session_state.predictions = pd.read_csv("data/predictions.csv")
+    print("getting prediction scores")
 
 # tweet_idx_list = list(predictions["id"].head())
 def embed_tweet(status_id):
@@ -50,6 +55,7 @@ def embed_tweet(status_id):
     """,
         height=1600,
     )
+
 
 # counter
 if "count" not in st.session_state:
@@ -67,9 +73,9 @@ def decrease_counter():
 def reset_count():
     st.session_state.count = 0
 
+
 # columns
 col1, col2, col3 = st.beta_columns(3)
-
 
 
 # main content
@@ -78,33 +84,35 @@ st.progress(st.session_state.count / len(st.session_state.tweet_idx_list))
 
 if st.session_state.count != len(st.session_state.tweet_idx_list):
     fav_list = [1415446064484651009]
-    tweet_id = (st.session_state.tweet_idx_list[st.session_state.count])
+    tweet_id = st.session_state.tweet_idx_list[st.session_state.count]
     if st.sidebar.button("💚 this tweet"):
         output = st.empty()
         with st_capture(output.code):
             like_tweet(auth, (tweet_id))
     if st.sidebar.button("🍅 don't like this tweet"):
-        st.write("this tweet sucks")
-        #TODO
+        st.write("this tweet sucks ", tweet_id)
+        # TODO
         # add to disliked_list
-    #TODO
-    #print tweet score
+    # TODO
+    # print tweet score
+    df = st.session_state.predictions
+    st.sidebar.write(
+        "tweet predicted score: ", df[df.id == int(tweet_id)].iloc[0][1]
+    )
     embed_tweet(tweet_id)
 
-if st.session_state.count != len(st.session_state.tweet_idx_list):  
+if st.session_state.count != len(st.session_state.tweet_idx_list):
     col2.button("Next tweet", on_click=increment_counter)
 else:
     st.write("you viewed all tweets in collection")
     col2.button("start over", on_click=reset_count)
-# col1.write("there are ",len(st.session_state.tweet_idx_list), " tweets in collection.")
-# st.sidebar.write("you are viewing tweet nr ", st.session_state.count+1)
 col1.button("Previous tweet", on_click=decrease_counter)
 
-#sidebar
+# sidebar
 if st.sidebar.button("Finish for now"):
-    #TODO
+    # TODO
     # if there are tweets from disliked list
     # add them to not_relevant collection
     # remove "seen" tweets from customfeed collection
-    # list [:counter] 
+    # list [:counter]
     pass
