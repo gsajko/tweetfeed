@@ -79,7 +79,7 @@ def load_favorites(db_path: str) -> pd.DataFrame:
 def find_url(tweet: str) -> list:
     """find all urls in string and returns a list of all urls"""
     return re.findall(
-        r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
+        r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-']|[\/\-.&+]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
         tweet,
     )
 
