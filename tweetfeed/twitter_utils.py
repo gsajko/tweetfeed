@@ -201,8 +201,8 @@ def rem_from_collection(collection_id: str, auth_path: str):
 
 def add_tweets_to_collection(
     collection_id: str, tweet_list: List, auth_path: str
-):
-    "Adds tweets from the list to collection"
+) -> pd.DataFrame:
+    "Adds tweets from the list to collection and returns DataFrame of those tweets"
     auth = json.load(open(auth_path))
     session = session_for_auth(auth)
     procc_list = []
@@ -278,3 +278,19 @@ def get_not_rel_idx(owner_id, auth_path):
     )
     not_relevant_col_idx = [int(x) for x in not_relevant_col_idx]
     return not_relevant_col_idx
+
+
+def like_tweet(auth_path: str, idx):
+    auth = json.load(open(auth_path))
+    session = session_for_auth(auth)
+    url = f"https://api.twitter.com/1.1/favorites/create.json?id={str(idx)}"
+    while True:
+        response = session.post(url, timeout=5)
+        timeout_handling(response, sleep=60)
+        if "errors" in response.json():
+            for i in range(len(response.json()["errors"])):
+                print(response.json()["errors"][i]["message"])
+            break
+        if response.reason == "OK":
+            print("tweet liked ❤️")
+            break
