@@ -57,3 +57,10 @@ anacron
 ```
 ### next
 - do classifier based on list ("show me tweets similiar to those from people in list Q1")
+
+
+### temp
+sucks tweets 
+1408100850828988427
+1393298798022123530
+1378867029176840194

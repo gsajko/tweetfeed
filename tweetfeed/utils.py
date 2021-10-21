@@ -78,7 +78,10 @@ def load_favorites(db_path: str) -> pd.DataFrame:
 
 def find_url(tweet: str) -> list:
     """find all urls in string and returns a list of all urls"""
-    return re.findall(r"http\S+", tweet)
+    return re.findall(
+        r"http[s]?://(?:[a-zA-Z]|[0-9]|[$-']|[\/\-.&+]|(?:%[0-9a-fA-F][0-9a-fA-F]))+",
+        tweet,
+    )
 
 
 def clean_up_url(url: str) -> str:
@@ -115,12 +118,16 @@ def rem_short_links(tweet: str) -> str:
 
 def get_domain(url: str) -> str:
     """extracts domain from url, returns it"""
-    domain = urlparse(url).netloc.replace("www.", "")
-    dot_split = domain.split(".")
-    if (len(dot_split) > 2) & (
-        dot_split[-1] == "com"
-    ):  # for links like "edition.cnn.com", but not like "site.co.nz"
-        return ".".join(dot_split[1:])
+    domain = ""
+    try:
+        domain = urlparse(url).netloc.replace("www.", "")
+        dot_split = domain.split(".")
+        if (len(dot_split) > 2) & (
+            dot_split[-1] == "com"
+        ):  # for links like "edition.cnn.com", but not like "site.co.nz"
+            return ".".join(dot_split[1:])
+    except Exception as e:
+        print(url, " ", e)
     return domain
 
 
@@ -396,4 +403,6 @@ def prep_batch(
     top_pred_list = list(df["preds"].nlargest(n=3))
     for score in top_pred_list:
         print(score)
+    # df.sort_values(by=["preds"], ascending=False, inplace=True)
+    # TODO sort preds from highest
     return df

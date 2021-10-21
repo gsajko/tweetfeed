@@ -1,13 +1,15 @@
+from contextlib import contextmanager, redirect_stdout
+from io import StringIO
+
+import pandas as pd
+
 import streamlit as st
 import streamlit.components.v1 as components
-import pandas as pd
 from tweetfeed.twitter_utils import (
     get_collection_id,
     get_tweets_from_collection,
     like_tweet,
 )
-from contextlib import contextmanager, redirect_stdout
-from io import StringIO
 
 # var
 auth: str = "config/auth.json"
@@ -42,6 +44,8 @@ if "predictions" not in st.session_state:
     print("getting prediction scores")
 
 # tweet_idx_list = list(predictions["id"].head())
+
+
 def embed_tweet(status_id):
     components.html(
         f"""
@@ -79,7 +83,10 @@ col1, col2, col3 = st.beta_columns(3)
 
 
 # main content
-st.progress(st.session_state.count / len(st.session_state.tweet_idx_list))
+if len(st.session_state.tweet_idx_list) > 0:
+    st.progress(st.session_state.count / len(st.session_state.tweet_idx_list))
+else:
+    st.write("NO TWEETS LOADED")
 
 
 if st.session_state.count != len(st.session_state.tweet_idx_list):
@@ -89,16 +96,27 @@ if st.session_state.count != len(st.session_state.tweet_idx_list):
         output = st.empty()
         with st_capture(output.code):
             like_tweet(auth, (tweet_id))
-    if st.sidebar.button("🍅 don't like this tweet"):
+
+    if st.sidebar.button("🍅 don't like this tweet [does nothing]"):
         st.write("this tweet sucks ", tweet_id)
         # TODO
         # add to disliked_list
     # TODO
+    # bookmark tweet 💾
+    # TODO
     # print tweet score
     df = st.session_state.predictions
-    st.sidebar.write(
-        "tweet predicted score: ", df[df.id == int(tweet_id)].iloc[0][1]
-    )
+    st.sidebar.write(df[df.id == int(tweet_id)].empty)
+    if not df[df.id == int(tweet_id)].empty:
+        st.sidebar.write(
+            "tweet predicted relevancy score: ",
+            df[df.id == int(tweet_id)].iloc[0][1],
+        )
+    else:
+        st.sidebar.write(
+            "tweet predicted relevancy score: ", df[df.id == int(tweet_id)]
+        )
+
     embed_tweet(tweet_id)
 
 if st.session_state.count != len(st.session_state.tweet_idx_list):
@@ -109,10 +127,16 @@ else:
 col1.button("Previous tweet", on_click=decrease_counter)
 
 # sidebar
-if st.sidebar.button("Finish for now"):
+
+if st.sidebar.button("Finish for now [does nothing]"):
+
     # TODO
     # if there are tweets from disliked list
     # add them to not_relevant collection
     # remove "seen" tweets from customfeed collection
     # list [:counter]
     pass
+
+# TODO
+# sidebar loading new collection
+# with all the options to choose from
