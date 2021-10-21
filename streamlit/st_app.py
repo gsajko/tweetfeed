@@ -96,6 +96,7 @@ if st.session_state.count != len(st.session_state.tweet_idx_list):
         output = st.empty()
         with st_capture(output.code):
             like_tweet(auth, (tweet_id))
+
     if st.sidebar.button("🍅 don't like this tweet [does nothing]"):
         st.write("this tweet sucks ", tweet_id)
         # TODO
@@ -115,6 +116,7 @@ if st.session_state.count != len(st.session_state.tweet_idx_list):
         st.sidebar.write(
             "tweet predicted relevancy score: ", df[df.id == int(tweet_id)]
         )
+
     embed_tweet(tweet_id)
 
 if st.session_state.count != len(st.session_state.tweet_idx_list):
@@ -125,7 +127,9 @@ else:
 col1.button("Previous tweet", on_click=decrease_counter)
 
 # sidebar
+
 if st.sidebar.button("Finish for now [does nothing]"):
+
     # TODO
     # if there are tweets from disliked list
     # add them to not_relevant collection
@@ -136,4 +140,3 @@ if st.sidebar.button("Finish for now [does nothing]"):
 # TODO
 # sidebar loading new collection
 # with all the options to choose from
-#
