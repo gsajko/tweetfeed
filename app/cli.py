@@ -149,7 +149,10 @@ def to_collection(
     )  # adds to collection
 
     # backup old data
-    seen_tweets_old = pd.read_csv("data/seen.csv")
+    try:
+        seen_tweets_old = pd.read_csv("data/seen.csv")
+    except FileNotFoundError:
+        seen_tweets_old = pd.DataFrame(columns=["tweet_id", "err_reason"])
     seen_tweets_old.to_csv("data/seen_old.csv", index=False)
 
     # update seen.csv file

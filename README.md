@@ -1,16 +1,19 @@
 ### Setup
 git clone repository
 
-poetry install
+install poetry
+`poetry shell`
+`poetry install`
 
-poetry shell
+run `install_nltk.py`
 
-
+install twitter-to-sqlite
 
 using twitter-to-sqlite generate `auth.json` file
-copy it into config folder
+copy it into `/config` folder
 
 run script:
+
 - run 3 diff twitter-to-sqlite commands
     - create `home.db`
     - create `faves.db`
@@ -24,11 +27,6 @@ To undo this, you need to use `git update-index --no-assume-unchanged [<file> ..
 
 - get your own twitter id, put it into `config/settings.json` as `owner_id`
 
-
-
-
-
-
 ### Optional
 
 #### setup twitter-to-sqlite
@@ -37,6 +35,19 @@ install twitter-to-sqlite outside of poetry shell.
 
 configure crontab and anacron.
 I use crontab to add data to databases, and anacron to delete favorites and timeline databases once a week - you are adding tweets to database using twitter-to-sqlite but this doesn't reflect Twitter use. Sometimes you delete your own tweets, undo retweets, un-like tweets by other. 
+
+use `whereis twitter-to-sqlite` to find path to `twitter-to-sqlite`
+
+check if cron is working
+`sudo service cron status`
+
+If you are using WSL Ubuntu use this guide:
+https://www.howtogeek.com/746532/how-to-launch-cron-automatically-in-wsl-on-windows-10-and-11/
+
+check if you have `anacron` installed by typing:
+`cat /etc/anacrontab`
+If not, install it:
+`sudo apt-get install -y anacron`
 
 My example:
 
@@ -55,6 +66,8 @@ anacron
 7	10	del-fav rm /home/gsajko/work/tweetfeed/data/faves.db
 7	15	del-timeline rm /home/gsajko/work/tweetfeed/data/timeline.db
 ```
+<!-- create `data/news_domains.txt` -->
+
 ### next
 - do classifier based on list ("show me tweets similiar to those from people in list Q1")
 

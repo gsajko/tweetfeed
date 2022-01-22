@@ -35,4 +35,6 @@ dvc:
 	dvc push
 
 check: great-expectations test lint style 
+bare_check: test lint style # if no prediction data is available
+
 # check: test lint style mypy data

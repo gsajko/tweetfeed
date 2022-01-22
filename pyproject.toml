@@ -16,7 +16,7 @@ pandas = "^1.2.1"
 requests_html = "^0.10.0"
 typer = "^0.3.2"
 requests-oauthlib = "1.2.0"
-torch = "1.7.0"
+# torch = "1.7.0"
 
 
 

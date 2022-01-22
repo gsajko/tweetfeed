@@ -175,3 +175,6 @@ notebooks/ge.py
 great_expectations/notebooks/*
 data/*.txt
 notebooks/*.txt
+
+# Allow
+data/news_domains.txt

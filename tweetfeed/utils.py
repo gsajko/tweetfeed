@@ -329,16 +329,21 @@ def prep_batch(
             df,
             to_print="after removing seen, DataFrame is empty, nothing to add",
         )
-        predictions = pd.read_csv(f"{d_path}predictions.csv")
-        df.insert(
-            3,
-            "preds",
-            df["id"].map(
-                predictions.set_index("id")["predicted"], na_action="ignore"
-            ),
-        )
-        df["preds"] = df["preds"].fillna(0)
-        df.sort_values(by="preds", ascending=False, inplace=True)
+        try:
+            predictions = pd.read_csv(f"{d_path}predictions.csv")
+            df.insert(
+                3,
+                "preds",
+                df["id"].map(
+                    predictions.set_index("id")["predicted"],
+                    na_action="ignore",
+                ),
+            )
+            df["preds"] = df["preds"].fillna(0)
+            df.sort_values(by="preds", ascending=False, inplace=True)
+        except FileNotFoundError:
+            print("no predictions file loaded")
+            df["preds"] = 0
     else:
         df["preds"] = 0
 
