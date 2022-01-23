@@ -31,9 +31,9 @@ def cleaning(df: pd.DataFrame) -> pd.DataFrame:
 
     clean_tweet_texts = []
     clean_df = df.copy()
-    for t in clean_df["full_text"]:
-        t = t.lower()
-        stripped = re.sub(combined_pat, "", t)
+    for tweet in clean_df["full_text"]:
+        tweet = tweet.lower()
+        stripped = re.sub(combined_pat, "", tweet)
         tokens = word_tokenize(stripped)
         words = [x for x in tokens if len(x) > 1]
         sentences = " ".join(words)
@@ -87,6 +87,7 @@ def idx_contain_muted_words(df_tweets: pd.DataFrame, data_path: str) -> list:
 
 
 def create_neg_list_idx(path_to_db, owner_id, auth_path, muted_path):
+    """"""
     df_tweets = load_tweets(path_to_db, days=0)
     muted_acc_list = get_muted_acc(
         owner_id, auth_path, muted_lists=["nytblock", "muted"]
@@ -103,6 +104,7 @@ def create_neg_list_idx(path_to_db, owner_id, auth_path, muted_path):
 
 
 def get_engagement(path_to_fav, path_to_timeline):
+    """"""
     favorite_idx = load_favorites(path_to_fav).tweet.tolist()
     df_timeline = load_tweets(path_to_timeline, days=0)
     quoted = df_timeline[df_timeline.quoted_status == "N/A"].id.tolist()
@@ -113,6 +115,7 @@ def get_engagement(path_to_fav, path_to_timeline):
 def create_dataset_df(
     owner_id, auth, path_to_db, path_to_fav, path_to_timeline, muted_path
 ):
+    """"""
     # TODO add logging
     df_tweets = load_tweets(db_path=path_to_db, days=0)
     df_tweets = df_tweets[df_tweets["lang"] == "en"]

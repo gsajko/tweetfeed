@@ -114,9 +114,9 @@ def test_drop_contains(test_df):
 
 
 def test_rem_seen_tweets(test_df, capsysbinary):
-    data_path = "data/test_"
+    data_path = "tests"
     df = utils.rem_seen_tweets(test_df, data_path)
-    assert df.shape[0] == 0
+    assert df.shape[0] == test_df.shape[0] - 2
     data_path = "wrong_path"
     df = utils.rem_seen_tweets(test_df, data_path)
     captured = capsysbinary.readouterr()

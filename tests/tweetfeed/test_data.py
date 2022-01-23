@@ -66,7 +66,7 @@ def test_with_news_idx(test_df, data_path="tests"):
     ]
 
 
-def test_idx_contain_muted_words(test_df, data_path="data"):
+def test_idx_contain_muted_words(test_df, data_path="tests"):
     df = test_df
     list_idx = data.idx_contain_muted_words(df, data_path)
     assert list_idx == [

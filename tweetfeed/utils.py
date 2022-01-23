@@ -11,6 +11,7 @@ import torch
 
 
 def set_seed(seed: int = 1234) -> None:
+    """sets seed for random number generator"""
     np.random.seed(seed)
     random.seed(seed)
     torch.manual_seed(seed)
@@ -70,6 +71,7 @@ def load_tweets(db_path: str, days: int, latest=False) -> pd.DataFrame:
 
 
 def load_favorites(db_path: str) -> pd.DataFrame:
+    """loads likes from SQLite database"""
     cnx = sqlite3.connect(db_path)
     query = "SELECT * FROM favorited_by"
     df = pd.read_sql_query(query, cnx)
@@ -213,7 +215,7 @@ def find_news(df: pd.DataFrame, news_domains_list: list) -> pd.DataFrame:
 def rem_seen_tweets(df: pd.DataFrame, data_path: str) -> pd.DataFrame:
     "removes tweets stored in 'seen.csv' from DataFrame"
     try:
-        seen_tweets = pd.read_csv(f"{data_path}seen.csv")
+        seen_tweets = pd.read_csv(f"{data_path}/seen.csv")
     except FileNotFoundError:
         print("No 'seen.csv' file loaded. No such file or directory")
         seen_tweets = pd.DataFrame(columns=["tweet_id", "err_reason"])
@@ -243,11 +245,10 @@ def if_empty_df_raise(
 ):
     if df.shape[0] == 0:
         raise ValueError(to_print)
-    else:
-        pass
 
 
 def concat_tweet_text(df: pd.DataFrame) -> pd.DataFrame:
+    """concatenates tweet text from "full_text" and extended tweet columns"""
     df = df.rename({"full_text": "full_text_short"}, axis=1)
     df.quoted_status = (
         df.quoted_status.replace("N/A", 0).fillna(0).astype(np.int64)
@@ -316,6 +317,11 @@ def prep_batch(
 
     # remove retweets
     # TODO this should be options
+    df = df[df["lang"] == "en"]  # take only english lang tweets
+    if_empty_df_raise(
+        df,
+        to_print="ValueError:After removing non-english tweets, DataFrame is empty, nothing to add",
+    )
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
     if_empty_df_raise(
         df,
@@ -330,7 +336,7 @@ def prep_batch(
             to_print="after removing seen, DataFrame is empty, nothing to add",
         )
         try:
-            predictions = pd.read_csv(f"{d_path}predictions.csv")
+            predictions = pd.read_csv(f"{d_path}/predictions.csv")
             df.insert(
                 3,
                 "preds",
@@ -346,12 +352,6 @@ def prep_batch(
             df["preds"] = 0
     else:
         df["preds"] = 0
-
-    df = df[df["lang"] == "en"]  # take only english lang tweets
-    if_empty_df_raise(
-        df,
-        to_print="ValueError:After removing non-english tweets, DataFrame is empty, nothing to add",
-    )
 
     if "likes" in kwargs:
         if kwargs["likes"] > 0:

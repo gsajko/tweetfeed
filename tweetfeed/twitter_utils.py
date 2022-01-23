@@ -273,6 +273,7 @@ def from_muted_users_idx(
 
 
 def get_not_rel_idx(owner_id, auth_path):
+    """get tweets from not_relevant collection"""
     not_relevant_col_idx = get_tweets_from_collection(
         get_collection_id(owner_id, auth_path, "not_relevant"), auth_path
     )
@@ -281,6 +282,7 @@ def get_not_rel_idx(owner_id, auth_path):
 
 
 def like_tweet(auth_path: str, idx):
+    """Likes tweet with idx"""
     auth = json.load(open(auth_path))
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/favorites/create.json?id={str(idx)}"

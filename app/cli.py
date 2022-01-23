@@ -25,6 +25,7 @@ def create_dataset(
     auth: str = "config/auth.json",
     owner_id: str = "143058191",
 ):
+    """create dataset"""
     dataset_df = create_dataset_df(
         owner_id=owner_id,
         auth=auth,
@@ -68,7 +69,7 @@ def to_collection(
         ignore_lists (bool, optional): If `True` it prevents from using
             Twitter API and list functionality.
             This functionality causes most "Too Many Requests" errors.
-        friends (bool, optional): If `True`, tweets by friends (who user is following) will be added.
+        friends (bool, optional): If `True`, tweets by friends (following) will be added.
         notfriends (bool, optional): If `True`, tweets by
              non-friends (who user does not follow) will be added.
         remove_liked: If `True`, remove tweets from tweetfeed, that user already liked.
@@ -138,7 +139,7 @@ def to_collection(
         news_domains=news_domains,
         mute_list=mute_list,
         mute_list_cs=mute_list_cs,
-        data_path="data/",
+        data_path="data",
         remove_news=True,
         likes=min_likes,
     )
