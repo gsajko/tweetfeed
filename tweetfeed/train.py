@@ -1,5 +1,7 @@
 from __future__ import print_function
 
+import pickle
+
 import mlflow
 import mlflow.sklearn
 import numpy as np
@@ -49,7 +51,19 @@ if __name__ == "__main__":
     df["labels"] = dataset_df["labels"]
     utils.set_seed()
     cleaned_df = df.copy()
-    X_train, X_val, X_test, y_train, y_val, y_test = get_data_splits_cv(df)
+    (
+        X_train,
+        X_val,
+        X_test,
+        y_train,
+        y_val,
+        y_test,
+        count_vect,
+    ) = get_data_splits_cv(df)
+    # save count_vectorizer #TODO
+    cv_filename = "model/cv.pkl"
+    with open(cv_filename, "wb") as f:
+        pickle.dump(count_vect, f)
     weights = np.linspace(0.0, 0.99, 200)
     param_grid = {"class_weight": [{0: x, 1: 1.0 - x} for x in weights]}
     for i in param_grid["class_weight"]:

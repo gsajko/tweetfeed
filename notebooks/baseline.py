@@ -1,5 +1,6 @@
 # %%
 import json
+import pickle
 import re
 from datetime import date
 
@@ -85,13 +86,15 @@ def set_seeds(seed=1234):
 # %%
 # Split sizes
 def get_data_splits_cv(df, train_size=0.7):
-    # get data
+    # Get data
     x = df["text"]
-    y = df["sentiment"]
-    cv = CountVectorizer(
+    y = df["labels"]
+
+    # Convert text documents to a matrix of token counts
+    count_vect = CountVectorizer(
         stop_words="english", binary=False, ngram_range=(1, 3)
     )
-    X = cv.fit_transform(x)
+    X = count_vect.fit_transform(x)
 
     # Split (train)
     X_train, X_, y_train, y_ = train_test_split(X, y, train_size=train_size)
@@ -114,7 +117,7 @@ def get_data_splits_cv(df, train_size=0.7):
 
     counts_df["ratio"] = counts_df[1.0] / (counts_df[1.0] + counts_df[0.0])
     print(counts_df)
-    return X_train, X_val, X_test, y_train, y_val, y_test
+    return X_train, X_val, X_test, y_train, y_val, y_test, count_vect
 
 
 # %%
@@ -122,7 +125,15 @@ def get_data_splits_cv(df, train_size=0.7):
 # Set seeds
 set_seeds()
 cleaned_df = df.copy()
-X_train, X_val, X_test, y_train, y_val, y_test = get_data_splits_cv(df)
+(
+    X_train,
+    X_val,
+    X_test,
+    y_train,
+    y_val,
+    y_test,
+    count_vect,
+) = get_data_splits_cv(df)
 
 print(f"X_train: {X_train.shape}, y_train: {y_train.shape}")
 print(f"X_val: {X_val.shape}, y_val: {y_val.shape}")
@@ -202,8 +213,19 @@ from sklearn.linear_model import LogisticRegression
 # Set seeds
 set_seeds()
 cleaned_df = df.copy()
-X_train, X_val, X_test, y_train, y_val, y_test = get_data_splits_cv(df)
+(
+    X_train,
+    X_val,
+    X_test,
+    y_train,
+    y_val,
+    y_test,
+    count_vect,
+) = get_data_splits_cv(df)
 
+cv_filename = "model/cv_baseline.pkl"
+with open(cv_filename, "wb") as f:
+    pickle.dump(count_vect, f)
 # %%
 # %%
 log_cv = LogisticRegression()
