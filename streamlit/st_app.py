@@ -40,8 +40,14 @@ if "tweet_idx_list" not in st.session_state:
     print("getting tweets")
 
 if "predictions" not in st.session_state:
-    st.session_state.predictions = pd.read_csv("data/predictions.csv")
-    print("getting prediction scores")
+    try:
+        st.session_state.predictions = pd.read_csv("data/predictions.csv")
+        print("getting prediction scores")
+    except FileNotFoundError:
+        st.session_state.predictions = pd.DataFrame(
+            columns=["id", "predicted"]
+        )
+        print("no prediction scores found")
 
 # tweet_idx_list = list(predictions["id"].head())
 

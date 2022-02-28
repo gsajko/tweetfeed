@@ -39,6 +39,7 @@ def create_dataset(
     with open("data/dataset.json", "w") as f:
         json.dump(df_json, f)
         f.write("\n")
+    print("dataset created ✨")
 
 
 @app.command()

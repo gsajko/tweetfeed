@@ -68,9 +68,17 @@ anacron
 ```
 <!-- create `data/news_domains.txt` -->
 
+### create dataset
+`poetry run tweetfeed create_dataset`
+
+
 ### next
 - do classifier based on list ("show me tweets similiar to those from people in list Q1")
 
+
+### display tweets
+run `streamlit run streamlit/st_app.py`
+BUT, disable ad blocking software to display tweets in browser.
 
 ### temp
 sucks tweets 
