@@ -78,10 +78,7 @@ anacron
 
 ### display tweets
 run `streamlit run streamlit/st_app.py`
+
 BUT, disable ad blocking software to display tweets in browser.
 
-### temp
-sucks tweets 
-1408100850828988427
-1393298798022123530
-1378867029176840194
+

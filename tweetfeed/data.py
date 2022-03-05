@@ -28,12 +28,14 @@ def cleaning(df: pd.DataFrame) -> pd.DataFrame:
     pat4 = "#[^ ]+"
     pat5 = "[0-9]"
     combined_pat = "|".join((pat1, pat2, pat3, pat4, pat5))
+    pat6 = "^\s*\."
 
     clean_tweet_texts = []
     clean_df = df.copy()
     for tweet in clean_df["full_text"]:
         tweet = tweet.lower()
         stripped = re.sub(combined_pat, "", tweet)
+        stripped = re.sub(pat6, "", stripped)
         tokens = word_tokenize(stripped)
         words = [x for x in tokens if len(x) > 1]
         sentences = " ".join(words)
@@ -158,5 +160,6 @@ def get_data_splits_cv(df, train_size=0.7):
     ).T.fillna(0)
 
     counts_df["ratio"] = counts_df[1.0] / (counts_df[1.0] + counts_df[0.0])
+    print("class balance:")
     print(counts_df)
     return X_train, X_val, X_test, y_train, y_val, y_test, count_vect

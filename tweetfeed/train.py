@@ -64,8 +64,8 @@ if __name__ == "__main__":
     cv_filename = "model/cv.pkl"
     with open(cv_filename, "wb") as f:
         pickle.dump(count_vect, f)
-    weights = np.linspace(0.0, 0.99, 200)
-    param_grid = {"class_weight": [{0: x, 1: 1.0 - x} for x in weights]}
+    weights = np.linspace(1, 100, 10)
+    param_grid = {"class_weight": [{0: 1, 1: x} for x in weights]}
     for i in param_grid["class_weight"]:
         class_weight = i
         with mlflow.start_run():
@@ -88,7 +88,10 @@ if __name__ == "__main__":
             }
             print("Metrics: %s" % metrics)
             mlflow.log_param("model", MODEL_NAME)
-            mlflow.log_param("class_weight_1", class_weight[1])
+            class_w_ratio = class_weight[1] * (1 / class_weight[0])
+            class_w_ratio_str = f"ratio 1: {class_w_ratio}"
+            mlflow.log_param("class_weight_ratio", class_w_ratio)
+            mlflow.log_param("class_weight_ratio_str", class_w_ratio_str)
             mlflow.log_metrics(metrics)
             mlflow.sklearn.log_model(lr, "model")
             print("Model saved in run %s" % mlflow.active_run().info.run_uuid)
