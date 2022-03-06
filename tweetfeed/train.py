@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_recall_fscore_support
-
+from sklearn.utils.class_weight import compute_class_weight
 from tweetfeed import utils
 from tweetfeed.data import cleaning, get_data_splits_cv
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     dataset_df = pd.read_json("data/dataset.json")
     df = cleaning(dataset_df)
     df["labels"] = dataset_df["labels"]
-    utils.set_seed()
+    utils.set_seed()  # 1234 default
     cleaned_df = df.copy()
     (
         X_train,
@@ -64,8 +64,17 @@ if __name__ == "__main__":
     cv_filename = "model/cv.pkl"
     with open(cv_filename, "wb") as f:
         pickle.dump(count_vect, f)
-    weights = np.linspace(1, 100, 10)
-    param_grid = {"class_weight": [{0: 1, 1: x} for x in weights]}
+
+    balanced_w = compute_class_weight("balanced", [0, 1], y_train)
+    print(balanced_w)
+    ratio_balanced = balanced_w[1] / balanced_w[0]
+    ratio = np.linspace(ratio_balanced, ratio_balanced + 7, 7)
+    # explore betweem 0.5 and 2, but add also weight from "balanced"
+    class1 = [1]
+    param_grid = {
+        "class_weight": [{0: x / y, 1: x} for x in class1 for y in ratio]
+    }
+
     for i in param_grid["class_weight"]:
         class_weight = i
         with mlflow.start_run():
@@ -88,6 +97,8 @@ if __name__ == "__main__":
             }
             print("Metrics: %s" % metrics)
             mlflow.log_param("model", MODEL_NAME)
+            mlflow.log_param("class_weight_0", class_weight[0])
+            mlflow.log_param("class_weight_1", class_weight[1])
             class_w_ratio = class_weight[1] * (1 / class_weight[0])
             class_w_ratio_str = f"ratio 1: {class_w_ratio}"
             mlflow.log_param("class_weight_ratio", class_w_ratio)

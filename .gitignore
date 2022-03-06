@@ -151,7 +151,7 @@ home.db
 *.db-journal
 
 # data
-*.csv
+data/*.csv
 *.pkl
 
 

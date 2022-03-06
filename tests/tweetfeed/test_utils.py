@@ -64,7 +64,7 @@ def test_remove_tw_urls(test_df):
     tweet = utils.remove_tw_urls(tweet)
     urls_list = utils.find_url(tweet)
     assert len(urls_list) == 1
-    tweet = test_df[test_df["id"] == 1329935540049817600].iloc[0].full_text
+    tweet = "the endpoint is: https://api.twitter.com/fleets/v1/user_fleets?user_id="
     tweet = utils.remove_tw_urls(tweet)
     urls_list = utils.find_url(tweet)
     assert len(urls_list) == 0
