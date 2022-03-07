@@ -4,11 +4,11 @@ from __future__ import print_function
 import pickle
 import re
 
-from nltk import word_tokenize
 import mlflow
 import mlflow.sklearn
 import numpy as np
 import pandas as pd
+from nltk import word_tokenize
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_recall_fscore_support
 
@@ -121,9 +121,10 @@ param_grid = dict(class_weight=balance)
 class_weight = "balanced"
 
 
+from sklearn.datasets import make_classification
+
 # calculate heuristic class weighting
 from sklearn.utils.class_weight import compute_class_weight
-from sklearn.datasets import make_classification
 
 # generate 2 class dataset
 # X, y = make_classification(n_samples=10000, n_features=2, n_redundant=0,

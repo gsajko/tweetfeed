@@ -1,7 +1,7 @@
 from __future__ import print_function
 
-import pickle
 import os
+import pickle
 
 import mlflow
 import mlflow.sklearn
@@ -10,6 +10,7 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.utils.class_weight import compute_class_weight
+
 from tweetfeed import utils
 from tweetfeed.data import cleaning, get_data_splits_cv
 
@@ -39,10 +40,12 @@ def get_performance(y_true, y_pred, classes):
         }
 
     return performance
-    
+
+
 def create_folder_if_not_exists(folder_name):
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
+
 
 # class_weight = "balanced"
 
@@ -73,16 +76,17 @@ if __name__ == "__main__":
     balanced_w = compute_class_weight("balanced", [0, 1], y_train)
     print(balanced_w)
     ratio_balanced = balanced_w[1] / balanced_w[0]
-    ratio = np.linspace(ratio_balanced, ratio_balanced + 7, 7)
+    ratio = np.linspace(ratio_balanced, ratio_balanced + 15, 30)
     # explore betweem 0.5 and 2, but add also weight from "balanced"
     class1 = [1]
     param_grid = {
         "class_weight": [{0: x / y, 1: x} for x in class1 for y in ratio]
     }
-
+    mlflow.set_experiment(experiment_name="220307_2")
     for i in param_grid["class_weight"]:
         class_weight = i
         with mlflow.start_run():
+            mlflow.log_artifact(cv_filename)
             # class_weight = "balanced"
             MODEL_NAME = "Logistic Regression CV"
             lr = LogisticRegression(class_weight=class_weight)

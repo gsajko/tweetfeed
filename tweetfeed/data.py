@@ -28,14 +28,14 @@ def cleaning(df: pd.DataFrame) -> pd.DataFrame:
     pat4 = "#[^ ]+"
     pat5 = "[0-9]"
     combined_pat = "|".join((pat1, pat2, pat3, pat4, pat5))
-    pat6 = "^\s*\."
+    pat6 = "^[^a-zA-Z]*"  # remove all non-letters from the beginning of the string
 
     clean_tweet_texts = []
     clean_df = df.copy()
     for tweet in clean_df["full_text"]:
         tweet = tweet.lower()
-        stripped = re.sub(combined_pat, "", tweet)
-        stripped = re.sub(pat6, "", stripped)
+        stripped_first = re.sub(combined_pat, "", tweet)
+        stripped = re.sub(pat6, "", stripped_first)
         tokens = word_tokenize(stripped)
         words = [x for x in tokens if len(x) > 1]
         sentences = " ".join(words)

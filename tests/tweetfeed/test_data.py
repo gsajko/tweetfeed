@@ -55,9 +55,8 @@ def test_cleaning(test_df, test_news_domains):
     )
     assert (
         df["text"][10]
-        == "`` developers will be kicked off apple 's app store if they fail to play by the rules of the iphone new anti-tracking policy '' how does it fare with the european for example competition-wise not asking about or"
+        == "developers will be kicked off apple 's app store if they fail to play by the rules of the iphone new anti-tracking policy '' how does it fare with the european for example competition-wise not asking about or"
     )
-    
 
 
 def test_with_news_idx(test_df, data_path="tests"):
@@ -86,9 +85,15 @@ def test_get_data_splits_cv(test_dataset_df):
     df = data.cleaning(test_dataset_df)
     df["labels"] = test_dataset_df["labels"]
     set_seed()
-    X_train, X_val, X_test, y_train, y_val, y_test, count_vect = data.get_data_splits_cv(
-        df, train_size=0.7
-    )
+    (
+        X_train,
+        X_val,
+        X_test,
+        y_train,
+        y_val,
+        y_test,
+        count_vect,
+    ) = data.get_data_splits_cv(df, train_size=0.7)
 
     assert X_train.shape[0] == y_train.shape[0]
     assert X_val.shape[0] == y_val.shape[0]
