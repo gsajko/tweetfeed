@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import pickle
+import os
 
 import mlflow
 import mlflow.sklearn
@@ -38,7 +39,10 @@ def get_performance(y_true, y_pred, classes):
         }
 
     return performance
-
+    
+def create_folder_if_not_exists(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
 
 # class_weight = "balanced"
 
@@ -61,6 +65,7 @@ if __name__ == "__main__":
         count_vect,
     ) = get_data_splits_cv(df)
     # save count_vectorizer #TODO
+    create_folder_if_not_exists("model")
     cv_filename = "model/cv.pkl"
     with open(cv_filename, "wb") as f:
         pickle.dump(count_vect, f)

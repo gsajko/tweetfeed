@@ -25,7 +25,7 @@ subgraph splited_data
 test_data & train_data
 end
 
-fitted_cv --> save_cv
+
 
 
 subgraph training
@@ -37,7 +37,7 @@ subgraph predict
 model.fit --> model.predict
 test_data --> model.predict
 end
-predict --> save_model & save_performance
+
 end
 
 subgraph predict_prod
@@ -45,9 +45,9 @@ subgraph predict_prod
 subgraph data_prep_
 prep_batch --> cleaning --> data_to_pred
 data_to_pred & count_vect --transform--> encoded
+model_prod
 end
 
-save_model --load--> model_prod
 
 end
 
@@ -55,9 +55,15 @@ end
 save_cv --load--> count_vect
 
 subgraph mlflow
-save_model & save_performance & save_cv --> artefacts
+artefacts
 end
 
-data_prep_ & model_prod --> predicted_scores
+predict --> save_model & save_performance
+fitted_cv --> save_cv
+encoded & model_prod --> predicted_scores
+save_model & save_performance & save_cv --> artefacts
+
+save_model --load--> model_prod
 
 ```
+
