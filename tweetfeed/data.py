@@ -22,20 +22,17 @@ from tweetfeed.utils import (
 def cleaning(df: pd.DataFrame) -> pd.DataFrame:
     "clean Dataframe"
 
-    pat1 = "@[^ ]+"
-    pat2 = "http[^ ]+"
-    pat3 = "www.[^ ]+"
-    pat4 = "#[^ ]+"
-    pat5 = "[0-9]"
-    combined_pat = "|".join((pat1, pat2, pat3, pat4, pat5))
-    pat6 = "^[^a-zA-Z]*"  # remove all non-letters from the beginning of the string
+    patterns = "|".join(
+        ("@[^ ]+", "http[^ ]+", "www.[^ ]+", "#[^ ]+", "[0-9]")
+    )
+    non_lett_pat = "^[^a-zA-Z]*"  # remove all non-letters from the beginning of the string
 
     clean_tweet_texts = []
     clean_df = df.copy()
     for tweet in clean_df["full_text"]:
         tweet = tweet.lower()
-        stripped_first = re.sub(combined_pat, "", tweet)
-        stripped = re.sub(pat6, "", stripped_first)
+        stripped_first = re.sub(patterns, "", tweet)
+        stripped = re.sub(non_lett_pat, "", stripped_first)
         tokens = word_tokenize(stripped)
         words = [x for x in tokens if len(x) > 1]
         sentences = " ".join(words)
@@ -89,7 +86,7 @@ def idx_contain_muted_words(df_tweets: pd.DataFrame, data_path: str) -> list:
 
 
 def create_neg_list_idx(path_to_db, owner_id, auth_path, muted_path):
-    """"""
+    "create list of tweets idx, that should be filtered out"
     df_tweets = load_tweets(path_to_db, days=0)
     muted_acc_list = get_muted_acc(
         owner_id, auth_path, muted_lists=["nytblock", "muted"]
@@ -106,7 +103,7 @@ def create_neg_list_idx(path_to_db, owner_id, auth_path, muted_path):
 
 
 def get_engagement(path_to_fav, path_to_timeline):
-    """"""
+    "get list of tweets id, that user interacted with"
     favorite_idx = load_favorites(path_to_fav).tweet.tolist()
     df_timeline = load_tweets(path_to_timeline, days=0)
     quoted = df_timeline[df_timeline.quoted_status == "N/A"].id.tolist()
@@ -117,7 +114,7 @@ def get_engagement(path_to_fav, path_to_timeline):
 def create_dataset_df(
     owner_id, auth, path_to_db, path_to_fav, path_to_timeline, muted_path
 ):
-    """"""
+    "create dataset of tweets with positive and negative labels"
     # TODO add logging
     df_tweets = load_tweets(db_path=path_to_db, days=0)
     df_tweets = df_tweets[df_tweets["lang"] == "en"]
@@ -130,6 +127,7 @@ def create_dataset_df(
 
 
 def get_data_splits_cv(df, train_size=0.7):
+    "split dataset into train, validation and test sets using count vectorizer"
     # Get data
     x = df["text"]
     y = df["labels"]

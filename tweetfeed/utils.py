@@ -122,15 +122,12 @@ def rem_short_links(tweet: str) -> str:
 def get_domain(url: str) -> str:
     """extracts domain from url, returns it"""
     domain = ""
-    try:
-        domain = urlparse(url).netloc.replace("www.", "")
-        dot_split = domain.split(".")
-        if (len(dot_split) > 2) & (
-            dot_split[-1] == "com"
-        ):  # for links like "edition.cnn.com", but not like "site.co.nz"
-            return ".".join(dot_split[1:])
-    except Exception as e:
-        print(url, " ", e)
+    domain = urlparse(url).netloc.replace("www.", "")
+    dot_split = domain.split(".")
+    if (len(dot_split) > 2) & (
+        dot_split[-1] == "com"
+    ):  # for links like "edition.cnn.com", but not like "site.co.nz"
+        return ".".join(dot_split[1:])
     return domain
 
 
@@ -244,6 +241,7 @@ def rem_on_likes(
 def if_empty_df_raise(
     df: pd.DataFrame, to_print: str = "DataFrame is empty, nothing to add"
 ):
+    """raises error if DataFrame is empty"""
     if df.shape[0] == 0:
         raise ValueError(to_print)
 

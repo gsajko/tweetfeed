@@ -3,8 +3,9 @@ good-names=i,j,k,f,ex,df
 
 [MASTER]
 disable=
-    C0114,E0401,E0611,W0511, W1514, C0103
+    C0114,E0401,E0611,W0511, W1514, C0103, E1136
 # W0511 is for TODO
+# E1136 get me false positives
 
 [FORMAT]
 max-line-length=100

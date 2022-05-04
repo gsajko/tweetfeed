@@ -114,4 +114,5 @@ if __name__ == "__main__":
             mlflow.log_param("class_weight_ratio_str", class_w_ratio_str)
             mlflow.log_metrics(metrics)
             mlflow.sklearn.log_model(lr, "model")
-            print("Model saved in run %s" % mlflow.active_run().info.run_uuid)
+            run_uuid = mlflow.active_run().info.run_uuid
+            print(f"Model saved in run {run_uuid}")
