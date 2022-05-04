@@ -18,7 +18,8 @@ def session_for_auth(auth: str):
 
 def get_list_id(owner_id: str, list_name: str, auth_path: str) -> str:
     "gets id of the list with the name provided"
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/lists/list.json?user_id={owner_id}"
     while True:
@@ -38,7 +39,8 @@ def get_list_id(owner_id: str, list_name: str, auth_path: str) -> str:
 
 def get_friends_ids(auth_path: str) -> list:
     "gets friends list (who user is following)"
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     url = "https://api.twitter.com/1.1/friends/ids.json"
     while True:
@@ -60,7 +62,8 @@ def get_users_from_list(owner_id: str, auth_path: str, list_name: str) -> List:
     Returns:
         [list] return list of dictionaries {id, screen_name, name}
     """
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     list_id = get_list_id(owner_id, list_name, auth_path)
     # TODO what if there is no list named list_name?
@@ -96,7 +99,8 @@ def filter_users(df: pd.DataFrame, users_list: List, remove=True):
 
 def count_collection(collection_id: str, auth_path: str) -> int:
     "counts how many tweets are in the collection"
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url, timeout=5)
@@ -138,7 +142,8 @@ def get_collection_id(
     Returns:
         str: [description]
     """
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     url = (
         f"https://api.twitter.com/1.1/collections/list.json?user_id={owner_id}"
@@ -163,7 +168,8 @@ def timeout_handling(response, sleep=60):  # pragma: no cover, will block API
 
 def get_tweets_from_collection(collection_id: str, auth_path: str) -> List:
     "returns up too 200 tweets from a Twitter collection"
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url, timeout=5)
@@ -180,7 +186,8 @@ def get_tweets_from_collection(collection_id: str, auth_path: str) -> List:
 def rem_from_collection(collection_id: str, auth_path: str):
     """Removes all the tweets from the collection.
     Collection can't have more than 200 tweets"""
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/collections/entries.json?id={collection_id}&count=200"
     response = session.get(url, timeout=5)
@@ -203,7 +210,8 @@ def add_tweets_to_collection(
     collection_id: str, tweet_list: List, auth_path: str
 ) -> pd.DataFrame:
     "Adds tweets from the list to collection and returns DataFrame of those tweets"
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     procc_list = []
     print(f"Adding {len(tweet_list)} tweets to collection {collection_id}")
@@ -212,11 +220,10 @@ def add_tweets_to_collection(
         if (counter + 1) % 100 == 0:
             print(f"{(counter+1)} / {len(tweet_list)} added")
         while True:
-            add_to_coll_url = (
+            response = session.post(
                 "https://api.twitter.com/1.1/collections/entries/add.json?"
+                f"tweet_id={tweet_id}&id={collection_id}"
             )
-            url = f"{add_to_coll_url}tweet_id={tweet_id}&id={collection_id}"
-            response = session.post(url)
             timeout_handling(response)
             if response.reason == "OK":
                 errors = response.json()["response"]["errors"]
@@ -283,7 +290,8 @@ def get_not_rel_idx(owner_id, auth_path):
 
 def like_tweet(auth_path: str, idx):
     """Likes tweet with idx"""
-    auth = json.load(open(auth_path))
+    with open(auth_path) as f:
+        auth = json.load(f)
     session = session_for_auth(auth)
     url = f"https://api.twitter.com/1.1/favorites/create.json?id={str(idx)}"
     while True:
