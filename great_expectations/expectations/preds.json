@@ -40,7 +40,7 @@
         "batch_kwargs": {
           "data_asset_name": "predictions",
           "datasource": "datasources",
-          "path": "/home/gsajko/work/tweetfeed/great_expectations/../data/predictions.csv"
+          "path": "/home/sjao/work/tweetfeed/great_expectations/../data/predictions.csv"
         },
         "batch_markers": null,
         "batch_parameters": null,

@@ -7,16 +7,17 @@ from urllib.parse import urlparse
 
 import numpy as np
 import pandas as pd
-import torch
+
+# import torch
 
 
 def set_seed(seed: int = 1234) -> None:
     """sets seed for random number generator"""
     np.random.seed(seed)
     random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)  # multi-GPU
+    # torch.manual_seed(seed)
+    # torch.cuda.manual_seed(seed)
+    # torch.cuda.manual_seed_all(seed)  # multi-GPU
 
 
 # utils

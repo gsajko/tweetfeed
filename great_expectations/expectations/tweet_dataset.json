@@ -16,7 +16,7 @@
       "batch_kwargs": {
         "data_asset_name": "dataset",
         "datasource": "datasources",
-        "path": "/home/gsajko/work/tweetfeed/great_expectations/../data/dataset.json"
+        "path": "/home/sjao/work/tweetfeed/great_expectations/../data/dataset.json"
       },
       "created_at": 1620654095.4788978,
       "created_by": "BasicSuiteBuilderProfiler"

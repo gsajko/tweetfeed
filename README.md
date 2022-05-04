@@ -27,6 +27,8 @@ To undo this, you need to use `git update-index --no-assume-unchanged [<file> ..
 
 - get your own twitter id, put it into `config/settings.json` as `owner_id`
 
+Edit paths in `great expectations` in files `preds.json` and `tweet_dataset.json` so that they point to the correct files. Repeat for `checkpoints` `yml` files.
+
 ### Optional
 
 #### setup twitter-to-sqlite
