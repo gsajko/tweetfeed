@@ -67,22 +67,26 @@ if __name__ == "__main__":
         y_test,
         count_vect,
     ) = get_data_splits_cv(df)
-    # save count_vectorizer #TODO
+    # don't save count_vectorizer as a local file #TODO
     create_folder_if_not_exists("model")
     cv_filename = "model/cv.pkl"
     with open(cv_filename, "wb") as f:
         pickle.dump(count_vect, f)
 
-    balanced_w = compute_class_weight("balanced", [0, 1], y_train)
+    balanced_w = compute_class_weight(class_weight="balanced", classes=[0, 1], y=y_train)
     print(balanced_w)
     ratio_balanced = balanced_w[1] / balanced_w[0]
-    ratio = np.linspace(ratio_balanced, ratio_balanced + 15, 30)
-    # explore betweem 0.5 and 2, but add also weight from "balanced"
+    ratios = np.linspace(ratio_balanced - 5, ratio_balanced + 15, 60)
+    # during my experiments, the best results for logreg were with 
+    # undersampling from overrepresented class
+    # so I hardcoded class1 value to 1.
+    # class2 value is based on the ratio of weights
+    # I performed a grid search to find the best ratio
     class1 = [1]
     param_grid = {
-        "class_weight": [{0: x / y, 1: x} for x in class1 for y in ratio]
+        "class_weight": [{0: x / y, 1: x} for x in class1 for y in ratios]
     }
-    mlflow.set_experiment(experiment_name="220307_2")
+    mlflow.set_experiment(experiment_name="220504_1")
     for i in param_grid["class_weight"]:
         class_weight = i
         with mlflow.start_run():

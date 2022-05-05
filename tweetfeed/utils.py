@@ -398,6 +398,7 @@ def prep_batch(
         )
 
     df = to_custom_news_feed[["id", "user", "full_text", "preds"]]
+    #TODO filter out user own tweets
     print(f"{df.shape[0]} tweets in a batch")
     if_empty_df_raise(
         to_custom_news_feed,

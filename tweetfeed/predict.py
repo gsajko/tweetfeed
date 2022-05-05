@@ -15,7 +15,7 @@ from tweetfeed.utils import prep_batch
 # load model
 ##
 client = mlflow.tracking.MlflowClient()
-experiment_id = mlflow.get_experiment_by_name("220307_2").experiment_id
+experiment_id = mlflow.get_experiment_by_name("220504_1").experiment_id
 experiment = client.get_experiment(experiment_id)
 # %%
 all_runs = client.search_runs(
@@ -30,9 +30,6 @@ loaded_model = mlflow.sklearn.load_model(logged_model)
 # %%
 # %%
 # load encoder
-# d_filename = "model/cv.pkl"
-# with open(d_filename, "rb") as file:
-#     cv = pickle.load(file)
 logged_cv = f"mlruns/{experiment_id}/{best_run}/artifacts/cv.pkl"
 with open(logged_cv, "rb") as file:
     cv = pickle.load(file)
@@ -41,8 +38,7 @@ with open(logged_cv, "rb") as file:
 # load data from SQL
 df_tweets = load_tweets("data/home.db", days=0)
 
-# load files
-## use prep_batch to concat tweet texts
+# load list of news domains for filtering
 with open("data/news_domains.txt", "r") as f:
     news_domains = json.loads(f.read())
 # %%
@@ -59,10 +55,10 @@ df = cleaning(df_to_pred)
 # %%
 # preprocess using cv
 x = df["text"]
-# X = cv.fit_transform(x)
 X = cv.transform(x)
-# get predictions
+
 # %%
+# get predictions
 # TODO predict only on those without predictions!
 df["predicted"] = loaded_model.predict_proba(X)[:, 1]
 # %%
