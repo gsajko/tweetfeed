@@ -1,10 +1,12 @@
 import json
+import pickle
 from datetime import datetime
 
+import mlflow
 import pandas as pd
 import typer
 
-from tweetfeed.data import create_dataset_df
+from tweetfeed.data import cleaning, create_dataset_df
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
     count_collection,
@@ -173,6 +175,63 @@ def to_collection(
             f"{datetime.now():%Y_%m_%d_%H%M}_not_relevant_list.txt", "w"
         ) as f:
             f.write(json.dumps(not_relevant_list))
+
+
+@app.command()
+def predict_scores(exp_name: str):
+    """using exp_name get experiment, get best run from that exp
+    and use it to create prediction scores for tweets.
+    """
+    # Predict
+    client = mlflow.tracking.MlflowClient()
+    print("searching for best model")
+    experiment_id = mlflow.get_experiment_by_name(exp_name).experiment_id
+
+    all_runs = client.search_runs(
+        experiment_id, order_by=["metrics.f1_class1 DESC"]
+    )
+    best_run = all_runs[0].info.run_id
+
+    logged_model = f"mlruns/{experiment_id}/{best_run}/artifacts/model"
+    loaded_model = mlflow.sklearn.load_model(logged_model)
+
+    # load encoder
+    logged_cv = f"mlruns/{experiment_id}/{best_run}/artifacts/cv.pkl"
+    with open(logged_cv, "rb") as file:
+        cv = pickle.load(file)
+
+    # prepare data
+    # load data from SQL
+    print("preparing data")
+    df_tweets = load_tweets("data/home.db", days=0)
+    # load list of news domains for filtering
+    with open("data/news_domains.txt", "r") as f:
+        news_domains = json.loads(f.read())
+    df_to_pred = prep_batch(
+        df=df_tweets,
+        news_domains=news_domains,
+        remove_news=False,
+        batch_size=df_tweets.shape[0],
+        print_out=False,
+    )
+
+    # clean data
+    df = cleaning(df_to_pred)
+    # %%
+    # preprocess using cv
+    x = df["text"]
+    X = cv.transform(x)
+
+    # %%
+    # get predictions
+    # TODO predict only on those without predictions!
+    df["predicted"] = loaded_model.predict_proba(X)[:, 1]
+    # %%
+    # TODO change mode to a once above implemented
+    df[["id", "predicted"]].to_csv(
+        "data/predictions.csv", mode="w", index=False
+    )
+    print(f"created prediction scores using expermient {exp_name}")
 
 
 if __name__ == "__main__":

@@ -285,7 +285,11 @@ def concat_tweet_text(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def prep_batch(
-    df: pd.DataFrame, news_domains: list, remove_news=True, **kwargs
+    df: pd.DataFrame,
+    news_domains: list,
+    remove_news=True,
+    print_out=True,
+    **kwargs,
 ) -> pd.DataFrame:
     """Loads tweets from database. Applies transformation to them:
     removes retweets, finds and remove tweets with links to news site
@@ -398,13 +402,14 @@ def prep_batch(
         )
 
     df = to_custom_news_feed[["id", "user", "full_text", "preds"]]
-    #TODO filter out user own tweets
+    # TODO filter out user own tweets
     print(f"{df.shape[0]} tweets in a batch")
     if_empty_df_raise(
         to_custom_news_feed,
         to_print="after removing tweets containing muted words, DataFrame is empty, nothing to add",
     )
-    print("top prediction scores from batch: ")
+    if print_out:
+        print("top prediction scores from batch: ")
     top_pred_list = list(df["preds"].nlargest(n=3))
     for score in top_pred_list:
         print(score)

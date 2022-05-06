@@ -16,7 +16,7 @@ from tweetfeed.utils import prep_batch
 ##
 client = mlflow.tracking.MlflowClient()
 experiment_id = mlflow.get_experiment_by_name("220504_1").experiment_id
-experiment = client.get_experiment(experiment_id)
+# experiment = client.get_experiment(experiment_id)
 # %%
 all_runs = client.search_runs(
     experiment_id, order_by=["metrics.f1_class1 DESC"]

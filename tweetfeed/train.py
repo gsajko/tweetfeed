@@ -73,11 +73,13 @@ if __name__ == "__main__":
     with open(cv_filename, "wb") as f:
         pickle.dump(count_vect, f)
 
-    balanced_w = compute_class_weight(class_weight="balanced", classes=[0, 1], y=y_train)
+    balanced_w = compute_class_weight(
+        class_weight="balanced", classes=[0, 1], y=y_train
+    )
     print(balanced_w)
     ratio_balanced = balanced_w[1] / balanced_w[0]
     ratios = np.linspace(ratio_balanced - 5, ratio_balanced + 15, 60)
-    # during my experiments, the best results for logreg were with 
+    # during my experiments, the best results for logreg were with
     # undersampling from overrepresented class
     # so I hardcoded class1 value to 1.
     # class2 value is based on the ratio of weights
