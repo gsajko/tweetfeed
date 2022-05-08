@@ -55,7 +55,7 @@ def to_collection(
     users_from_list: str = typer.Option(None, "--users_from_list", "-fl"),
     friends: bool = typer.Option(False, "--friends_only", "-fo"),
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
-    remove_liked: bool = typer.Option(False, "--ignore_lists", "-rl"),
+    remove_liked: bool = typer.Option(True, "--ignore_lists", "-rl"),
     # dont_rem_news: bool = typer.Option(False, "--dont_remove_news", "-n"),
     # TODO above
     min_likes: int = typer.Option(0, "--min_likes", "-l"),
@@ -119,12 +119,13 @@ def to_collection(
         mutedacc = [user["id"] for user in mutedacc_rich]
         df = filter_users(df, mutedacc)
 
+    df = filter_users(df, users_list=[owner_id], remove=True)
     if friends:
         friends_idx = get_friends_ids(auth)
-        df = filter_users(df, friends_idx, remove=False)
+        df = filter_users(df, users_list=friends_idx, remove=False)
     if notfriends:
         friends_idx = get_friends_ids(auth)
-        df = filter_users(df, friends_idx, remove=True)
+        df = filter_users(df, users_list=friends_idx, remove=True)
     if users_from_list:
         list_acc = get_users_from_list(
             owner_id, auth, list_name=users_from_list

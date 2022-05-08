@@ -6,7 +6,7 @@ import pandas as pd
 from requests_oauthlib import OAuth1Session
 
 
-def session_for_auth(auth: str):
+def session_for_auth(auth: dict):
     "Twitter Auth"
     return OAuth1Session(
         client_key=auth["api_key"],
