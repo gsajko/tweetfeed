@@ -34,7 +34,7 @@ dvc:
 	dvc add data/predictions.csv
 	dvc push
 
-check: great-expectations test lint style 
+check: great-expectations test lint style mypy
 bare_check: test lint style # if no prediction data is available
 
 # check: test lint style mypy data

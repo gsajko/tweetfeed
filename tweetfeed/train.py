@@ -49,7 +49,9 @@ def create_folder_if_not_exists(folder_name):
 
 # class_weight = "balanced"
 
-if __name__ == "__main__":
+
+def train_model(exp_name):
+    """run mlflow experiments using different class weights"""
     # class_weight = sys.argv[1] if len(sys.argv) > 1 else "balanced"
     # dataset_df = create_dataset()
     # dataset_df = load
@@ -66,7 +68,7 @@ if __name__ == "__main__":
         y_val,
         y_test,
         count_vect,
-    ) = get_data_splits_cv(df)
+    ) = get_data_splits_cv(cleaned_df)
     # don't save count_vectorizer as a local file #TODO
     create_folder_if_not_exists("model")
     cv_filename = "model/cv.pkl"
@@ -88,7 +90,7 @@ if __name__ == "__main__":
     param_grid = {
         "class_weight": [{0: x / y, 1: x} for x in class1 for y in ratios]
     }
-    mlflow.set_experiment(experiment_name="220504_1")
+    mlflow.set_experiment(experiment_name=exp_name)
     for i in param_grid["class_weight"]:
         class_weight = i
         with mlflow.start_run():

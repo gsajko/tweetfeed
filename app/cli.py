@@ -7,6 +7,7 @@ import pandas as pd
 import typer
 
 from tweetfeed.data import cleaning, create_dataset_df
+from tweetfeed.train import train_model
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
     count_collection,
@@ -233,6 +234,12 @@ def predict_scores(exp_name: str):
         "data/predictions.csv", mode="w", index=False
     )
     print(f"created prediction scores using expermient {exp_name}")
+
+
+@app.command()
+def train(exp_name: str):
+    """train model on dataset"""
+    train_model(exp_name=exp_name)
 
 
 if __name__ == "__main__":

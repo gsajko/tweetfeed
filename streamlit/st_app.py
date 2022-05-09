@@ -112,7 +112,7 @@ if st.session_state.count != len(st.session_state.tweet_idx_list):
     # TODO
     # print tweet score
     df = st.session_state.predictions
-    st.sidebar.write(df[df.id == int(tweet_id)].empty)
+    # st.sidebar.write(df[df.id == int(tweet_id)].empty)
     if not df[df.id == int(tweet_id)].empty:
         st.sidebar.write(
             "tweet predicted relevancy score: ",
@@ -122,13 +122,13 @@ if st.session_state.count != len(st.session_state.tweet_idx_list):
         st.sidebar.write(
             "tweet predicted relevancy score: ", df[df.id == int(tweet_id)]
         )
-
     embed_tweet(tweet_id)
 
 if st.session_state.count != len(st.session_state.tweet_idx_list):
     col2.button("Next tweet", on_click=increment_counter)
 else:
     st.write("you viewed all tweets in collection")
+    st.write("use CLI to load another batch, then clear cache (C)")
     col2.button("start over", on_click=reset_count)
 col1.button("Previous tweet", on_click=decrease_counter)
 
