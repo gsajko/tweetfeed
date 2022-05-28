@@ -65,6 +65,25 @@ anacron
 7	15	del-timeline rm /home/gsajko/work/tweetfeed/data/timeline.db
 ```
 <!-- create `data/news_domains.txt` -->
+### Optional - install airflow
+follow instructions:
+
+https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html
+
+After that, change path to your repo.
+
+`export AIRFLOW_HOME=~/work/tweetfeed/airflow`
+
+and run `airflow db init`
+
+```
+$ airflow users create \
+        --username admin \
+        --firstname Grzegorz \
+        --lastname Sajko \
+        --role Admin \
+        --email grzegorz.sajko@protonmail.com
+```
 
 ### create dataset
 `tweetfeed create_dataset`
@@ -78,5 +97,6 @@ anacron
 run `streamlit run streamlit/st_app.py`
 
 BUT, disable ad blocking software to display tweets in browser.
+
 
 

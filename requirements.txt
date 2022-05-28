@@ -1,7 +1,6 @@
 appdirs==1.4.4;
 beautifulsoup4==4.10.0; 
 bs4==0.0.1; 
-certifi==2021.10.8;
 charset-normalizer==2.0.12;
 click-default-group==1.2.2;
 click>=7.1.2;
@@ -38,7 +37,7 @@ w3lib==1.22.0;
 websockets==10.2;
 zipp==3.7.0; 
 
-pytest==6.0.2;
+pytest>=6.0.2;
 pytest-cov==2.10.1;
 pylint==2.6.0;
 mypy==0.782;
@@ -48,7 +47,7 @@ jupyter==1.0.0;
 jupyter_contrib_nbextensions==0.5.1;
 ipykernel==5.3.4;
 jupyter_nbextensions_configurator==0.4.1;
-flake8==3.8.4;
+flake8>=3.8.4;
 isort==5.7.0;
 seaborn==0.11.1;
 nltk==3.6.6;
@@ -57,6 +56,7 @@ sklearn==0.0;
 mlflow==1.23.1;
 great-expectations==0.15.6;
 dvc==2.5.4;
-streamlit==0.84.2;
+streamlit>=0.84.2;
 pre-commit==2.17.0;
 wheel>=0.37.1;
+pluggy>=1.0
