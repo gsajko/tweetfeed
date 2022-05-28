@@ -1,18 +1,16 @@
 ### Setup
 git clone repository
 
-install poetry
-`poetry shell`
-`poetry install`
-
 run `install_nltk.py`
+
+install from `requirements.txt`
+
+run `python setup.py develop`
 
 install twitter-to-sqlite
 
 using twitter-to-sqlite generate `auth.json` file
 copy it into `/config` folder
-
-run script:
 
 - run 3 diff twitter-to-sqlite commands
     - create `home.db`
@@ -24,8 +22,6 @@ Mute lists are added to repo, but changes to them are not tracked:
 `git update-index --assume-unchanged [<file> ...]` was used on them.
 
 To undo this, you need to use `git update-index --no-assume-unchanged [<file> ...]`
-
-- get your own twitter id, put it into `config/settings.json` as `owner_id`
 
 Edit paths in `great expectations` in files `preds.json` and `tweet_dataset.json` so that they point to the correct files. Repeat for `checkpoints` `yml` files.
 
@@ -71,7 +67,7 @@ anacron
 <!-- create `data/news_domains.txt` -->
 
 ### create dataset
-`poetry run tweetfeed create_dataset`
+`tweetfeed create_dataset`
 
 
 ### next
