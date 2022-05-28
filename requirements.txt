@@ -51,7 +51,7 @@ jupyter_nbextensions_configurator==0.4.1;
 flake8==3.8.4;
 isort==5.7.0;
 seaborn==0.11.1;
-nltk==3.6;
+nltk==3.6.6;
 wordcloud==1.8.1;
 sklearn==0.0;
 mlflow==1.23.1;
