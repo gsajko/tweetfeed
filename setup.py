@@ -1,10 +1,10 @@
 from setuptools import setup
 
 setup(
-    name='tweetfeed',
+    name="tweetfeed",
     entry_points={
-        'console_scripts': [
-            'tweetfeed = app.cli:app',
+        "console_scripts": [
+            "tweetfeed = app.cli:app",
         ],
-    }
+    },
 )

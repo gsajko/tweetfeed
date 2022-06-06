@@ -180,14 +180,18 @@ def to_collection(
 
 
 @app.command()
-def predict_scores(exp_name: str):
+def predict_scores(exp_name: str = "defualt"):
     """using exp_name get experiment, get best run from that exp
     and use it to create prediction scores for tweets.
+    if no exp_name is given, use default (latest) exp.
     """
     # Predict
     client = mlflow.tracking.MlflowClient()
     print("searching for best model")
-    experiment_id = mlflow.get_experiment_by_name(exp_name).experiment_id
+    if exp_name == "defualt":
+        experiment_id = len(client.list_experiments())
+    else:
+        experiment_id = mlflow.get_experiment_by_name(exp_name).experiment_id
 
     all_runs = client.search_runs(
         experiment_id, order_by=["metrics.f1_class1 DESC"]
