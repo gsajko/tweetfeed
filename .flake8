@@ -1,5 +1,5 @@
 [flake8]
-exclude = venv
+exclude = venv, notebooks, tf_venv
 ignore = E501, W503, E226, E266, E741
 max-line-length = 79
 

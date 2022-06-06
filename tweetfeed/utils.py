@@ -100,21 +100,21 @@ def clean_up_url(url: str) -> str:
 
 def remove_tw_urls(tweet: str) -> str:
     """removes twitter links / urls from tweet"""
-    tweet = re.sub(r"https://twitter.com/\S+", "", tweet)
-    tweet = re.sub(r"http://twitter.com/\S+", "", tweet)
-    tweet = re.sub(r"https://api.twitter.com/\S+", "", tweet)
-    tweet = re.sub(r"http://api.twitter.com/\S+", "", tweet)
+    tweet = re.sub(r"https://twitter\.com/\S+", "", tweet)
+    tweet = re.sub(r"http://twitter\.com/\S+", "", tweet)
+    tweet = re.sub(r"https://api\.twitter\.com/\S+", "", tweet)
+    tweet = re.sub(r"http://api\.twitter\.com/\S+", "", tweet)
     return tweet
 
 
 def rem_short_links(tweet: str) -> str:
     """removes some of short links (bit.ly, buff.ly, t.co) from tweets"""
-    tweet = re.sub(r"https://bit.ly/\S+", "", tweet)
-    tweet = re.sub(r"http://bit.ly/\S+", "", tweet)
-    tweet = re.sub(r"https://buff.ly/\S+", "", tweet)
-    tweet = re.sub(r"http://buff.ly/\S+", "", tweet)
-    tweet = re.sub(r"https://t.co/\S+", "", tweet)
-    tweet = re.sub(r"http://t.co/\S+", "", tweet)
+    tweet = re.sub(r"https://bit\.ly/\S+", "", tweet)
+    tweet = re.sub(r"http://bit\.ly/\S+", "", tweet)
+    tweet = re.sub(r"https://buff\.ly/\S+", "", tweet)
+    tweet = re.sub(r"http://buff\.ly/\S+", "", tweet)
+    tweet = re.sub(r"https://t\.co/\S+", "", tweet)
+    tweet = re.sub(r"http://t\.co/\S+", "", tweet)
     tweet = re.sub(r"www\.google.com/amp/s/", "", tweet)
     return tweet
 

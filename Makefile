@@ -20,7 +20,7 @@ mypy:
 
 style:
 	black .
-	flake8 --exclude=notebooks/*
+	flake8
 	isort .
 
 great-expectations:
