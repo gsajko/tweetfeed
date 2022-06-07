@@ -32,6 +32,7 @@ great-expectations:
 dvc:
 	dvc add data/dataset.json
 	dvc add data/predictions.csv
+	dvc add data/seen.csv
 	dvc push
 
 check: great-expectations test lint style mypy
