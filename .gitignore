@@ -159,24 +159,13 @@ data/*.csv
 
 notebooks/ftest.py
 members.db
-20210315home.db
-notebooks/20210315home_fav.db
-20210315home_fav.db
 *mlruns/
 
 data/dataset.json
-data/to_del.db
 data/faves.db
 data/timeline.db
-
-tweetfeed/main.py
-
-
-notebooks/ge.py
 
 great_expectations/notebooks/*
 data/*.txt
 notebooks/*.txt
 
-# Allow
-data/news_domains.txt

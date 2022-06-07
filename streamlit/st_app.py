@@ -6,9 +6,11 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 from tweetfeed.twitter_utils import (
+    add_tweets_to_collection,
     get_collection_id,
     get_tweets_from_collection,
     like_tweet,
+    rem_from_collection,
 )
 
 # var
@@ -48,8 +50,6 @@ if "predictions" not in st.session_state:
             columns=["id", "predicted"]
         )
         print("no prediction scores found")
-
-# tweet_idx_list = list(predictions["id"].head())
 
 
 def embed_tweet(status_id):
@@ -96,53 +96,86 @@ else:
 
 
 if st.session_state.count != len(st.session_state.tweet_idx_list):
-    fav_list = [1415446064484651009]
-    tweet_id = st.session_state.tweet_idx_list[st.session_state.count]
-    if st.sidebar.button("💚 this tweet"):
-        output = st.empty()
-        with st_capture(output.code):
-            like_tweet(auth, (tweet_id))
-
-    if st.sidebar.button("🍅 don't like this tweet [does nothing]"):
-        st.write("this tweet sucks ", tweet_id)
-        # TODO
-        # add to disliked_list
-    # TODO
-    # bookmark tweet 💾
-    # TODO
-    # print tweet score
-    df = st.session_state.predictions
-    # st.sidebar.write(df[df.id == int(tweet_id)].empty)
-    if not df[df.id == int(tweet_id)].empty:
-        st.sidebar.write(
-            "tweet predicted relevancy score: ",
-            df[df.id == int(tweet_id)].iloc[0][1],
-        )
-    else:
-        st.sidebar.write(
-            "tweet predicted relevancy score: ", df[df.id == int(tweet_id)]
-        )
-    embed_tweet(tweet_id)
-
-if st.session_state.count != len(st.session_state.tweet_idx_list):
     col2.button("Next tweet", on_click=increment_counter)
 else:
-    st.write("you viewed all tweets in collection")
+    st.write("you viewed all tweets in collection or collection is empty")
     st.write("use CLI to load another batch, then clear cache (C)")
     col2.button("start over", on_click=reset_count)
 col1.button("Previous tweet", on_click=decrease_counter)
 
+
 # sidebar
 
-if st.sidebar.button("Finish for now [does nothing]"):
+if st.session_state.count != len(st.session_state.tweet_idx_list):
+    tweet_id = st.session_state.tweet_idx_list[st.session_state.count]
+else:
+    tweet_id = 0
+# like a tweet
+if st.sidebar.button("💚 this tweet"):
+    output = st.empty()
+    with st_capture(output.code):
+        like_tweet(auth, (tweet_id))
 
-    # TODO
-    # if there are tweets from disliked list
-    # add them to not_relevant collection
-    # remove "seen" tweets from customfeed collection
-    # list [:counter]
-    pass
+# dislike a tweet
+if st.sidebar.button("🍅 don't like this tweet"):
+    collection_name = "not_relevant"
+    collection_dont_like = get_collection_id(
+        owner_id, auth_path=auth, collection_name=collection_name
+    )
+    add_tweets_to_collection(
+        collection_id=collection_dont_like,
+        tweet_list=[tweet_id],
+        auth_path=auth,
+    )
+    st.write("added tweet to collection ", collection_name)
 
 # TODO
-# sidebar loading new collection
-# with all the options to choose from
+# bookmark tweet 💾
+
+# show tweet predicted relevancy score
+df = st.session_state.predictions
+if not df[df.id == int(tweet_id)].empty:
+    st.sidebar.write(
+        "tweet predicted relevancy score: ",
+        df[df.id == int(tweet_id)].iloc[0][1],
+    )
+else:
+    st.sidebar.write(
+        "tweet predicted relevancy score: ", df[df.id == int(tweet_id)]
+    )
+
+# finish reading session at current tweet
+if st.sidebar.button("Finish for now"):
+    tweet_now = st.session_state.count + 1
+    len_tweets = len(st.session_state.tweet_idx_list)
+    seen = st.session_state.tweet_idx_list[0:tweet_now]
+    not_seen = st.session_state.tweet_idx_list[tweet_now:len_tweets]
+    if len(not_seen) == 0:
+        st.write("readed all tweets in collection")
+    else:
+        for item in not_seen:
+            st.session_state.tweet_idx_list.remove(item)
+            tw_idx = int(item)
+            st.write(tw_idx)
+            st.write(type(tw_idx))
+            seen_tweets = pd.read_csv("data/seen.csv")
+            print(seen_tweets.shape)
+
+            def pandas_drop_row_by_name(df, tw_idx: int, column_name: str):
+                return df.drop(df[df[column_name] == tw_idx].index)
+
+            seen_tweets = pandas_drop_row_by_name(
+                df=seen_tweets, tw_idx=tw_idx, column_name="tweet_id"
+            )
+            seen_tweets.to_csv("data/seen.csv", index=False)
+            st.write(item, " removed from `seen.csv`")
+        custom_newsfeed = get_collection_id(
+            owner_id=owner_id,
+            auth_path=auth,
+            collection_name="custom_newsfeed",
+        )
+        rem_from_collection(custom_newsfeed, auth)
+        st.experimental_rerun()
+
+# show tweet
+embed_tweet(tweet_id)
