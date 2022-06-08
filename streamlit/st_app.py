@@ -4,6 +4,7 @@ from io import StringIO
 import pandas as pd
 
 import streamlit as st
+
 import streamlit.components.v1 as components
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
@@ -156,8 +157,6 @@ if st.sidebar.button("Finish for now"):
         for item in not_seen:
             st.session_state.tweet_idx_list.remove(item)
             tw_idx = int(item)
-            st.write(tw_idx)
-            st.write(type(tw_idx))
             seen_tweets = pd.read_csv("data/seen.csv")
             print(seen_tweets.shape)
 
@@ -168,7 +167,6 @@ if st.sidebar.button("Finish for now"):
                 df=seen_tweets, tw_idx=tw_idx, column_name="tweet_id"
             )
             seen_tweets.to_csv("data/seen.csv", index=False)
-            st.write(item, " removed from `seen.csv`")
         custom_newsfeed = get_collection_id(
             owner_id=owner_id,
             auth_path=auth,
@@ -176,6 +174,7 @@ if st.sidebar.button("Finish for now"):
         )
         rem_from_collection(custom_newsfeed, auth)
         st.experimental_rerun()
+    
 
 # show tweet
 embed_tweet(tweet_id)
