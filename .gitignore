@@ -169,3 +169,4 @@ great_expectations/notebooks/*
 data/*.txt
 notebooks/*.txt
 
+airflow/logs/scheduler/latest

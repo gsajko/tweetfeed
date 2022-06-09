@@ -4,7 +4,6 @@ from io import StringIO
 import pandas as pd
 
 import streamlit as st
-
 import streamlit.components.v1 as components
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
@@ -174,7 +173,7 @@ if st.sidebar.button("Finish for now"):
         )
         rem_from_collection(custom_newsfeed, auth)
         st.experimental_rerun()
-    
+
 
 # show tweet
 embed_tweet(tweet_id)
