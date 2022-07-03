@@ -6,7 +6,7 @@ sys.path.append("app/tweetfeed/tweetfeed")
 
 
 st.write(sys.path)
-st.write(os.path.dirname())
+st.write(os.getcwd())
 try:
     from tweetfeed import twitterutils
 except Exception as e:
