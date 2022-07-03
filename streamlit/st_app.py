@@ -1,5 +1,6 @@
 import argparse
 import sys
+sys.path.append('../../')
 from contextlib import contextmanager, redirect_stdout
 from io import StringIO
 
