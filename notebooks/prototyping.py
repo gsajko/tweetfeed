@@ -1,25 +1,17 @@
 # %%
-import pandas as pd
 
+import mlflow
 # %%
-seen_tweets = pd.read_csv("data/seen.csv")
-print(seen_tweets.shape)
+exp_name: str = "default"
+client = mlflow.tracking.MlflowClient()
+print("searching for best model")
+if exp_name == "default":
+    experiment_id = len(client.list_experiments())
+else:
+    experiment_id = mlflow.get_experiment_by_name(exp_name).experiment_id
 
-
-def pandas_drop_row_by_name(df, name: int, column_name: str = "tweet_id"):
-    return df.drop(df[df[column_name] == name].index)
-
-
-# %%
-
-# %%
-tw_idx = 1335698027537969155
-df = pandas_drop_row_by_name(seen_tweets, name=tw_idx)
-df.head()
-# df.to_csv("data/seen.csv")
-# %%
-tw_idx = 1336874318882467842
-df = pandas_drop_row_by_name(df, name=tw_idx)
-df.head()
-
+all_runs = client.search_runs(
+    experiment_id, order_by=["metrics.f1_class1 DESC"]
+)
+best_run = all_runs[0].info.run_id
 # %%
