@@ -8,7 +8,7 @@ import typer
 
 from tweetfeed.data import cleaning, create_dataset_df
 from tweetfeed.train import train_model
-from tweetfeed.twitter_utils import (
+from tweetfeed.twitterutils import (
     add_tweets_to_collection,
     count_collection,
     filter_users,
@@ -180,7 +180,7 @@ def to_collection(
 
 
 @app.command()
-def predict_scores(exp_name: str = "defualt"):
+def predict_scores(exp_name: str = "default"):
     """using exp_name get experiment, get best run from that exp
     and use it to create prediction scores for tweets.
     if no exp_name is given, use default (latest) exp.
@@ -188,13 +188,13 @@ def predict_scores(exp_name: str = "defualt"):
     # Predict
     client = mlflow.tracking.MlflowClient()
     print("searching for best model")
-    if exp_name == "defualt":
+    if exp_name == "default":
         experiment_id = len(client.list_experiments())
     else:
         experiment_id = mlflow.get_experiment_by_name(exp_name).experiment_id
 
     all_runs = client.search_runs(
-        experiment_id, order_by=["metrics.f1_class1 DESC"]
+        str(experiment_id), order_by=["metrics.f1_class1 DESC"]
     )
     best_run = all_runs[0].info.run_id
 
@@ -237,7 +237,7 @@ def predict_scores(exp_name: str = "defualt"):
     df[["id", "predicted"]].to_csv(
         "data/predictions.csv", mode="w", index=False
     )
-    print(f"created prediction scores using expermient {exp_name}")
+    print(f"created prediction scores using experiment {exp_name}")
 
 
 @app.command()

@@ -23,7 +23,7 @@ def parse_args(args):
         "--mode",
         help="demo version, with static list of tweets",
         type=str,
-        default="app",
+        default="demo",
         required=False,
     )
     return parser.parse_args(args)
