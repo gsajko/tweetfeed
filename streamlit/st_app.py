@@ -1,6 +1,7 @@
 import argparse
 import sys
-sys.path.append('../../')
+
+
 from contextlib import contextmanager, redirect_stdout
 from io import StringIO
 
@@ -8,6 +9,8 @@ import pandas as pd
 
 import streamlit as st
 import streamlit.components.v1 as components
+
+sys.path.append("../")
 from tweetfeed import data
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
