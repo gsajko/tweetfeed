@@ -55,7 +55,7 @@ wordcloud==1.8.1;
 sklearn==0.0;
 mlflow==1.23.1;
 great-expectations==0.15.6;
-dvc==2.5.4;
+dvc==2.10.2;
 streamlit>=0.84.2;
 pre-commit==2.17.0;
 wheel>=0.37.1;
