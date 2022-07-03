@@ -1,3 +1,5 @@
+import argparse
+import sys
 from contextlib import contextmanager, redirect_stdout
 from io import StringIO
 
@@ -5,6 +7,7 @@ import pandas as pd
 
 import streamlit as st
 import streamlit.components.v1 as components
+from tweetfeed import data
 from tweetfeed.twitter_utils import (
     add_tweets_to_collection,
     get_collection_id,
@@ -13,9 +16,29 @@ from tweetfeed.twitter_utils import (
     rem_from_collection,
 )
 
-# var
-auth: str = "config/auth.json"
-owner_id: str = "143058191"
+
+def parse_args(args):
+    parser = argparse.ArgumentParser("Streamlit options")
+    parser.add_argument(
+        "--mode",
+        help="demo version, with static list of tweets",
+        type=str,
+        default="app",
+        required=False,
+    )
+    return parser.parse_args(args)
+
+
+print(sys.argv)
+args = parse_args(sys.argv[1:])
+mode = args.mode
+print(mode)
+if mode == "demo":
+    print("This is demo")
+    pass
+else:
+    auth: str = "config/auth.json"
+    owner_id: str = "143058191"
 
 
 @contextmanager
@@ -34,22 +57,29 @@ def st_capture(output_func):
 
 st.title("tweetfeed")
 
-
-if "tweet_idx_list" not in st.session_state:
-    st.session_state.tweet_idx_list = get_tweets_from_collection(
-        get_collection_id(owner_id, auth, "custom_newsfeed"), auth
-    )
-    print("getting tweets")
-
-if "predictions" not in st.session_state:
-    try:
-        st.session_state.predictions = pd.read_csv("data/predictions.csv")
-        print("getting prediction scores")
-    except FileNotFoundError:
-        st.session_state.predictions = pd.DataFrame(
-            columns=["id", "predicted"]
+if mode == "app":
+    if "tweet_idx_list" not in st.session_state:
+        st.session_state.tweet_idx_list = get_tweets_from_collection(
+            get_collection_id(owner_id, auth, "custom_newsfeed"), auth
         )
-        print("no prediction scores found")
+        print("getting tweets")
+
+    if "predictions" not in st.session_state:
+        try:
+            st.session_state.predictions = pd.read_csv("data/predictions.csv")
+            print("getting prediction scores")
+        except FileNotFoundError:
+            st.session_state.predictions = pd.DataFrame(
+                columns=["id", "predicted"]
+            )
+            print("no prediction scores found")
+else:
+    tweets_df = data.load_tweets("data/test_tweets.db", days=0, latest=False)
+    tweets_df["id"] = tweets_df["id"].astype(str)
+    st.session_state.tweet_idx_list = tweets_df["id"].to_list()
+    predictions = st.session_state.predictions = pd.read_csv(
+        "data/test_predictions.csv"
+    )
 
 
 def embed_tweet(status_id):
@@ -113,24 +143,30 @@ else:
 # like a tweet
 if st.sidebar.button("💚 this tweet"):
     output = st.empty()
-    with st_capture(output.code):
-        like_tweet(auth, (tweet_id))
+    if mode == "app":
+        with st_capture(output.code):
+            like_tweet(auth, (tweet_id))
+    else:
+        st.write("this function doesn't work in demo mode")
 
 # dislike a tweet
 if st.sidebar.button("🍅 don't like this tweet"):
-    collection_name = "not_relevant"
-    collection_dont_like = get_collection_id(
-        owner_id, auth_path=auth, collection_name=collection_name
-    )
-    add_tweets_to_collection(
-        collection_id=collection_dont_like,
-        tweet_list=[tweet_id],
-        auth_path=auth,
-    )
-    st.write("added tweet to collection ", collection_name)
+    if mode == "app":
+        collection_name = "not_relevant"
+        collection_dont_like = get_collection_id(
+            owner_id, auth_path=auth, collection_name=collection_name
+        )
+        add_tweets_to_collection(
+            collection_id=collection_dont_like,
+            tweet_list=[tweet_id],
+            auth_path=auth,
+        )
+        st.write("added tweet to collection ", collection_name)
+    else:
+        st.write("this function doesn't work in demo mode")
 
-# TODO
-# bookmark tweet 💾
+# # TODO
+# # bookmark tweet 💾
 
 # show tweet predicted relevancy score
 df = st.session_state.predictions
@@ -145,35 +181,36 @@ else:
     )
 
 # finish reading session at current tweet
-if st.sidebar.button("Finish for now"):
-    tweet_now = st.session_state.count + 1
-    len_tweets = len(st.session_state.tweet_idx_list)
-    seen = st.session_state.tweet_idx_list[0:tweet_now]
-    not_seen = st.session_state.tweet_idx_list[tweet_now:len_tweets]
-    if len(not_seen) == 0:
-        st.write("readed all tweets in collection")
-    else:
-        for item in not_seen:
-            st.session_state.tweet_idx_list.remove(item)
-            tw_idx = int(item)
-            seen_tweets = pd.read_csv("data/seen.csv")
-            print(seen_tweets.shape)
+if mode == "app":
+    if st.sidebar.button("Finish for now"):
+        tweet_now = st.session_state.count + 1
+        len_tweets = len(st.session_state.tweet_idx_list)
+        seen = st.session_state.tweet_idx_list[0:tweet_now]
+        not_seen = st.session_state.tweet_idx_list[tweet_now:len_tweets]
+        if len(not_seen) == 0:
+            st.write("readed all tweets in collection")
+        else:
+            for item in not_seen:
+                st.session_state.tweet_idx_list.remove(item)
+                tw_idx = int(item)
+                seen_tweets = pd.read_csv("data/seen.csv")
+                print(seen_tweets.shape)
 
-            def pandas_drop_row_by_name(df, tw_idx: int, column_name: str):
-                return df.drop(df[df[column_name] == tw_idx].index)
+                def pandas_drop_row_by_name(df, tw_idx: int, column_name: str):
+                    return df.drop(df[df[column_name] == tw_idx].index)
 
-            seen_tweets = pandas_drop_row_by_name(
-                df=seen_tweets, tw_idx=tw_idx, column_name="tweet_id"
+                seen_tweets = pandas_drop_row_by_name(
+                    df=seen_tweets, tw_idx=tw_idx, column_name="tweet_id"
+                )
+                seen_tweets.to_csv("data/seen.csv", index=False)
+            custom_newsfeed = get_collection_id(
+                owner_id=owner_id,
+                auth_path=auth,
+                collection_name="custom_newsfeed",
             )
-            seen_tweets.to_csv("data/seen.csv", index=False)
-        custom_newsfeed = get_collection_id(
-            owner_id=owner_id,
-            auth_path=auth,
-            collection_name="custom_newsfeed",
-        )
-        rem_from_collection(custom_newsfeed, auth)
-        st.experimental_rerun()
+            rem_from_collection(custom_newsfeed, auth)
+            st.experimental_rerun()
 
 
-# show tweet
+# # show tweet
 embed_tweet(tweet_id)
