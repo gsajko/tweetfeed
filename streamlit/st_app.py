@@ -11,14 +11,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 sys.path.append("../")
-from tweetfeed import data
-from tweetfeed.twitter_utils import (
-    add_tweets_to_collection,
-    get_collection_id,
-    get_tweets_from_collection,
-    like_tweet,
-    rem_from_collection,
-)
+from tweetfeed import data, twitter_utils
 
 
 def parse_args(args):
@@ -63,8 +56,13 @@ st.title("tweetfeed")
 
 if mode == "app":
     if "tweet_idx_list" not in st.session_state:
-        st.session_state.tweet_idx_list = get_tweets_from_collection(
-            get_collection_id(owner_id, auth, "custom_newsfeed"), auth
+        st.session_state.tweet_idx_list = (
+            twitter_utils.get_tweets_from_collection(
+                twitter_utils.get_collection_id(
+                    owner_id, auth, "custom_newsfeed"
+                ),
+                auth,
+            )
         )
         print("getting tweets")
 
@@ -149,7 +147,7 @@ if st.sidebar.button("💚 this tweet"):
     output = st.empty()
     if mode == "app":
         with st_capture(output.code):
-            like_tweet(auth, (tweet_id))
+            twitter_utils.like_tweet(auth, (tweet_id))
     else:
         st.write("this function doesn't work in demo mode")
 
@@ -157,10 +155,10 @@ if st.sidebar.button("💚 this tweet"):
 if st.sidebar.button("🍅 don't like this tweet"):
     if mode == "app":
         collection_name = "not_relevant"
-        collection_dont_like = get_collection_id(
+        collection_dont_like = twitter_utils.get_collection_id(
             owner_id, auth_path=auth, collection_name=collection_name
         )
-        add_tweets_to_collection(
+        twitter_utils.add_tweets_to_collection(
             collection_id=collection_dont_like,
             tweet_list=[tweet_id],
             auth_path=auth,
@@ -207,12 +205,12 @@ if mode == "app":
                     df=seen_tweets, tw_idx=tw_idx, column_name="tweet_id"
                 )
                 seen_tweets.to_csv("data/seen.csv", index=False)
-            custom_newsfeed = get_collection_id(
+            custom_newsfeed = twitter_utils.get_collection_id(
                 owner_id=owner_id,
                 auth_path=auth,
                 collection_name="custom_newsfeed",
             )
-            rem_from_collection(custom_newsfeed, auth)
+            twitter_utils.rem_from_collection(custom_newsfeed, auth)
             st.experimental_rerun()
 
 
