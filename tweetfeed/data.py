@@ -6,7 +6,7 @@ from nltk import word_tokenize
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
-from tweetfeed.twitter_utils import (
+from tweetfeed.twitterutils import (
     from_muted_users_idx,
     get_muted_acc,
     get_not_rel_idx,

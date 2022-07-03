@@ -8,7 +8,7 @@ import typer
 
 from tweetfeed.data import cleaning, create_dataset_df
 from tweetfeed.train import train_model
-from tweetfeed.twitter_utils import (
+from tweetfeed.twitterutils import (
     add_tweets_to_collection,
     count_collection,
     filter_users,
