@@ -1,6 +1,6 @@
 import argparse
 import sys
-
+print(sys.path)
 
 from contextlib import contextmanager, redirect_stdout
 from io import StringIO
@@ -10,7 +10,8 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 
-sys.path.append("../")
+sys.path.append("../../")
+from tweetfeed import twitterutils
 from tweetfeed import data
 
 
@@ -34,8 +35,6 @@ if mode == "demo":
     print("This is demo")
     pass
 else:
-    from tweetfeed import twitterutils
-
     auth: str = "config/auth.json"
     owner_id: str = "143058191"
 
