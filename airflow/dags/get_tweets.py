@@ -1,6 +1,7 @@
+import datetime
 
 import pendulum
-import datetime
+
 from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 
@@ -13,7 +14,7 @@ default_args = {
     "tags": ["dataops"],
 }
 
-    
+
 @dag(
     dag_id="get_other_tweets_bash_operator",
     schedule_interval="57 * * * *",
@@ -43,6 +44,7 @@ def get_other_tweets_bash_operator():
     # Task relationships
     faves_to_favesdb >> timeline_to_homedb >> faves_to_homedb >> timeline_to_timelinedb
 
+
 @dag(
     dag_id="get_tweets_bash_operator",
     schedule_interval="7,12,17,22,27,32,37,42,47,52 * * * *",
@@ -56,6 +58,8 @@ def get_tweets_bash_operator():
         task_id="get_home_timeline",
         bash_command="run-one /usr/local/bin/twitter-to-sqlite home-timeline /home/sjao/work/tweetfeed/data/home.db -a /home/sjao/work/tweetfeed/config/auth.json --since",
     )
+    get_home_timeline
+
 
 # Define DAGs
 get_tweets_dag = get_tweets_bash_operator()
