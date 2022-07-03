@@ -11,7 +11,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 sys.path.append("../")
-from tweetfeed import data, twitter_utils
+from tweetfeed import twitter_utils
+from tweetfeed import data
 
 
 def parse_args(args):
