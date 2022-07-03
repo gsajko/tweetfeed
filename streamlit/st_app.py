@@ -12,8 +12,7 @@ import streamlit.components.v1 as components
 
 sys.path.append("../")
 from tweetfeed import data
-sys.path.append("../")
-from tweetfeed import twitterutils
+
 
 def parse_args(args):
     parser = argparse.ArgumentParser("Streamlit options")
@@ -21,7 +20,7 @@ def parse_args(args):
         "--mode",
         help="demo version, with static list of tweets",
         type=str,
-        default="app",
+        default="demo",
         required=False,
     )
     return parser.parse_args(args)
@@ -35,6 +34,8 @@ if mode == "demo":
     print("This is demo")
     pass
 else:
+    from tweetfeed import twitterutils
+
     auth: str = "config/auth.json"
     owner_id: str = "143058191"
 
