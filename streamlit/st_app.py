@@ -1,14 +1,12 @@
 import argparse
-import sys
 from contextlib import contextmanager, redirect_stdout
 from io import StringIO
 
 import pandas as pd
-
 import streamlit as st
 import streamlit.components.v1 as components
 from tweetfeed import data
-from tweetfeed.twitter_utils import (
+from tweetfeed.twitterutils import (
     add_tweets_to_collection,
     get_collection_id,
     get_tweets_from_collection,
@@ -211,6 +209,5 @@ if mode == "app":
             rem_from_collection(custom_newsfeed, auth)
             st.experimental_rerun()
 
-
-# # show tweet
+# show tweet
 embed_tweet(tweet_id)
