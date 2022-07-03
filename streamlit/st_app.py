@@ -10,8 +10,8 @@ import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
 
-sys.path.append("../")
 from tweetfeed import twitterutils
+sys.path.append("../")
 from tweetfeed import data
 
 
