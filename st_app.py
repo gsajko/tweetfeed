@@ -131,7 +131,8 @@ else:
     st.write("you viewed all tweets in collection or collection is empty")
     st.write("use CLI to load another batch, then clear cache (C)")
     col2.button("start over", on_click=reset_count)
-col1.button("Previous tweet", on_click=decrease_counter)
+if st.session_state.count > 0:
+    col1.button("Previous tweet", on_click=decrease_counter)
 
 
 # sidebar
