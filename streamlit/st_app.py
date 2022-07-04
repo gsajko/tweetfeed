@@ -115,7 +115,7 @@ def reset_count():
 
 
 # columns
-col1, col2, col3 = st.beta_columns(3)
+col1, col2, col3 = st.columns(3)
 
 
 # main content
