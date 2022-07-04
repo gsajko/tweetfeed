@@ -154,6 +154,7 @@ home.db
 
 # data
 data/*.csv
+!data/test_predictions.csv
 *.pkl
 
 
