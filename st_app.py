@@ -4,9 +4,9 @@ from contextlib import contextmanager, redirect_stdout
 from io import StringIO
 
 import pandas as pd
-
 import streamlit as st
 import streamlit.components.v1 as components
+
 from tweetfeed import data
 from tweetfeed.twitterutils import (
     add_tweets_to_collection,
@@ -55,7 +55,10 @@ def st_capture(output_func):
         yield
 
 
-st.title("tweetfeed")
+if mode == "app":
+    st.title("tweetfeed")
+else:
+    st.title("tweetfeed-demo")
 
 if mode == "app":
     if "tweet_idx_list" not in st.session_state:
@@ -177,9 +180,7 @@ if not df[df.id == int(tweet_id)].empty:
         df[df.id == int(tweet_id)].iloc[0][1],
     )
 else:
-    st.sidebar.write(
-        "tweet predicted relevancy score: ", df[df.id == int(tweet_id)]
-    )
+    st.sidebar.write("tweet predicted relevancy score: ", 0.00)
 
 # finish reading session at current tweet
 if mode == "app":
@@ -212,5 +213,11 @@ if mode == "app":
             rem_from_collection(custom_newsfeed, auth)
             st.experimental_rerun()
 
+# show tweet count
+tweet_count = st.session_state.count + 1
+if st.session_state.count < len(st.session_state.tweet_idx_list):
+    st.write(
+        st.session_state.count + 1, " / ", len(st.session_state.tweet_idx_list)
+    )
 # show tweet
 embed_tweet(tweet_id)
