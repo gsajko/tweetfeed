@@ -1,102 +1,146 @@
-### Setup
-git clone repository
+```mermaid
+flowchart LR
 
-run `install_nltk.py`
+tw[twitter]
+d[dataset]
+t[train model]
+s[predict scores]
+c[collection]
+neg_c[negative collection]
+cli[tweetfeed CLI]
+st[streamlit]
+seen[seen tweets]
 
-install from `requirements.txt`
+tw --get home timeline and likes--> sqlite
+sqlite --create--> d
+d --> t --> s 
 
-run `python setup.py develop`
+sqlite & s -->cli
+cli --load--> c
 
-install twitter-to-sqlite
+c  --> display
 
-using twitter-to-sqlite generate `auth.json` file
-copy it into `/config` folder
+display --add--> seen & likes & neg_c
 
-- run 3 diff twitter-to-sqlite commands
-    - create `home.db`
-    - create `faves.db`
-    - create `timeline.db`
 
-Mute lists are added to repo, but changes to them are not tracked:
+subgraph twitter-to-sqlite
+tw
+sqlite
+end
 
-`git update-index --assume-unchanged [<file> ...]` was used on them.
+subgraph model
+d
+t
+s
+end
 
-To undo this, you need to use `git update-index --no-assume-unchanged [<file> ...]`
+subgraph twitter-api
+c
+end
 
-Edit paths in `great expectations` in files `preds.json` and `tweet_dataset.json` so that they point to the correct files. Repeat for `checkpoints` `yml` files.
-
-### Optional
-
-#### setup twitter-to-sqlite
-
-install twitter-to-sqlite outside of poetry shell.
-
-configure crontab and anacron.
-I use crontab to add data to databases, and anacron to delete favorites and timeline databases once a week - you are adding tweets to database using twitter-to-sqlite but this doesn't reflect Twitter use. Sometimes you delete your own tweets, undo retweets, un-like tweets by other. 
-
-use `whereis twitter-to-sqlite` to find path to `twitter-to-sqlite`
-
-check if cron is working
-`sudo service cron status`
-
-If you are using WSL Ubuntu use this guide:
-https://www.howtogeek.com/746532/how-to-launch-cron-automatically-in-wsl-on-windows-10-and-11/
-
-check if you have `anacron` installed by typing:
-`cat /etc/anacrontab`
-If not, install it:
-`sudo apt-get install -y anacron`
-
-My example:
-
-crontab
-
-```bash
-2,7,12,17,22,27,32,37,42,47,52,57 * * * * run-one /home/gsajko/miniconda3/bin/twitter-to-sqlite home-timeline /home/gsajko/work/tweetfeed/data/home.db -a /home/gsajko/work/tweetfeed/config/auth.json --since
-
-59 * * * * run-one /home/gsajko/miniconda3/bin/twitter-to-sqlite favorites /home/gsajko/work/tweetfeed/data/faves.db -a /home/gsajko/work/tweetfeed/config/auth.json
-34 * * * * run-one /home/gsajko/miniconda3/bin/twitter-to-sqlite favorites /home/gsajko/work/tweetfeed/data/home.db -a /home/gsajko/work/tweetfeed/config/auth.json
-45 * * * * run-one /home/gsajko/miniconda3/bin/twitter-to-sqlite user-timeline /home/gsajko/work/tweetfeed/data/timeline.db -a /home/gsajko/work/tweetfeed/config/auth.json --since
-24 * * * * run-one /home/gsajko/miniconda3/bin/twitter-to-sqlite user-timeline /home/gsajko/work/tweetfeed/data/home.db -a /home/gsajko/work/tweetfeed/config/auth.json --since
-```
-anacron
-```
-7	10	del-fav rm /home/gsajko/work/tweetfeed/data/faves.db
-7	15	del-timeline rm /home/gsajko/work/tweetfeed/data/timeline.db
-```
-<!-- create `data/news_domains.txt` -->
-### Optional - install airflow
-follow instructions:
-
-https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html
-
-After that, change path to your repo.
-
-`export AIRFLOW_HOME=~/work/tweetfeed/airflow`
-
-and run `airflow db init`
+subgraph display
+st
+tweetdeck
+end
 
 ```
-$ airflow users create \
-        --username admin \
-        --firstname Grzegorz \
-        --lastname Sajko \
-        --role Admin \
-        --email grzegorz.sajko@protonmail.com
+
+I use twitter-to-sql to get tweets (home timeline and my likes) and I store them in Sqlite database.
+
+From that database I extract tweets:
+- I engaged with
+- I have seen
+- I find tweets that link to news sites, and label them as negative
+
+I create dataset of negative and positive sentiment. 
+
+Using that dataset I train simple logistic regression, and use it as a ranking function.
+
+Then I use that model, to predict sentiment score on all tweets in the database. 
+
+After that, I laverage twitter "collection" functionality. Using tweetfeed CLI I load tweets to collection. Tweets can be loaded on many custom rules. For example:
+
+==example==
+
+After tweets are loaded in collection, I can view the collection either in Twitter's Tweetdeck, or in Streamlit app. 
+
+I wrote simple Streamlit app to display one tweet at the time, NOT scrollable. Here is a demo of this app: 
+
+==link==
+
+/ in demo I used tweets that I use for testing different functionality (mostly filtering out tweets that contain links to news sites) /
+
+After viewing tweets, I like some of them, I label some of them as not relevant. All tweets are added to `seen.csv` - I track all tweets I seen already.
+
+All of this data will be used, to update dataset later.
+
+
+```mermaid
+flowchart LR
+
+tw[twitter]
+d[dataset]
+t[train model]
+s[predict scores]
+c[collection]
+neg_c[negative collection]
+f[filtering rules]
+cli[tweetfeed CLI]
+st[streamlit]
+seen[seen tweets]
+g[great expectations]
+
+tw --get home timeline and likes--> sqlite
+sqlite --create--> d
+d --> t --> s 
+
+sqlite & s & f -->cli
+cli --load--> c
+
+seen --add--> d
+
+g --testing--> d & s
+dvc --versioning--> d & s & seen
+
+c  --display--> st
+st --remove tweets--> c
+st --add--> seen & likes & neg_c
+seen --ignore--> cli
+neg_c --> d
+
+subgraph twitter-to-sqlite
+tw
+sqlite
+end
+
+subgraph mlflow
+d
+t
+s
+end
+
+subgraph twitter-api
+c
+end
+
+subgraph cron
+twitter-to-sqlite
+end
+
+subgraph airflow
+mlflow
+end
+
+subgraph utils
+g
+dvc
+end
+
 ```
 
-### create dataset
-`tweetfeed create_dataset`
 
 
-### next
-- do classifier based on list ("show me tweets similiar to those from people in list Q1")
-
-
-### display tweets
-run `streamlit run streamlit/st_app.py`
-
-BUT, disable ad blocking software to display tweets in browser.
-
-
-
+Future impromvent:
+- refractor code
+- use model to predict, if tweet is news related
+- use more sofisticated model for recommendations
