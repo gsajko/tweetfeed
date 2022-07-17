@@ -43,6 +43,11 @@ st
 tweetdeck
 end
 
+subgraph update_dataset
+seen & likes & neg_c
+end
+
+
 ```
 
 I use twitter-to-sql to get tweets (home timeline and my likes) and I store them in Sqlite database.
@@ -67,6 +72,8 @@ After tweets are loaded in collection, I can view the collection either in Twitt
 I wrote simple Streamlit app to display one tweet at the time, NOT scrollable. Here is a demo of this app: 
 
 ==link==
+
+[streamlit demo](https://gsajko-tweetfeed-st-app-add5rq.streamlitapp.com/)
 
 / in demo I used tweets that I use for testing different functionality (mostly filtering out tweets that contain links to news sites) /
 
@@ -137,6 +144,50 @@ dvc
 end
 
 ```
+
+AIRFLOW
+
+```mermaid
+flowchart LR
+p[predict]
+d[dataset]
+um[update model]
+d-->um-->p
+```
+
+```mermaid
+flowchart LR
+
+
+p[predict]
+d[dataset]
+dvc[make dvc]
+
+subgraph weekly
+d
+um[update model]
+p
+
+end
+
+nd[new dataset]
+d --create--> nd --> dvc
+nd --> check_metrics
+
+um --> model1--> predict1 --> check_metrics
+check_metrics --good--> do_nothing
+check_metrics --bad--> re-train_model
+
+ntweets[add scores to new tweets]
+alltweets[calculate scores for all tweets]
+p--_old_model?-->ntweets --> dvc
+p--_new_model?-->alltweets --> dvc
+```
+
+
+two things #TODO
+- check if new model is better than old one
+- check if there is new model, or the old model
 
 
 

@@ -1,4 +1,3 @@
-# %%
 import pickle
 
 import mlflow
@@ -8,20 +7,8 @@ from sklearn.metrics import precision_recall_fscore_support
 
 from tweetfeed import utils
 from tweetfeed.data import cleaning
-from tweetfeed.perf import get_exp_list_by_tag
 
-# %%
 
-client = mlflow.tracking.MlflowClient()
-# print("searching for best model")
-# if exp_name == "default":
-#     experiment_id = len(client.list_experiments())
-# else:
-#     experiment_id = mlflow.get_experiment_by_name(exp_name).experiment_id
-# Predict
-
-# %%
-# %%
 def get_performance(y_true, y_pred, classes):
     """Per-class performance metrics."""
     # Performance
@@ -49,8 +36,8 @@ def get_performance(y_true, y_pred, classes):
     return performance
 
 
-# %%
 def get_exp_list_by_tag(tag_key: str, tag_value: str) -> list:
+    client = mlflow.tracking.MlflowClient()
     exp_list = []
     for exp in client.list_experiments():
         if exp.tags.get(tag_key) == tag_value:
@@ -58,21 +45,8 @@ def get_exp_list_by_tag(tag_key: str, tag_value: str) -> list:
     return exp_list
 
 
-def get_exp_list():
-    exp_list = []
-    for exp in client.list_experiments():
-        exp_list.append(exp)
-    return exp_list
-
-
-# %%
-experiments = get_exp_list_by_tag("type", "train")
-# experiments = get_exp_list()
-
-# %%
-
-
 def get_all_runs(experiments: list, metric: str) -> list:
+    client = mlflow.tracking.MlflowClient()
     all_runs = []
     for exp in experiments:
         runs = client.search_runs(str(exp.experiment_id), order_by=[metric])
@@ -81,13 +55,7 @@ def get_all_runs(experiments: list, metric: str) -> list:
     return all_runs
 
 
-all_runs = get_all_runs(experiments, "metrics.f1_class1 DESC")
-
-# %%
-
-
-# ONE RUN ❗️
-# check metrics again on dataset
+# Predict
 
 
 def get_model_performance(exp_name, mlflow_runs_infos):
@@ -152,12 +120,3 @@ def get_model_performance(exp_name, mlflow_runs_infos):
             )
             mlflow.log_param("ref experiment_id", run.experiment_id)
             mlflow.log_param("ref run_id", run.run_id)
-
-
-# %%
-get_model_performance("performance220716b", all_runs)
-print("done❗️")
-# %%
-# f1_class1 of 0.78 will be cut-off for re-training
-
-# %%

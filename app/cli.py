@@ -7,6 +7,11 @@ import pandas as pd
 import typer
 
 from tweetfeed.data import cleaning, create_dataset_df
+from tweetfeed.perf import (
+    get_all_runs,
+    get_exp_list_by_tag,
+    get_model_performance,
+)
 from tweetfeed.train import train_model
 from tweetfeed.twitterutils import (
     add_tweets_to_collection,
@@ -186,13 +191,14 @@ def predict_scores(exp_name: str = "default"):
     if no exp_name is given, use default (latest) exp.
     """
     # Predict
-    client = mlflow.tracking.MlflowClient()
     print("searching for best model")
+    experiments = get_exp_list_by_tag("type", "train")
     if exp_name == "default":
-        experiment_id = len(client.list_experiments())
+        experiment_id = experiments[-1].experiment_id
     else:
         experiment_id = mlflow.get_experiment_by_name(exp_name).experiment_id
-
+    print(f"chosen experiment {experiment_id}")
+    client = mlflow.tracking.MlflowClient()
     all_runs = client.search_runs(
         str(experiment_id), order_by=["metrics.f1_class1 DESC"]
     )
@@ -244,6 +250,17 @@ def predict_scores(exp_name: str = "default"):
 def train(exp_name: str):
     """train model on dataset"""
     train_model(exp_name=exp_name)
+
+
+@app.command()
+def eval_perf(metric_lookup: str = "default"):
+    if metric_lookup == "default":
+        metric = "metrics.f1_class1 DESC"
+
+    experiments = get_exp_list_by_tag("type", "train")
+    all_runs = get_all_runs(experiments, metric)
+    get_model_performance("performance220716b", all_runs)
+    print("done❗️")
 
 
 if __name__ == "__main__":
