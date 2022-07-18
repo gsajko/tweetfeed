@@ -40,7 +40,7 @@ def cleaning(df: pd.DataFrame) -> pd.DataFrame:
 
         clean_tweet_texts.append(negations)
 
-    clean_df["text"] = pd.DataFrame(clean_tweet_texts, columns=["text"])
+    clean_df["text"] = clean_tweet_texts
     return clean_df
 
 

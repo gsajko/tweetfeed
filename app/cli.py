@@ -185,7 +185,9 @@ def to_collection(
 
 
 @app.command()
-def predict_scores(exp_name: str = "default"):
+def predict_scores(
+    exp_name: str = "default", mode: str = typer.Option("a", "--mode", "-m")
+):
     """using exp_name get experiment, get best run from that exp
     and use it to create prediction scores for tweets.
     if no exp_name is given, use default (latest) exp.
@@ -225,10 +227,17 @@ def predict_scores(exp_name: str = "default"):
         remove_news=False,
         batch_size=df_tweets.shape[0],
         print_out=False,
+        data_path="data",
     )
 
     # clean data
-    df = cleaning(df_to_pred)
+    if mode == "a":
+        df = cleaning(df_to_pred[df_to_pred.preds == 0])
+    if mode == "w":
+        df = cleaning(df_to_pred)
+    print(f"{df.shape[0]} tweets to predict")
+    
+
     # %%
     # preprocess using cv
     x = df["text"]
@@ -240,10 +249,15 @@ def predict_scores(exp_name: str = "default"):
     df["predicted"] = loaded_model.predict_proba(X)[:, 1]
     # %%
     # TODO change mode to a once above implemented
-    df[["id", "predicted"]].to_csv(
-        "data/predictions.csv", mode="w", index=False
-    )
-    print(f"created prediction scores using experiment {exp_name}")
+    if mode == "a":
+        df[["id", "predicted"]].to_csv(
+            "data/predictions.csv", mode="a", header=False, index=False
+        )
+    if mode == "w":
+        df[["id", "predicted"]].to_csv(
+            "data/predictions.csv", mode="w", index=False
+        )
+    print(f"created prediction scores using experiment {experiment_id}")
 
 
 @app.command()
@@ -254,6 +268,7 @@ def train(exp_name: str):
 
 @app.command()
 def eval_perf(metric_lookup: str = "default"):
+    """evaluate models performance"""
     if metric_lookup == "default":
         metric = "metrics.f1_class1 DESC"
 

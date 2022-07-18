@@ -59,6 +59,31 @@ def test_cleaning(test_df, test_news_domains):
     )
 
 
+def test_cleaning_dp(test_df, test_news_domains):
+    df_to_pred = prep_batch(
+        df=test_df,
+        news_domains=test_news_domains,
+        remove_news=False,
+        batch_size=test_df.shape[0],
+        data_path="data",
+    )
+    df = data.cleaning(df_to_pred)
+    assert df["text"][0] == "meanwhile in canada .."
+    assert (
+        df["text"][3]
+        == "is it still possible to teach children how to make republican friend or democratic friend on the playground talks with the editor in chief of `` highlights ''"
+    )
+
+    assert (
+        df["text"][5]
+        == "poll have the divergent covid experiences of asia and the west made you doubt the western liberal democratic model more than you did year ago"
+    )
+    assert (
+        df["text"][10]
+        == "the faz just ran this article in german focusing on behavioral economics be the ergodicity problem affects all of economic theory and be seems like practical response to theoretical flaw -- fair statement"
+    )
+
+
 def test_with_news_idx(test_df, data_path="tests"):
     df = test_df
     list_idx = data.with_news_idx(df, data_path)

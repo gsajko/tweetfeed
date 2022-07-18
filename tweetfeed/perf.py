@@ -1,39 +1,11 @@
 import pickle
 
 import mlflow
-import numpy as np
 import pandas as pd
-from sklearn.metrics import precision_recall_fscore_support
 
 from tweetfeed import utils
 from tweetfeed.data import cleaning
-
-
-def get_performance(y_true, y_pred, classes):
-    """Per-class performance metrics."""
-    # Performance
-    performance = {"overall": {}, "class": {}}
-
-    # Overall performance
-    metrics = precision_recall_fscore_support(
-        y_true, y_pred, average="weighted"
-    )
-    performance["overall"]["precision"] = metrics[0]
-    performance["overall"]["recall"] = metrics[1]
-    performance["overall"]["f1"] = metrics[2]
-    performance["overall"]["num_samples"] = np.float64(len(y_true))
-    # Per-class performance
-
-    metrics = precision_recall_fscore_support(y_true, y_pred, average=None)
-    for i in range(len(classes)):
-        performance["class"][classes[i]] = {
-            "precision": metrics[0][i],
-            "recall": metrics[1][i],
-            "f1": metrics[2][i],
-            "num_samples": np.float64(metrics[3][i]),
-        }
-
-    return performance
+from tweetfeed.train import get_performance
 
 
 def get_exp_list_by_tag(tag_key: str, tag_value: str) -> list:

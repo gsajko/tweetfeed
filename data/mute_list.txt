@@ -1,1 +1,1 @@
-["breaking:", "🍿", "🚨", "released"]
+["breaking:", "🍿", "🚨", "released", "registration"]

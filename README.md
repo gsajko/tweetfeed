@@ -6,7 +6,7 @@ d[dataset]
 t[train model]
 s[predict scores]
 c[collection]
-neg_c[negative collection]
+neg_c[not relevant tweets]
 cli[tweetfeed CLI]
 st[streamlit]
 seen[seen tweets]
@@ -90,7 +90,7 @@ d[dataset]
 t[train model]
 s[predict scores]
 c[collection]
-neg_c[negative collection]
+neg_c[not relevant tweets]
 f[filtering rules]
 cli[tweetfeed CLI]
 st[streamlit]
@@ -176,12 +176,11 @@ nd --> check_metrics
 
 um --> model1--> predict1 --> check_metrics
 check_metrics --good--> do_nothing
-check_metrics --bad--> re-train_model
+check_metrics --bad--> re-train_model --> alltweets --> dvc
 
 ntweets[add scores to new tweets]
 alltweets[calculate scores for all tweets]
 p--_old_model?-->ntweets --> dvc
-p--_new_model?-->alltweets --> dvc
 ```
 
 

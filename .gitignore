@@ -172,8 +172,6 @@ notebooks/*.txt
 
 airflow/logs/scheduler/latest
 airflow/standalone_admin_password.txt
-data/dataset.json.dvc
-data/predictions.csv.dvc
-data/seen.csv.dvc
+
 data/mute_list.txt
 data/mute_list_cs.txt
