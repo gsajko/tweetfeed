@@ -236,7 +236,6 @@ def predict_scores(
     if mode == "w":
         df = cleaning(df_to_pred)
     print(f"{df.shape[0]} tweets to predict")
-    
 
     # %%
     # preprocess using cv
