@@ -60,6 +60,8 @@ def test_cleaning(test_df, test_news_domains):
 
 
 def test_cleaning_dp(test_df, test_news_domains):
+    # data_path will cause to remove "seen"
+    # TODO, make separate file seen.csv for tests
     df_to_pred = prep_batch(
         df=test_df,
         news_domains=test_news_domains,
@@ -68,14 +70,14 @@ def test_cleaning_dp(test_df, test_news_domains):
         data_path="data",
     )
     df = data.cleaning(df_to_pred)
-    assert df["text"][0] == "meanwhile in canada .."
+    assert df["text"][1] == "meanwhile in canada .."
     assert (
-        df["text"][3]
+        df["text"][2]
         == "is it still possible to teach children how to make republican friend or democratic friend on the playground talks with the editor in chief of `` highlights ''"
     )
 
     assert (
-        df["text"][5]
+        df["text"][6]
         == "poll have the divergent covid experiences of asia and the west made you doubt the western liberal democratic model more than you did year ago"
     )
     assert (
