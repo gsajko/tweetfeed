@@ -147,13 +147,6 @@ end
 
 AIRFLOW
 
-```mermaid
-flowchart LR
-p[predict]
-d[dataset]
-um[update model]
-d-->um-->p
-```
 
 ```mermaid
 flowchart LR
@@ -161,26 +154,35 @@ flowchart LR
 
 p[predict]
 d[dataset]
-dvc[make dvc]
+
 
 subgraph weekly
 d
-um[update model]
-p
-
 end
 
-nd[new dataset]
-d --create--> nd --> dvc
-nd --> check_metrics
+subgraph daily
+p
+end
 
-um --> model1--> predict1 --> check_metrics
-check_metrics --good--> do_nothing
-check_metrics --bad--> re-train_model --> alltweets --> dvc
+d --create--> new_dataset
+
+subgraph new_dataset
+c[create dataset] --> vd[validate dataset] --> vcd[version control]
+end
+
+new_dataset --trigger--> update_model
+
+subgraph update_model
+cm[re-train] --> update_scores
+end
+
+subgraph update_scores
+alltweets --> vm[validate pred scores] --> vcm[version control]
+end
 
 ntweets[add scores to new tweets]
 alltweets[calculate scores for all tweets]
-p--_old_model?-->ntweets --> dvc
+p--_old_model?-->ntweets
 ```
 
 
