@@ -1,6 +1,5 @@
 import datetime
 
-import pendulum
 from great_expectations_provider.operators.great_expectations import (
     GreatExpectationsOperator,
 )
@@ -8,10 +7,13 @@ from great_expectations_provider.operators.great_expectations import (
 from airflow.decorators import dag
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
+from airflow.sensors.external_task import ExternalTaskSensor
+from airflow.utils.dates import days_ago
 from app import cli, config
 from tweetfeed import predict
 
-start_date = pendulum.datetime(2022, 7, 1, tz="UTC")
+start_date = days_ago(1)
+cron = "7 7 * * 7"
 
 # Default DAG args
 default_args = {
@@ -23,7 +25,7 @@ default_args = {
 
 @dag(
     dag_id="create_and_validate_dataset",
-    schedule_interval="5 4 5 5 5",
+    schedule_interval=cron,
     start_date=start_date,
     default_args=default_args,
     dagrun_timeout=datetime.timedelta(minutes=15),
@@ -42,7 +44,7 @@ def create_dataset():
     )
     version_control = BashOperator(
         task_id="version_control",
-        bash_command=f"cd {config.BASE_DIR} && dvc add data/dataset.json && dvc add data/seen.json",
+        bash_command=f"cd {config.BASE_DIR} && dvc add data/dataset.json && dvc add data/seen.csv",
     )
     # Task relationships
     create_dataset >> validate_dataset >> version_control
@@ -50,13 +52,19 @@ def create_dataset():
 
 @dag(
     dag_id="update_model",
-    schedule_interval="5 4 5 5 5",
+    schedule_interval=cron,
     start_date=start_date,
     default_args=default_args,
     dagrun_timeout=datetime.timedelta(minutes=45),
-    tags=["dataset"],
+    tags=["model"],
 )
 def update_model():
+    wait_for_dataset = ExternalTaskSensor(
+        task_id="wait_for_dataset",
+        external_dag_id="create_and_validate_dataset",
+        external_task_id=None,
+        allowed_states=["success"],
+    )
     update_model = PythonOperator(
         task_id="update_model",
         python_callable=cli.train,
@@ -78,8 +86,9 @@ def update_model():
         task_id="version_control",
         bash_command=f"cd {config.BASE_DIR} && dvc add data/predictions.csv",
     )
+
     # Task relationships
-    update_model >> calc_scores >> validate_model_output >> version_control_pred
+    wait_for_dataset >> update_model >> calc_scores >> validate_model_output >> version_control_pred
 
 
 # Define DAGs
