@@ -172,6 +172,8 @@ notebooks/*.txt
 
 airflow/logs/scheduler/latest
 airflow/standalone_admin_password.txt
+airflow/airflow-webserver.pid
 
 data/mute_list.txt
 data/mute_list_cs.txt
+

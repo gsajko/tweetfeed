@@ -51,11 +51,11 @@ def to_collection(
     age: int = typer.Option(21, "--age", "-a"),
     reverse_age: bool = typer.Option(False, "--reverse", "-r"),
     nr_tweets: int = typer.Option(30, "--tweets", "-t"),
-    ignore_lists: bool = typer.Option(False, "--ignore_lists", "-il"),
+    ignore_muted: bool = typer.Option(False, "--ignore_muted", "-im"),
     users_from_list: str = typer.Option(None, "--users_from_list", "-fl"),
     friends: bool = typer.Option(False, "--friends_only", "-fo"),
     notfriends: bool = typer.Option(False, "--not_friends_only", "-nfo"),
-    remove_liked: bool = typer.Option(True, "--ignore_lists", "-rl"),
+    remove_liked: bool = typer.Option(True, "--ignore_liked", "-rl"),
     # dont_rem_news: bool = typer.Option(False, "--dont_remove_news", "-n"),
     # TODO above
     min_likes: int = typer.Option(0, "--min_likes", "-l"),
@@ -67,15 +67,17 @@ def to_collection(
         auth (str): Path to your twitter credential. Defaults to "config/auth.json".
         owner_id (str): Owner of list and collections. Defaults to "143058191".
         age (int, optional): How old (in days) should be the most recent tweet. Defaults to 21.
-        reverse_age (bool, optional): If chosed, no tweets older than age (in days) will be shown.
+        reverse_age (bool, optional): If chosen, no tweets older than age (in days) will be shown.
         nr_tweets (int): How many tweets upload to collection.
-        ignore_lists (bool, optional): If `True` it prevents from using
+        ignore_muted (bool, optional): If `True` it prevents from using
             Twitter API and list functionality.
             This functionality causes most "Too Many Requests" errors.
+        users_from_list(str, optional): If chosen, it will only grab tweets from users in a named list.
         friends (bool, optional): If `True`, tweets by friends (following) will be added.
-        notfriends (bool, optional): If `True`, tweets by
+        notfriends (bool, optional): If `True`, only tweets by
              non-friends (who user does not follow) will be added.
         remove_liked: If `True`, remove tweets from tweetfeed, that user already liked.
+        min_likes: Minimum number of likes a tweet must have to be added to collection.
     """
     # TODO
     # use str from above:
@@ -101,7 +103,7 @@ def to_collection(
     with open("data/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
 
-    if not ignore_lists:
+    if not ignore_muted:
         mutedacc_rich = get_users_from_list(owner_id, auth, list_name="muted")
         nytblock = get_users_from_list(owner_id, auth, list_name="nytblock")
         # TODO idea - scrape https://www.politwoops.com/ for politician accounts
@@ -115,7 +117,7 @@ def to_collection(
         df = load_tweets("data/home.db", days=age, latest=True)
     else:
         df = load_tweets("data/home.db", days=age)
-    if not ignore_lists:
+    if not ignore_muted:
         mutedacc = [user["id"] for user in mutedacc_rich]
         df = filter_users(df, mutedacc)
 
