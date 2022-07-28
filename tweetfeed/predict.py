@@ -59,7 +59,9 @@ def calc_pred_scores(exp_name: str = "default", mode: str = "w"):
     if mode == "w":
         df = cleaning(df_to_pred)
     print(f"{df.shape[0]} tweets to predict")
-
+    if df.shape[0] == 0:
+        print("no tweets to predict, exiting")
+        return None
     # %%
     # preprocess using cv
     x = df["text"]
