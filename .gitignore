@@ -177,3 +177,4 @@ airflow/airflow-webserver.pid
 data/mute_list.txt
 data/mute_list_cs.txt
 
+*Zone.Identifier
