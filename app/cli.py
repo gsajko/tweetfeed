@@ -184,7 +184,7 @@ def to_collection(
 def predict_scores(
     exp_name: str = "default", mode: str = typer.Option("a", "--mode", "-m")
 ):
-    calc_pred_scores(exp_name, mode)
+    calc_pred_scores(exp_name, mode, d_path="data")
 
 
 @app.command()

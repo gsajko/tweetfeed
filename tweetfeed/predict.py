@@ -7,9 +7,12 @@ import mlflow
 from tweetfeed.data import cleaning, load_tweets
 from tweetfeed.perf import get_exp_list_by_tag
 from tweetfeed.utils import prep_batch
+import pandas as pd
 
 
-def calc_pred_scores(exp_name: str = "default", mode: str = "w"):
+def calc_pred_scores(
+    exp_name: str = "default", mode: str = "w", d_path: str = "data"
+):
     """using exp_name get experiment, get best run from that exp
     and use it to create prediction scores for tweets.
     if no exp_name is given, use default (latest) exp.
@@ -40,9 +43,9 @@ def calc_pred_scores(exp_name: str = "default", mode: str = "w"):
     # prepare data
     # load data from SQL
     print("preparing data")
-    df_tweets = load_tweets("data/home.db", days=0)
+    df_tweets = load_tweets(f"{d_path}/home.db", days=0)
     # load list of news domains for filtering
-    with open("data/news_domains.txt", "r") as f:
+    with open(f"{d_path}/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
     df_to_pred = prep_batch(
         df=df_tweets,
@@ -75,10 +78,13 @@ def calc_pred_scores(exp_name: str = "default", mode: str = "w"):
     # TODO change mode to a once above implemented
     if mode == "a":
         df[["id", "predicted"]].to_csv(
-            "data/predictions.csv", mode="a", header=False, index=False
+            f"{d_path}/predictions.csv", mode="a", header=False, index=False
         )
+        # TODO remove duplicates after adding new predictions
+        predictions = pd.read_csv(f"{d_path}/predictions.csv")
+        predictions.drop_duplicates(subset="id", keep="last", inplace=True)
     if mode == "w":
         df[["id", "predicted"]].to_csv(
-            "data/predictions.csv", mode="w", index=False
+            f"{d_path}/predictions.csv", mode="w", index=False
         )
     print(f"created prediction scores using experiment {experiment_id}")
