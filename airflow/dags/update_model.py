@@ -98,6 +98,7 @@ def update_model():
     default_args=default_args,
     dagrun_timeout=datetime.timedelta(minutes=15),
     tags=["scores"],
+    catchup=False,
 )
 def update_scores():
     add_scores = PythonOperator(
