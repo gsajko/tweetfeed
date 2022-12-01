@@ -88,7 +88,7 @@ def test_cleaning(test_df, test_news_domains):
 
 def test_with_news_idx(test_df, data_path="tests"):
     df = test_df
-    list_idx = data.with_news_idx(df, data_path)
+    list_idx = data.tweets_with_news_idx(df, data_path)
     assert list_idx == [
         615449556961095680,
         643922773400809473,

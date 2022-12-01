@@ -3,11 +3,11 @@ import json
 import pickle
 
 import mlflow
+import pandas as pd
 
 from tweetfeed.data import cleaning, load_tweets
 from tweetfeed.perf import get_exp_list_by_tag
 from tweetfeed.utils import prep_batch
-import pandas as pd
 
 
 def calc_pred_scores(
@@ -83,7 +83,9 @@ def calc_pred_scores(
         # TODO remove duplicates after adding new predictions
         predictions = pd.read_csv(f"{d_path}/predictions.csv")
         predictions.drop_duplicates(subset="id", keep="last", inplace=True)
+        predictions.to_csv(f"{d_path}/predictions.csv", index=False)
     if mode == "w":
+        df.drop_duplicates(subset="id", keep="last", inplace=True)
         df[["id", "predicted"]].to_csv(
             f"{d_path}/predictions.csv", mode="w", index=False
         )

@@ -22,36 +22,33 @@ from tweetfeed.utils import (
 def cleaning(df: pd.DataFrame) -> pd.DataFrame:
     "clean Dataframe"
 
-    patterns = "|".join(
-        ("@[^ ]+", "http[^ ]+", "www.[^ ]+", "#[^ ]+", "[0-9]")
-    )
-    non_lett_pat = "^[^a-zA-Z]*"  # remove all non-letters from the beginning of the string
+    patterns = r"@[^ ]+|http[^ ]+|www.[^ ]+|#[^ ]+|[0-9]|n't"
+    # remove all non-letters from the beginning of the string
+    non_lett_pat = "^[^a-zA-Z]*"
 
-    clean_tweet_texts = []
-    clean_df = df.copy()
-    for tweet in clean_df["full_text"]:
+    def clean_tweet(tweet):
         tweet = tweet.lower()
-        stripped_first = re.sub(patterns, "", tweet)
-        stripped = re.sub(non_lett_pat, "", stripped_first)
-        tokens = word_tokenize(stripped)
+        tweet = re.sub(patterns, "", tweet)
+        tweet = re.sub(non_lett_pat, "", tweet)
+        tokens = word_tokenize(tweet)
+        # keep only words that are at least two characters long
         words = [x for x in tokens if len(x) > 1]
-        sentences = " ".join(words)
-        negations = re.sub("n't", "not", sentences)
+        clean_tweet = " ".join(words)
+        return clean_tweet
 
-        clean_tweet_texts.append(negations)
-
-    clean_df["text"] = clean_tweet_texts
+    clean_df = df.copy()
+    clean_df["text"] = clean_df["full_text"].apply(clean_tweet)
     return clean_df
 
 
 # negative list
 
 
-def with_news_idx(df_tweets: pd.DataFrame, data_path: str) -> list:
+def tweets_with_news_idx(df_tweets: pd.DataFrame, data_path: str) -> list:
     "given DataFrame, return list of tweets id, that contain news"
     df = concat_tweet_text(
         df_tweets
-    )  # concat with in_reply to / qouted tweets
+    )  # concat with in_reply to / quoted tweets
     df = df[df["retweeted_status"] == "N/A"]  # remove RT
     with open(f"{data_path}/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
@@ -95,7 +92,7 @@ def create_neg_list_idx(path_to_db, owner_id, auth_path, muted_path):
         set(
             idx_contain_muted_words(df_tweets, muted_path)
             + from_muted_users_idx(df_tweets, muted_acc_list)
-            + with_news_idx(df_tweets, muted_path)
+            + tweets_with_news_idx(df_tweets, muted_path)
             + get_not_rel_idx(owner_id, auth_path)
         )
     )

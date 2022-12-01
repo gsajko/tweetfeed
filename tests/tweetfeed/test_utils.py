@@ -136,5 +136,5 @@ def test_rem_on_likes(test_df):
 
 def test_concat_tweet_text(test_df):
     df = utils.concat_tweet_text(test_df)
-    assert len(df[df.id == 643922773400809473].iloc[0,2]) == 394
-    assert len(df[df.id == 1338127864542203908].iloc[0,2]) == 513
+    assert len(df[df.id == 643922773400809473].iloc[0, 2]) == 394
+    assert len(df[df.id == 1338127864542203908].iloc[0, 2]) == 513

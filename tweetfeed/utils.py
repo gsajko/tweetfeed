@@ -301,17 +301,14 @@ def prep_batch(
     Returns:
         pd.DataFrame: filtered DataFrame with 2 columns, "id" and "user".
     """
-
+    # TODO make this into class
     if df.empty:
         raise ValueError("ValueError: DataFrame is empty, nothing to add")
-        
-    # TODO make this into class
-    # concat tweet with in_reply, quoted tweets
-    df = concat_tweet_text(df)
 
     # remove retweets
     # TODO this should be options
     df = df[df["lang"] == "en"]  # take only english lang tweets
+
     if_empty_df_raise(
         df,
         to_print="ValueError:After removing non-english tweets, DataFrame is empty, nothing to add",
@@ -396,6 +393,8 @@ def prep_batch(
             str_list=kwargs["mute_list_cs"],
             case_sensitive=True,
         )
+    # concat tweet with in_reply, quoted tweets
+    df = concat_tweet_text(df)
 
     df = to_custom_news_feed[["id", "user", "full_text", "preds"]]
     # TODO filter out user own tweets
@@ -407,6 +406,7 @@ def prep_batch(
     if print_out:
         print("top prediction scores from batch: ")
     top_pred_list = list(df["preds"].nlargest(n=3))
+    print("3 top prediction scores from batch:")
     for score in top_pred_list:
         print(score)
     # df.sort_values(by=["preds"], ascending=False, inplace=True)
