@@ -249,31 +249,22 @@ def if_empty_df_raise(
 def concat_tweet_text(df: pd.DataFrame) -> pd.DataFrame:
     """concatenates tweet text from "full_text" and extended tweet columns"""
     df = df.rename({"full_text": "full_text_short"}, axis=1)
-    df.quoted_status = (
-        df.quoted_status.replace("N/A", 0).fillna(0).astype(np.int64)
-    )
-    df.in_reply_to_status_id = (
-        df.in_reply_to_status_id.replace("N/A", 0).fillna(0).astype(np.int64)
-    )
-    df.insert(
-        3,
-        "in_reply_to_text",
-        df["in_reply_to_status_id"].map(df.set_index("id")["full_text_short"]),
-    )
-    df.insert(
-        3,
-        "quoted_text",
-        df["quoted_status"].map(df.set_index("id")["full_text_short"]),
-    )
+    for col in ["quoted_status", "in_reply_to_status_id"]:
+        df[col] = df[col].replace("N/A", 0).fillna(0).astype(np.int64)
+    # do vlookup on tweets, and add text of tweets to new column
+    lookup_dict = {
+        "quoted_status": "quoted_text",
+        "in_reply_to_status_id": "in_reply_to_text",
+    }
+    for key, value in lookup_dict.items():
+        df.insert(3, value, df[key].map(df.set_index("id")["full_text_short"]))
     df.insert(
         2,
         "full_text",
-        (
-            df.full_text_short
-            + " "
-            + df.in_reply_to_text.fillna("")
-            + " "
-            + df.quoted_text.fillna("")
+        df.full_text_short.str.cat(
+            df[["in_reply_to_text", "quoted_text"]],
+            sep=" ",
+            na_rep="",
         ),
     )
     df.drop(
@@ -313,9 +304,9 @@ def prep_batch(
 
     if df.empty:
         raise ValueError("ValueError: DataFrame is empty, nothing to add")
-
+        
+    # TODO make this into class
     # concat tweet with in_reply, quoted tweets
-    # TODO make this into separate function
     df = concat_tweet_text(df)
 
     # remove retweets
