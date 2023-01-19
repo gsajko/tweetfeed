@@ -1,3 +1,4 @@
+# %%
 import json
 from datetime import datetime
 
@@ -17,7 +18,7 @@ from tweetfeed.twitterutils import (
     get_users_from_list,
     rem_from_collection,
 )
-from tweetfeed.utils import load_favorites, load_tweets, prep_batch
+from tweetfeed.utils import BatchProcessor, load_favorites, load_tweets
 
 app = typer.Typer(help="awesome custom twitter feed")
 
@@ -140,7 +141,8 @@ def to_collection(
         df = df[~df["id"].isin(favorite_idx)]
 
     # remove news and RT
-    tweets_df = prep_batch(
+
+    tweets_df = BatchProcessor(
         df=df,
         news_domains=news_domains,
         mute_list=mute_list,
@@ -148,7 +150,7 @@ def to_collection(
         data_path="data",
         remove_news=True,
         likes=min_likes,
-    )
+    ).process_tweets()
 
     tweet_list = tweets_df["id"].tolist()[:nr_tweets]
     df = add_tweets_to_collection(
@@ -178,6 +180,7 @@ def to_collection(
             f"{datetime.now():%Y_%m_%d_%H%M}_not_relevant_list.txt", "w"
         ) as f:
             f.write(json.dumps(not_relevant_list))
+    return tweets_df
 
 
 @app.command()
@@ -203,4 +206,7 @@ if __name__ == "__main__":
     #     reverse_age=False,
     #     nr_tweets=1,
     #     remove_liked=True,
+    #     min_likes=0,
     # )  # uncomment to debug, use explicit bool for filtering
+
+# run setup develop first

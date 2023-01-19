@@ -7,7 +7,7 @@ import pandas as pd
 
 from tweetfeed.data import cleaning, load_tweets
 from tweetfeed.perf import get_exp_list_by_tag
-from tweetfeed.utils import prep_batch
+from tweetfeed.utils import BatchProcessor
 
 
 def calc_pred_scores(
@@ -47,14 +47,15 @@ def calc_pred_scores(
     # load list of news domains for filtering
     with open(f"{d_path}/news_domains.txt", "r") as f:
         news_domains = json.loads(f.read())
-    df_to_pred = prep_batch(
+
+    df_to_pred = BatchProcessor(
         df=df_tweets,
         news_domains=news_domains,
         remove_news=False,
-        batch_size=df_tweets.shape[0],
         print_out=False,
         data_path="data",
-    )
+    ).process_tweets()
+
     print("cleaning data")
     # clean data
     if mode == "a":
