@@ -18,13 +18,13 @@ cron = "7 7 * * 7"
 # Default DAG args
 default_args = {
     "owner": "airflow",
-    "catch_up": False,
     "tags": ["dataops"],
 }
 
 
 @dag(
     dag_id="create_and_validate_dataset",
+    catchup=False,
     schedule_interval=cron,
     start_date=start_date,
     default_args=default_args,
@@ -52,6 +52,7 @@ def create_dataset():
 
 @dag(
     dag_id="update_model",
+    catchup=False,
     schedule_interval=cron,
     start_date=start_date,
     default_args=default_args,
@@ -93,6 +94,7 @@ def update_model():
 
 @dag(
     dag_id="update_scores",
+    catchup=False,
     schedule_interval="@daily",
     start_date=pendulum.today().add(days=-1),
     default_args=default_args,
