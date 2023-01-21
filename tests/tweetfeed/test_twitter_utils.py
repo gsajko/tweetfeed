@@ -100,7 +100,7 @@ def test_get_list_id():
     list_id = twitterutils.get_list_id(
         owner_id, list_name="test_list", auth_path=auth_path
     )
-    assert list_id == "1369691201033691138"
+    assert list_id == "1616872003050344448"
     with pytest.raises(ValueError) as execinfo:
         twitterutils.get_list_id(
             owner_id, list_name="bad_list_name", auth_path=auth_path
@@ -178,3 +178,27 @@ def test_from_muted_users_idx(test_df):
 def test_get_not_rel_idx():
     not_relevant_col_idx = twitterutils.get_not_rel_idx(owner_id, auth_path)
     assert type(not_relevant_col_idx[0]) == int
+
+
+def test_create_list_add_users_to_list(capsys):
+    list_name = "test_list_to_delete"
+    users_idx = [8472272, 16562730]
+    list_id = str(
+        twitterutils.create_list(auth_path=auth_path, list_name=list_name)
+    )
+    # add users to list
+    users_ids_str = ",".join([str(i) for i in users_idx])
+    r = twitterutils.add_users_to_list(
+        auth_path=auth_path,
+        list_id=list_id,
+        users_ids=users_ids_str,
+        owner_id=owner_id,
+    )
+    # delete list
+    twitterutils.delete_list(auth_path=auth_path, list_id=list_id)
+    c = capsys.readouterr().out.split("\n")
+    for i in c:
+        print(i)
+    assert c[0] == f"list {list_name} created"
+    assert c[2] == f"list {list_id} deleted"
+    assert r["member_count"] == 2

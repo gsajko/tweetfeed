@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 from tweetfeed import data
-from tweetfeed.utils import prep_batch, set_seed
+from tweetfeed.utils import BatchProcessor, set_seed
 
 
 @pytest.fixture
@@ -33,12 +33,12 @@ def test_news_domains():
 
 
 def test_cleaning(test_df, test_news_domains):
-    df_to_pred = prep_batch(
+    df_to_pred = BatchProcessor(
         df=test_df,
         news_domains=test_news_domains,
         remove_news=False,
         batch_size=test_df.shape[0],
-    )
+    ).process_tweets()
     df = data.cleaning(df_to_pred)
     assert (
         df["text"][0]

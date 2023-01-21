@@ -44,11 +44,14 @@ def get_list_id(owner_id: str, list_name: str, auth_path: str) -> str:
                 )
 
 
-def get_friends_ids(auth_path: str) -> list:
+def get_friends_ids(auth_path: str, user_id="") -> list:
     "gets friends list (who user is following)"
 
     session = create_session(auth_path)
-    url = "https://api.twitter.com/1.1/friends/ids.json"
+    if user_id == "":
+        url = "https://api.twitter.com/1.1/friends/ids.json"
+    else:
+        url = f"https://api.twitter.com/1.1/friends/ids.json?user_id={user_id}"
     while True:
         response = session.get(url, timeout=5)
         timeout_handling(response, sleep=60)
@@ -303,3 +306,56 @@ def like_tweet(auth_path: str, idx):
         if response.reason == "OK":
             print("tweet liked ❤️")
             break
+
+
+def create_list(auth_path: str, list_name: str, private: bool = True):
+    """Creates list with list_name name for owner_id user"""
+
+    session = create_session(auth_path)
+    if private:
+        mode = "private"
+    else:
+        mode = "public"
+    url = f"https://api.twitter.com/1.1/lists/create.json?name={list_name}&mode={mode}"
+
+    response = session.post(url, timeout=5)
+    timeout_handling(response, sleep=60)
+    if response.reason == "OK":
+        print(f"list {list_name} created")
+    else:
+        print(f"list {list_name} not created")
+        print(response.json())
+    return response.json()["id"]
+
+
+def delete_list(auth_path: str, list_id: str):
+    """Deletes list with list_id name"""
+
+    session = create_session(auth_path)
+    url = f"https://api.twitter.com/1.1/lists/destroy.json?list_id={list_id}"
+
+    response = session.post(url, timeout=5)
+    timeout_handling(response, sleep=60)
+    if response.reason == "OK":
+        print(f"list {list_id} deleted")
+    else:
+        print(f"list {list_id} not deleted")
+        print(response.json())
+    return response.json()
+
+
+def add_users_to_list(
+    auth_path: str, list_id: str, users_ids: List, owner_id: str
+):
+    """Adds users (based on ids) to list with list_id name"""
+
+    session = create_session(auth_path)
+    url = f"https://api.twitter.com/1.1/lists/members/create_all.json?list_id={list_id}&user_id={users_ids}&owner_id={owner_id}"
+    response = session.post(url, timeout=5)
+    timeout_handling(response, sleep=60)
+    if response.reason == "OK":
+        print(f"{len(users_ids)} users added to list {list_id}")
+    else:
+        print(f"users not added to list {list_id}")
+        print(response.json())
+    return response.json()
