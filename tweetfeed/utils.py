@@ -335,7 +335,11 @@ class BatchProcessor:
                             na_action="ignore",
                         ),
                     )
-                    self.df.loc[:, "preds"] = self.df["preds"].fillna(0)
+                    self.df = self.df.assign(
+                        preds=self.df["id"]
+                        .map(predictions.set_index("id")["predicted"])
+                        .fillna(0)
+                    )
                     self.df.sort_values(
                         by="preds", ascending=False, inplace=True
                     )
@@ -389,7 +393,6 @@ class BatchProcessor:
         # TODO filter out user own tweets
         df = self.df[["id", "user", "full_text", "preds"]]
         if self.print_out:
-            print("top prediction scores from batch: ")
             top_pred_list = list(df["preds"].nlargest(n=3))
             print("3 top prediction scores from batch:")
             for score in top_pred_list:

@@ -190,13 +190,13 @@ if mode == "app":
         seen = st.session_state.tweet_idx_list[0:tweet_now]
         not_seen = st.session_state.tweet_idx_list[tweet_now:len_tweets]
         if len(not_seen) == 0:
-            st.write("readed all tweets in collection")
+            st.write("read all tweets in collection")
         else:
             for item in not_seen:
                 st.session_state.tweet_idx_list.remove(item)
                 tw_idx = int(item)
                 seen_tweets = pd.read_csv("data/seen.csv")
-                print(seen_tweets.shape)
+                print(seen_tweets.shape[0])
 
                 def pandas_drop_row_by_name(df, tw_idx: int, column_name: str):
                     return df.drop(df[df[column_name] == tw_idx].index)

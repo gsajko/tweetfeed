@@ -140,8 +140,6 @@ def to_collection(
         favorite_idx = favorite_df["tweet"].tolist()
         df = df[~df["id"].isin(favorite_idx)]
 
-    # remove news and RT
-
     tweets_df = BatchProcessor(
         df=df,
         news_domains=news_domains,
@@ -151,8 +149,10 @@ def to_collection(
         remove_news=True,
         likes=min_likes,
     ).process_tweets()
-
-    tweet_list = tweets_df["id"].tolist()[:nr_tweets]
+    # print nr of tweets in a batch
+    list_to_add = tweets_df["id"].tolist()
+    print(f"nr of tweets in batch: {len(list_to_add)}")
+    tweet_list = list_to_add[:nr_tweets]
     df = add_tweets_to_collection(
         custom_newsfeed, tweet_list, auth
     )  # adds to collection
