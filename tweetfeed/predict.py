@@ -66,16 +66,13 @@ def calc_pred_scores(
     if df.shape[0] == 0:
         print("no tweets to predict, exiting")
         return None
-    # %%
     # preprocess using cv
     x = df["text"]
     X = cv.transform(x)
 
-    # %%
     # get predictions
     # TODO predict only on those without predictions!
     df["predicted"] = loaded_model.predict_proba(X)[:, 1]
-    # %%
     # TODO change mode to a once above implemented
     if mode == "a":
         df[["id", "predicted"]].to_csv(
