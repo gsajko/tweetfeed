@@ -53,7 +53,7 @@ seaborn==0.11.1;
 nltk==3.6.6;
 wordcloud==1.8.1;
 scikit-learn==1.1.1;
-mlflow==1.23.1;
+mlflow==2.2.1;
 great-expectations==0.15.6;
 dvc==2.10.2;
 streamlit==1.11.1;
